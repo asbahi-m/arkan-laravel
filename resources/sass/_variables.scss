@@ -1,0 +1,18 @@
+@use "sass:color";
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$primary: #3B3363;
+$secondary: #EB8153;
+$dark: #2C254A;
+$light: #f8f9fa;
+
+$nav-link-color: $light;
+$nav-link-hover-color: $secondary;
+// $nav-link-hover-color: color.scale($secondary, $lightness: -10%);
+// $secondary: #C5BAFF;

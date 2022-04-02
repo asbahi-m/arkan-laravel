@@ -23,6 +23,18 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('admin.index');
     })->name('dashboard');
+
+    Route::get('/dashboard-old', function () {
+        return view('dashboard');
+    })->name('dashboard.old');
+
+    Route::get('/profile', function() {
+        return view('admin.user.profile');
+    })->name('profile');
+
+    Route::get('/user/change-password', function() {
+        return view('admin.user.change-password');
+    })->name('user.password');
 });
