@@ -42,7 +42,7 @@
                                     <li>
                                         <div class="timeline-panel">
                                             <div class="media mr-2">
-                                                <img alt="image" width="50" src="images/avatar/1.jpg">
+                                                <img alt="image" width="50" src="admin/images/user.png">
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -75,7 +75,7 @@
                                         <li>
                                         <div class="timeline-panel">
                                             <div class="media mr-2">
-                                                <img alt="image" width="50" src="images/avatar/1.jpg">
+                                                <img alt="image" width="50" src="admin/images/user.png">
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -115,7 +115,7 @@
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                             <img
-                                src="{{ auth()->user()->profile_photo_path ? asset(auth()->user()->profile_photo_path) : asset('admin/images/user.png') }}"
+                                src="{{ auth()->user()->profile_photo_path ? asset(Storage::url(auth()->user()->profile_photo_path)) : asset('admin/images/user.png') }}"
                                 alt="" style="width: auto"/>
                             <div class="header-info">
                                 <span>{{ auth()->user()->name }}</span>
@@ -146,55 +146,3 @@
         </nav>
     </div>
 </div>
-
-
-
-{{--<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <!-- Brand -->
-        <a class="navbar-brand col-2" href="dashboard">
-            <img src="{{ asset('admin/images/logo-white.png') }}" alt="" class="d-inline-block align-text-top">
-            {{ config('app.name') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <!-- Search Feild -->
-            <form>
-                <div class="input-group">
-                    <input class="form-control py-2 bg-dark text-light border-0" type="search" placeholder="{{ __('admin.search') }}" aria-label="Search">
-                    <button class="input-group-text bg-dark text-light border-0" type="submit" id="search"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-            <!-- Username -->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img
-                            src="{{ auth()->user()->profile_photo_path ? asset(auth()->user()->profile_photo_path) : asset('admin/images/user.png') }}"
-                            alt="" height="30">
-                        <div class="px-2">
-                            <strong class="d-block">{{ auth()->user()->name }}</strong>
-                            <small class="d-block">{{ __('Super Admin') }}</small>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarUser">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user pe-2"></i> {{ __('admin.profile') }}</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-key pe-2"></i> {{ __('admin.change_pass') }}</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
-                                <i class="fas fa-sign-out-alt pe-2"></i> {{ __('admin.logout') }}</a>
-                            <form method="POST" action="{{ route('logout') }}" id="form-logout" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>--}}

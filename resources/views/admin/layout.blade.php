@@ -52,7 +52,6 @@
         @include('admin.include.footer')
     </div>
 
-
     <!-- Scripts -->
     <script src="{{ asset('admin/vendor/global/global.min.js') }}"></script>
 	<script src="{{ asset('admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
@@ -71,5 +70,6 @@
     --}}
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 	<script src="{{ asset('admin/js/deznav-init.js') }}"></script>
+    @include('sweetalert::alert')
 </body>
 </html>

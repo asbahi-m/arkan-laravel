@@ -2,7 +2,7 @@
     <div class="deznav-scroll">
         <!-- User Profile -->
         <div class="main-profile">
-            <img src="{{ auth()->user()->profile_photo_path ? asset(auth()->user()->profile_photo_path) : asset('admin/images/user.png') }}"
+            <img src="{{ auth()->user()->profile_photo_path ? asset(Storage::url(auth()->user()->profile_photo_path)) : asset('admin/images/user.png') }}"
                     alt="" style="width: auto">
             <a href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
             <h5 class="mb-0 fs-20 text-black "><span class="font-w400">{{ __('admin.hello') }},</span> {{ auth()->user()->name }}</h5>

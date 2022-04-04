@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\TypeController;
-use App\Http\Controllers\admin\ServiceController;
-use App\Http\Controllers\admin\ProjectController;
-use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------

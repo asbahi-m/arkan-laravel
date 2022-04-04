@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,7 @@ Route::middleware([
     Route::get('/user/change-password', function() {
         return view('admin.user.change-password');
     })->name('user.password');
+
+    Route::post('/user/password/update', [UserController::class, 'passwordUpdate'])->name('password.update');
+    Route::post('/profile/update', [UserController::class, 'profileUpdate'])->name('profile.update');
 });

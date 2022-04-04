@@ -6,12 +6,12 @@
             <h4 class="card-title">{{ __('admin.change_pass') }}</h4>
         </div>
         <div class="card-body">
-            <div class="form-validation">
-                <form class="form-valide" action="#" method="post">
+            <div class="basic-form">
+                <form class="form-valide-with-icon" action="{{ route('password.update') }}" method="post">
                     @csrf
                     <!-- Current Passowrd -->
                     <div class="form-group">
-                        <label class="text-label" for="dz-password">
+                        <label class="text-label" for="current-password">
                             <span>{{ __('admin.password_current') }}</span> <span class="text-danger">*</span>
                         </label>
                         <div class="input-group transparent-append">
@@ -23,39 +23,40 @@
                                 </span>
                             </div>
                         </div>
+                        @error('current_password')
+                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <!-- New Password -->
                     <div class="form-group">
-                        <label class="text-label" for="val-password">
+                        <label class="text-label" for="new-password">
                             <span>{{ __('admin.password_new') }}</span><span class="text-danger">*</span>
                         </label>
                         <div>
-                            <input type="text" class="form-control" id="val-password" name="val-password"
+                            <input type="text" class="form-control" id="new-password" name="password"
                                     placeholder="{{ __('admin.password_msg') }}" autocomplete="new-password">
                         </div>
+                        @error('password')
+                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{$message}}</div>
+                        @enderror
                     </div>
 
                     <!-- Confirm New Password -->
                     <div class="form-group">
-                        <label class="text-label" for="val-confirm-password">
+                        <label class="text-label" for="password-confirm">
                             <span>{{ __('admin.password_confirm') }}</span><span class="text-danger">*</span>
                         </label>
                         <div>
-                            <input type="text" class="form-control" id="val-confirm-password" name="val-confirm-password"
+                            <input type="text" class="form-control" id="password-confirm" name="password_confirmation"
                                     placeholder="{{ __('admin.password_confirm_msg') }}" autocomplete="new-password">
                         </div>
                     </div>
+
+                    <!-- Submit -->
                     <button type="submit" class="btn btn-primary btn-sm mr-2">{{ __('admin.update') }}</button>
                 </form>
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <!-- Jquery Validation -->
-    <script src="{{ asset('admin/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-    <!-- Form validate init -->
-    <script src="{{ asset('admin/js/plugins-init/jquery.validate-init.js') }}"></script>
 @endsection
