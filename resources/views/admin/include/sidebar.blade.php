@@ -48,6 +48,20 @@
                     @endif
                 </ul>
             </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <i class="fa fa-clone"></i>
+                    <span class="nav-text">{{ __('admin.projects') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('projects.all'))
+                        <li><a href="{{ route('projects.all') }}">{{ __('admin.projects_all') }}</a></li>
+                    @endif
+                    @if (Route::has('project.create'))
+                        <li><a href="{{ route('project.create') }}">{{ __('admin.project_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
         </ul>
         {{--<div class="copyright">
             <p><strong>Zenix Crypto Admin Dashboard</strong> © 2021 All Rights Reserved</p>
