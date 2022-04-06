@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,4 +51,11 @@ Route::middleware([
     Route::post('/service/update/{service}', [ServiceController::class, 'update'])->name('service.update');
     Route::get('/service/delete', [ServiceController::class, 'delete'])->name('service.delete');
 
+    // Products Route
+    Route::get('/products/all', [ProductController::class, 'index'])->name('products.all');
+    Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/product/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::post('/product/update/{product}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('/product/delete', [ProductController::class, 'delete'])->name('product.delete');
 });

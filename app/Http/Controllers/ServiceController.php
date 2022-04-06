@@ -16,7 +16,9 @@ class ServiceController extends Controller
 
         if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
-                $services->join('types', 'types.id', '=', 'services.type_id')->orderBy('types.name');
+                $services->join('types', 'types.id', '=', 'services.type_id')
+                ->select('services.*', 'types.name as type_name')
+                ->orderBy('type_name');
             } else {
                 $services->orderBy($request['sortBy']);
             }
@@ -24,7 +26,9 @@ class ServiceController extends Controller
 
         if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
-                $services->join('types', 'types.id', '=', 'services.type_id')->orderByDesc('types.name');
+                $services->join('types', 'types.id', '=', 'services.type_id')
+                ->select('services.*', 'types.name as type_name')
+                ->orderByDesc('type_name');
             } else {
                 $services->orderByDesc($request['sortByDesc']);
             }

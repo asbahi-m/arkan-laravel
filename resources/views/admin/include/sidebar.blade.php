@@ -34,6 +34,20 @@
                     @endif
                 </ul>
             </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="fa fa-cubes"></i>
+                    <span class="nav-text">{{ __('admin.products') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('products.all'))
+                        <li><a href="{{ route('products.all') }}">{{ __('admin.products_all') }}</a></li>
+                    @endif
+                    @if (Route::has('product.create'))
+                        <li><a href="{{ route('product.create') }}">{{ __('admin.product_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
         </ul>
         {{--<div class="copyright">
             <p><strong>Zenix Crypto Admin Dashboard</strong> © 2021 All Rights Reserved</p>
