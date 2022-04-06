@@ -21,6 +21,14 @@
                 </li>
             @endif
 
+            @if (Route::has('types.all'))
+                <li><a href="{{ route('types.all') }}" class="ai-icon" aria-expanded="false">
+                        <i class="fa fa-linode"></i>
+                        <span class="nav-text">{{ __('admin.types') }}</span>
+                    </a>
+                </li>
+            @endif
+
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                 <i class="flaticon-077-menu-1"></i>
                     <span class="nav-text">{{ __('admin.services') }}</span>

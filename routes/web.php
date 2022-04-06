@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
@@ -43,6 +44,12 @@ Route::middleware([
         return view('admin.user.change-password');
     })->name('user.password');
     Route::post('/user/password/update', [UserController::class, 'passwordUpdate'])->name('password.update');
+
+    // Types Route
+    Route::get('/types/all', [TypeController::class, 'index'])->name('types.all');
+    Route::post('/type/inline_store', [TypeController::class, 'inline_store'])->name('type.inline_store');
+    Route::put('/type/update', [TypeController::class, 'update'])->name('type.update');
+    Route::get('/type/delete', [TypeController::class, 'delete'])->name('type.delete');
 
     // Services Route
     Route::get('/services/all', [ServiceController::class, 'index'])->name('services.all');

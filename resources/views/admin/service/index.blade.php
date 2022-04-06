@@ -21,30 +21,30 @@
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'name' ? 'Desc' : '' }}=name">
                                     <i class="fa fa-sort{{ request('sortBy') == 'name' ? '-asc' : (request('sortByDesc') == 'name' ? '-desc' : '') }}"></i></a>
-                                <strong>Name</strong>
+                                <strong>{{ __('admin.name') }}</strong>
                             </th>
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'type' ? 'Desc' : '' }}=type">
                                     <i class="fa fa-sort{{ request('sortBy') == 'type' ? '-asc' : (request('sortByDesc') == 'type' ? '-desc' : '') }}"></i></a>
-                                <strong>Type</strong>
+                                <strong>{{ __('admin.type') }}</strong>
                             </th>
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'description' ? 'Desc' : '' }}=description">
                                     <i class="fa fa-sort{{ request('sortBy') == 'description' ? '-asc' : (request('sortByDesc') == 'description' ? '-desc' : '') }}"></i></a>
-                                <strong>Description</strong>
+                                <strong>{{ __('admin.description') }}</strong>
                             </th>
-                            <th><strong>Image</strong></th>
+                            <th><strong>{{ __('admin.image') }}</strong></th>
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'created_at' ? 'Desc' : '' }}=created_at">
                                     <i class="fa fa-sort{{ request('sortBy') == 'created_at' ? '-asc' : (request('sortByDesc') == 'created_at' ? '-desc' : '') }}"></i></a>
-                                <strong>Date</strong>
+                                <strong>{{ __('admin.date') }}</strong>
                             </th>
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'is_published' ? 'Desc' : '' }}=is_published">
                                     <i class="fa fa-sort{{ request('sortBy') == 'is_published' ? '-asc' : (request('sortByDesc') == 'is_published' ? '-desc' : '') }}"></i></a>
-                                <strong>Status</strong>
+                                <strong>{{ __('admin.status') }}</strong>
                             </th>
-                            <th>Action</th>
+                            <th>{{ __('admin.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="py-2">Showing {{ $services->count() }} of {{ $services->total() }} results</div>
+            <div class="py-2">{{ trans_choice('admin.pagination_info', $services->total(), ['items' => $services->count(), 'total' => $services->total()]) }}</div>
             <div>{{ $services->links() }}</div>
         </div>
     </div>

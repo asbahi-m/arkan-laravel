@@ -8,6 +8,7 @@ return [
     'projects' => 'Projects',
 
     // Actions
+    'action' => 'Action',
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
@@ -16,10 +17,8 @@ return [
     '' => '',
     '' => '',
 
-
-
-
     // User Page
+    'name' => 'Name',
     'profile' => 'Profile',
     'your_profile' => 'Your Profile',
     'change_pass' => 'Change Passowrd',
@@ -39,7 +38,17 @@ return [
     'choose_avatar' => 'Choose Avatar',
     'profile_update_succsess' => 'Your profile has been updated successfully',
 
-    // Services
+    // Types Page
+    'types_all' => 'All Types',
+    'type_add' => 'Add Type',
+    'type_add_new' => 'Add a new type',
+    'type_name' => 'Type Name',
+    'type_add_success' => 'The type has been created successfully',
+    'type_edit' => 'Edit Type',
+    'type_update_success' => 'The type has been Updated successfully',
+    'type_delete_success' => 'The type has been deleted successfully',
+
+    // Services Page
     'services_all' => 'All Services',
     'service_add' => 'Add Service',
     'service_add_new' => 'Add a new service',
@@ -52,7 +61,7 @@ return [
     'service_update_success' => 'The service has been Updated successfully',
     'service_delete_success' => 'The service has been deleted successfully',
 
-    // Products
+    // Products Page
     'products_all' => 'All Products',
     'product_add' => 'Add Product',
     'product_add_new' => 'Add a new product',
@@ -87,6 +96,11 @@ return [
     'confirm_delete_it' => 'Yes, delete it!',
 
     // Others
+    'description' => 'Description',
+    'type' => 'Type',
+    'image' => 'Image',
+    'date' => 'Date',
+    'status' => 'Status',
     'publish' => 'Publish',
     'published' => 'Published',
     'unpublished' => 'Unpublished',
@@ -96,6 +110,11 @@ return [
     'hello' => 'Hello',
     'search' => 'Search',
     'search_placeholder' => 'Find something here...',
+    // 'pagination_info' => '{0} There are none|{1} Showing :Items item|[2,*] Showing :Items items out of :Total in total',
+    'pagination_info' => '{0} There are none|[1,*] Showing :Items of :Total results',
+    'pagination_info2' => '{0} There are none|[1,*] Showing :Items of :Total results',
+    'no_data' => 'There is no data entered.',
+    'all' => 'All',
     '' => '',
 
 ];
