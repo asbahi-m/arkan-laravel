@@ -4,7 +4,7 @@
         <div class="main-profile">
             <img src="{{ auth()->user()->profile_photo_path ? asset(Storage::url(auth()->user()->profile_photo_path)) : asset('admin/images/user.png') }}"
                     alt="" style="width: auto">
-            <a href="javascript:void(0);"><i class="fa fa-cog" aria-hidden="true"></i></a>
+            <a href="{{ route('profile') }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
             <h5 class="mb-0 fs-20 text-black "><span class="font-w400">{{ __('admin.hello') }},</span> {{ auth()->user()->name }}</h5>
             <p class="mb-0 fs-14 font-w400">{{ auth()->user()->email }}</p>
         </div>
@@ -20,17 +20,20 @@
                     </a>
                 </li>
             @endif
-            @if (Route::has('services'))
-                <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-077-menu-1"></i>
-                        <span class="nav-text">{{ __('admin.services') }}</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="{{ route('dashboard') }}">{{ __('admin.services') }}</a></li>
-                        <li><a href="./post-details.html">{{ __('admin.service_add') }}</a></li>
-                    </ul>
-                </li>
-            @endif
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                <i class="flaticon-077-menu-1"></i>
+                    <span class="nav-text">{{ __('admin.services') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('services.all'))
+                        <li><a href="{{ route('services.all') }}">{{ __('admin.services_all') }}</a></li>
+                    @endif
+                    @if (Route::has('service.create'))
+                        <li><a href="{{ route('service.create') }}">{{ __('admin.service_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
         </ul>
         {{--<div class="copyright">
             <p><strong>Zenix Crypto Admin Dashboard</strong> © 2021 All Rights Reserved</p>

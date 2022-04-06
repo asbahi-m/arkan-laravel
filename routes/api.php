@@ -23,16 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Types API's
-Route::get('/types', [TypeController::class, 'view']);
+Route::get('/types', [TypeController::class, 'viewAPI']);
 
 // Services API's
-Route::get('/services', [ServiceController::class, 'view']);
-Route::get('/service/{id}', [ServiceController::class, 'show']);
+Route::get('/services', [ServiceController::class, 'viewAPI']);
+Route::get('/service/{id}', [ServiceController::class, 'showAPI']);
 
 // Projects API's
-Route::get('/projects', [ProjectController::class, 'view']);
-Route::get('/projects/latest', [ProjectController::class, 'latest']);
-Route::get('/project/{id}', [ProjectController::class, 'show']);
+Route::get('/projects', [ProjectController::class, 'viewAPI']);
+Route::get('/projects/latest', [ProjectController::class, 'latestAPI']);
+Route::get('/project/{id}', [ProjectController::class, 'showAPI']);
 
 // Products API's
-Route::get('/products', [ProductController::class, 'view']);
+Route::get('/products', [ProductController::class, 'viewAPI']);

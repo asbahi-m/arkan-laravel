@@ -1,6 +1,12 @@
 @extends('admin.layout')
 
 @section('content')
+    <div class="page-titles d-flex">
+        <ul class="breadcrumb ml-auto">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('admin.dashboard') }}</a></li>
+        </ul>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">{{ __('admin.change_pass') }}</h4>

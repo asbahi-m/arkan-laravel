@@ -20,6 +20,7 @@
     {{--<link href="{{ asset('admin/vendor/chartist/css/chartist.min.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     {{--<link href="{{ asset('admin/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">--}}
+    @yield('link')
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -71,5 +72,16 @@
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 	<script src="{{ asset('admin/js/deznav-init.js') }}"></script>
     @include('sweetalert::alert')
+    <script>
+        function showImage(target, $event) {
+            let showImg = document.getElementById(target);
+            var reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]);
+            reader.onloadend = function(event){
+                showImg.src = event.target.result;
+                showImg.style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
