@@ -6,6 +6,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,4 +75,12 @@ Route::middleware([
     Route::get('/project/edit/{project}', [ProjectController::class, 'edit'])->name('project.edit');
     Route::post('/project/update/{project}', [ProjectController::class, 'update'])->name('project.update');
     Route::get('/project/delete', [ProjectController::class, 'delete'])->name('project.delete');
+
+    // Pages Route
+    Route::get('/pages', [PageController::class, 'index'])->name('pages');
+    Route::get('/page/create', [PageController::class, 'create'])->name('page.create');
+    Route::post('/page/store', [PageController::class, 'store'])->name('page.store');
+    Route::get('/page/edit/{page}', [PageController::class, 'edit'])->name('page.edit');
+    Route::post('/page/update/{page}', [PageController::class, 'update'])->name('page.update');
+    Route::get('/page/delete', [PageController::class, 'delete'])->name('page.delete');
 });

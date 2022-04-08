@@ -70,6 +70,20 @@
                     @endif
                 </ul>
             </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <i class="fa fa-file"></i>
+                    <span class="nav-text">{{ __('admin.pages') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('pages'))
+                        <li><a href="{{ route('pages') }}">{{ __('admin.pages_all') }}</a></li>
+                    @endif
+                    @if (Route::has('page.create'))
+                        <li><a href="{{ route('page.create') }}">{{ __('admin.page_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
         </ul>
         {{--<div class="copyright">
             <p><strong>Zenix Crypto Admin Dashboard</strong> © 2021 All Rights Reserved</p>

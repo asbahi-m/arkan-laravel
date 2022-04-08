@@ -6,6 +6,7 @@ return [
     'services' => 'Services',
     'products' => 'Products',
     'projects' => 'Projects',
+    'pages' => 'Pages',
 
     // Actions
     'action' => 'Action',
@@ -86,7 +87,21 @@ return [
     'project_edit' => 'Edit Project',
     'project_update_success' => 'The project has been Updated successfully',
     'project_delete_success' => 'The project has been deleted successfully',
-    '' => '',
+
+    // Pages
+    'pages_all' => 'All Pages',
+    'page_add' => 'Add Page',
+    'page_add_new' => 'Add a new page',
+    'page_title' => 'Page Title',
+    'page_subtitle' => 'Page Subitle',
+    'page_desc' => 'Page Description',
+    'page_templates' => 'Page Templates',
+    'page_image' => 'Page Image',
+    'page_slug' => 'Page Slug',
+    'page_add_success' => 'The page has been created successfully',
+    'page_edit' => 'Edit Page',
+    'page_update_success' => 'The page has been Updated successfully',
+    'page_delete_success' => 'The page has been deleted successfully',
     '' => '',
     '' => '',
 
@@ -95,10 +110,25 @@ return [
     'confirm_msg' => 'You won\'t be able to revert this!',
     'confirm_delete_it' => 'Yes, delete it!',
 
+    // Templates
+    'service_order' => 'Service Order',
+    'jop_application' => 'Job Application',
+    'contact_us' => 'Contact Us',
+    '' => '',
+    '' => '',
+
     // Others
+    'title' => 'Title',
     'description' => 'Description',
+    'author' => 'Author',
     'type' => 'Type',
+    'no_type' => 'No type',
+    'templates' => 'Templates',
+    'template' => 'Template',
+    'no_template' => 'No template',
+    'marker' => 'Marker',
     'image' => 'Image',
+    'view_image' => 'View Image',
     'date' => 'Date',
     'status' => 'Status',
     'publish' => 'Publish',
@@ -106,7 +136,7 @@ return [
     'unpublished' => 'Unpublished',
     'chioce_type' => 'Chioce one type',
     'choose_image' => 'Choose Image',
-    'no_type' => 'No type',
+
     'hello' => 'Hello',
     'search' => 'Search',
     'search_placeholder' => 'Find something here...',
@@ -115,6 +145,6 @@ return [
     'pagination_info2' => '{0} There are none|[1,*] Showing :Items of :Total results',
     'no_data' => 'There is no data entered.',
     'all' => 'All',
-    '' => '',
+    'blank' => 'Blank',
 
 ];
