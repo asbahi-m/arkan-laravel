@@ -72,6 +72,20 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <i class="flaticon-061-puzzle"></i>
+                    <span class="nav-text">{{ __('admin.features') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('features.all'))
+                        <li><a href="{{ route('features.all') }}">{{ __('admin.features_all') }}</a></li>
+                    @endif
+                    @if (Route::has('feature.create'))
+                        <li><a href="{{ route('feature.create') }}">{{ __('admin.feature_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
             <i class="fa fa-file"></i>
                     <span class="nav-text">{{ __('admin.pages') }}</span>
                 </a>

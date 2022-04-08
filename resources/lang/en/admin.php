@@ -6,6 +6,7 @@ return [
     'services' => 'Services',
     'products' => 'Products',
     'projects' => 'Projects',
+    'features' => 'Features',
     'pages' => 'Pages',
 
     // Actions
@@ -87,6 +88,18 @@ return [
     'project_edit' => 'Edit Project',
     'project_update_success' => 'The project has been Updated successfully',
     'project_delete_success' => 'The project has been deleted successfully',
+
+    // Features Page
+    'features_all' => 'All Features',
+    'feature_add' => 'Add Feature',
+    'feature_add_new' => 'Add a new feature',
+    'feature_name' => 'Feature Name',
+    'feature_desc' => 'Feature Description',
+    'feature_image' => 'Feature Image',
+    'feature_add_success' => 'The feature has been created successfully',
+    'feature_edit' => 'Edit Feature',
+    'feature_update_success' => 'The feature has been Updated successfully',
+    'feature_delete_success' => 'The feature has been deleted successfully',
 
     // Pages
     'pages_all' => 'All Pages',
