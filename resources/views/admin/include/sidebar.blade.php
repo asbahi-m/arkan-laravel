@@ -86,6 +86,20 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <i class="fa fa-handshake-o"></i>
+                    <span class="nav-text">{{ __('admin.clients') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('clients.all'))
+                        <li><a href="{{ route('clients.all') }}">{{ __('admin.clients_all') }}</a></li>
+                    @endif
+                    @if (Route::has('client.create'))
+                        <li><a href="{{ route('client.create') }}">{{ __('admin.client_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
             <i class="fa fa-file"></i>
                     <span class="nav-text">{{ __('admin.pages') }}</span>
                 </a>

@@ -7,6 +7,7 @@ return [
     'products' => 'Products',
     'projects' => 'Projects',
     'features' => 'Features',
+    'clients' => 'Clients',
     'pages' => 'Pages',
 
     // Actions
@@ -100,6 +101,18 @@ return [
     'feature_edit' => 'Edit Feature',
     'feature_update_success' => 'The feature has been Updated successfully',
     'feature_delete_success' => 'The feature has been deleted successfully',
+
+    // Clients Page
+    'clients_all' => 'All Clients',
+    'client_add' => 'Add Client',
+    'client_add_new' => 'Add a new client',
+    'client_name' => 'Client Name',
+    'client_url' => 'Client URL Address',
+    'client_image' => 'Client Image',
+    'client_add_success' => 'The client has been created successfully',
+    'client_edit' => 'Edit Client',
+    'client_update_success' => 'The client has been Updated successfully',
+    'client_delete_success' => 'The client has been deleted successfully',
 
     // Pages
     'pages_all' => 'All Pages',

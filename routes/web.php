@@ -7,6 +7,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PageController;
 
 /*
@@ -84,6 +85,14 @@ Route::middleware([
     Route::get('/feature/edit/{feature}', [FeatureController::class, 'edit'])->name('feature.edit');
     Route::post('/feature/update/{feature}', [FeatureController::class, 'update'])->name('feature.update');
     Route::get('/feature/delete', [FeatureController::class, 'delete'])->name('feature.delete');
+
+    // Clients Route
+    Route::get('/clients/all', [ClientController::class, 'index'])->name('clients.all');
+    Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
+    Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
+    Route::get('/client/edit/{client}', [ClientController::class, 'edit'])->name('client.edit');
+    Route::post('/client/update/{client}', [ClientController::class, 'update'])->name('client.update');
+    Route::get('/client/delete', [ClientController::class, 'delete'])->name('client.delete');
 
     // Pages Route
     Route::get('/pages', [PageController::class, 'index'])->name('pages');
