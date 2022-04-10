@@ -9,6 +9,7 @@ return [
     'features' => 'Features',
     'clients' => 'Clients',
     'pages' => 'Pages',
+    'orders' => 'Orders',
 
     // Actions
     'action' => 'Action',
@@ -22,6 +23,8 @@ return [
 
     // User Page
     'name' => 'Name',
+    'email' => 'Email',
+    'phone' => 'Phone',
     'profile' => 'Profile',
     'your_profile' => 'Your Profile',
     'change_pass' => 'Change Passowrd',
@@ -52,6 +55,7 @@ return [
     'type_delete_success' => 'The type has been deleted successfully',
 
     // Services Page
+    'service' => 'Service',
     'services_all' => 'All Services',
     'service_add' => 'Add Service',
     'service_add_new' => 'Add a new service',
@@ -131,6 +135,27 @@ return [
     '' => '',
     '' => '',
 
+
+    // Orders Page
+    'order' => 'Order',
+    'order_accept' => 'Order Accept',
+    'order_reject' => 'Order Reject',
+    'accept' => 'Accept',
+    'reject' => 'Reject',
+    'accepted' => 'Accepted',
+    'rejected' => 'Rejected',
+    'pending' => 'Pending',
+    'reply_msg' => 'Reply Message',
+    'reply' => 'Reply',
+    'response_by' => 'Response By',
+    'response_date' => 'Response Date',
+    'order_accept_reply_msg' => 'Your order has been accepted and we will contact you via email for more details.',
+    'order_reject_reply_msg' => 'Sorry, your order was not accepted.',
+    'order_service_success' => 'The service order has been successfully',
+    'order_accept_success' => 'The order has been successfully accepted',
+    'order_reject_success' => 'The order has been rejected',
+    'order_delete_success' => 'The order has been deleted',
+
     // Messages
     'confirm_sure' => 'Are you sure?',
     'confirm_msg' => 'You won\'t be able to revert this!',
@@ -144,6 +169,9 @@ return [
     '' => '',
 
     // Others
+    '' => '',
+    '' => '',
+    '' => '',
     'title' => 'Title',
     'description' => 'Description',
     'author' => 'Author',
@@ -172,5 +200,13 @@ return [
     'no_data' => 'There is no data entered.',
     'all' => 'All',
     'blank' => 'Blank',
+
+    // Email Message
+    'hello' => 'Hello',
+    'welcome_back' => 'welcome back!',
+    'received_order_msg' => 'We have received your message regarding your service order',
+    'review_order_msg' => 'We will review your order, and get back to you.',
+    'yours_sincerly' => 'yours sincerly',
+    '' => '',
 
 ];

@@ -22,6 +22,11 @@
     {{--<link href="{{ asset('admin/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">--}}
     @yield('link')
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <style>
+        table thead th {
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader -->

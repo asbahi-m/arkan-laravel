@@ -230,8 +230,10 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
+        'Rule' => Illuminate\Validation\Rule::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Carbon' => Carbon\Carbon::class,
+        'Mail' => Illuminate\Support\Facades\Mail::class,
 
     ],
 

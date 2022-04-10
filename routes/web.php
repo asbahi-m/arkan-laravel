@@ -9,6 +9,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,4 +102,15 @@ Route::middleware([
     Route::get('/page/edit/{page}', [PageController::class, 'edit'])->name('page.edit');
     Route::post('/page/update/{page}', [PageController::class, 'update'])->name('page.update');
     Route::get('/page/delete', [PageController::class, 'delete'])->name('page.delete');
+
+    // Order Route
+    Route::controller(OrderController::class)->name('order.')->group(function () {
+        Route::get('order', 'index')->name('index');
+        // Route::get('order/create', 'create')->name('create');
+        Route::post('order/store', 'store')->name('store');
+        Route::get('order/{order}', 'show')->name('show');
+        Route::delete('order/destroy', 'destroy')->name('destroy');
+        Route::put('order/accept', 'accept')->name('accept');
+        Route::put('order/reject', 'reject')->name('reject');
+    });
 });

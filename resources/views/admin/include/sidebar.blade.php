@@ -30,7 +30,7 @@
             @endif
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                <i class="flaticon-077-menu-1"></i>
+                    <i class="flaticon-077-menu-1"></i>
                     <span class="nav-text">{{ __('admin.services') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -44,7 +44,7 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                <i class="fa fa-cubes"></i>
+                    <i class="fa fa-cubes"></i>
                     <span class="nav-text">{{ __('admin.products') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -58,7 +58,7 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-            <i class="fa fa-clone"></i>
+                    <i class="fa fa-clone"></i>
                     <span class="nav-text">{{ __('admin.projects') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -72,7 +72,7 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-            <i class="flaticon-061-puzzle"></i>
+                    <i class="flaticon-061-puzzle"></i>
                     <span class="nav-text">{{ __('admin.features') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -86,7 +86,7 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-            <i class="fa fa-handshake-o"></i>
+                    <i class="fa fa-handshake-o"></i>
                     <span class="nav-text">{{ __('admin.clients') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -100,7 +100,7 @@
             </li>
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-            <i class="fa fa-file"></i>
+                    <i class="fa fa-file"></i>
                     <span class="nav-text">{{ __('admin.pages') }}</span>
                 </a>
                 <ul aria-expanded="false">
@@ -112,6 +112,15 @@
                     @endif
                 </ul>
             </li>
+
+            @if (Route::has('order.index'))
+                <li><a href="{{ route('order.index') }}" class="ai-icon d-flex" aria-expanded="false">
+                        <i class="fa fa-cart-plus"></i>
+                        <span class="nav-text mr-auto">{{ __('admin.orders') }}</span>
+                        <span class="badge light badge-info">{{ App\Models\Order::where('status', 'pending')->count() }}</span>
+                    </a>
+                </li>
+            @endif
         </ul>
         {{--<div class="copyright">
             <p><strong>Zenix Crypto Admin Dashboard</strong> © 2021 All Rights Reserved</p>
