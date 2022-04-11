@@ -1,6 +1,7 @@
 @php
     $orders_count = App\Models\Order::where('status', 'pending')->count();
     $careers_count = App\Models\Career::where('status', 'pending')->count();
+    $msgs_count = App\Models\ContactUs::where('status', 'unread')->count();
 @endphp
 <div class="deznav">
     <div class="deznav-scroll">
@@ -131,6 +132,15 @@
                         <i class="fa fa-id-badge"></i>
                         <span class="nav-text mr-auto">{{ __('admin.careers') }}</span>
                         <span class="badge light badge-info">{{ $careers_count }}</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (Route::has('contact.index'))
+                <li><a href="{{ route('contact.index') }}" class="ai-icon d-flex" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="nav-text mr-auto">{{ __('admin.messages') }}</span>
+                        <span class="badge light badge-info">{{ $msgs_count }}</span>
                     </a>
                 </li>
             @endif

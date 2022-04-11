@@ -11,6 +11,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CareerController;
+use App\Http\Controllers\ContactUsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,5 +125,15 @@ Route::middleware([
         Route::delete('/destroy', 'destroy')->name('destroy');
         Route::put('/accept', 'accept')->name('accept');
         Route::put('/reject', 'reject')->name('reject');
+    });
+
+    // Contact Us Routes
+    Route::controller(ContactUsController::class)->prefix('contact')->name('contact.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{contact}', 'show')->name('show');
+        Route::delete('/destroy', 'destroy')->name('destroy');
+        Route::put('/reply', 'reply')->name('reply');
     });
 });

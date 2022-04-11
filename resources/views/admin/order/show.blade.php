@@ -8,7 +8,7 @@
         </ul>
     </div>
 
-    <!-- Edit Modal -->
+    <!-- Order Modal -->
     <div class="modal fade" id="order-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -41,10 +41,13 @@
             </div>
         </div>
     </div>
+    @error('reply_msg')
+        <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+    @enderror
 
     <div class="card">
         <div class="card-header flex-column flex-sm-row">
-            <h4>Order No. {{ $order->id }}</h4>
+            <h4>{{ __('admin.order_number') }} {{ $order->id }}</h4>
             <span>{{ $order->created_at }}</span>
             <strong>{{ __('admin.status') }}:
                 <span class="badge badge-{{

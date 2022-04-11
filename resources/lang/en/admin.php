@@ -11,6 +11,7 @@ return [
     'pages' => 'Pages',
     'orders' => 'Orders',
     'careers' => 'Careers',
+    'messages' => 'Messages',
 
     // Actions
     'action' => 'Action',
@@ -145,6 +146,7 @@ return [
     'accepted' => 'Accepted',
     'rejected' => 'Rejected',
     'pending' => 'Pending',
+    'order_number' => 'Order No.',
     'reply_msg' => 'Reply Message',
     'reply' => 'Reply',
     'response_by' => 'Response By',
@@ -166,6 +168,7 @@ return [
     'job_reject' => 'Job application rejected',
     'download' => 'Download',
     'cv' => 'CV',
+    'career_number' => 'Career No.',
     'job_accept_reply_msg' => 'You have been accepted with us, and we will contact you via email for more details.',
     'job_reject_reply_msg' => 'Sorry, you were not accepted.',
     'job_apply_success' => 'You have successfully applied for the job',
@@ -175,7 +178,17 @@ return [
     'received_job_msg' => 'We have received your job application.',
     'review_job_msg' => 'We will review your information and get back to you shortly.',
 
-    // Messages
+    // Contact Us
+    'contact_us' => 'Contact Us',
+    'unread' => 'Unread',
+    'read' => 'Read',
+    'message_number' => 'Message No.',
+    'message_send_success' => 'Your message has been sent successfully',
+    'message_delete_success' => 'Message has been deleted',
+    'message_reply_success' => 'Message has been replied',
+    'received_contact_msg' => 'Thank you for contacting us, we will respond to you as soon as possible.',
+
+    // Configm Message
     'confirm_sure' => 'Are you sure?',
     'confirm_msg' => 'You won\'t be able to revert this!',
     'confirm_delete_it' => 'Yes, delete it!',
