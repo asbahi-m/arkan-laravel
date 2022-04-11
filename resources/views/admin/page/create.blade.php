@@ -88,8 +88,8 @@
                         <select class="multi-select" name="templates[]" multiple="multiple">
                             <option {{ old('templates') && in_array('service_order', old('templates')) ? 'selected' : '' }} value="service_order"
                                 >{{ __('admin.service_order') }}</option>
-                            <option {{ old('templates') && in_array('jop_application', old('templates')) ? 'selected' : '' }} value="jop_application"
-                                >{{ __('admin.jop_application') }}</option>
+                            <option {{ old('templates') && in_array('job_application', old('templates')) ? 'selected' : '' }} value="job_application"
+                                >{{ __('admin.job_application') }}</option>
                             <option {{ old('templates') && in_array('contact_us', old('templates')) ? 'selected' : '' }} value="contact_us"
                                 >{{ __('admin.contact_us') }}</option>
                         </select>

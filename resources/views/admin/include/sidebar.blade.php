@@ -1,3 +1,7 @@
+@php
+    $orders_count = App\Models\Order::where('status', 'pending')->count();
+    $careers_count = App\Models\Career::where('status', 'pending')->count();
+@endphp
 <div class="deznav">
     <div class="deznav-scroll">
         <!-- User Profile -->
@@ -117,7 +121,16 @@
                 <li><a href="{{ route('order.index') }}" class="ai-icon d-flex" aria-expanded="false">
                         <i class="fa fa-cart-plus"></i>
                         <span class="nav-text mr-auto">{{ __('admin.orders') }}</span>
-                        <span class="badge light badge-info">{{ App\Models\Order::where('status', 'pending')->count() }}</span>
+                        <span class="badge light badge-info">{{ $orders_count }}</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (Route::has('career.index'))
+                <li><a href="{{ route('career.index') }}" class="ai-icon d-flex" aria-expanded="false">
+                        <i class="fa fa-id-badge"></i>
+                        <span class="nav-text mr-auto">{{ __('admin.careers') }}</span>
+                        <span class="badge light badge-info">{{ $careers_count }}</span>
                     </a>
                 </li>
             @endif

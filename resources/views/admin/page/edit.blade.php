@@ -88,8 +88,8 @@
                         <select class="multi-select" name="templates[]" multiple="multiple">
                             <option {{ $page->templates && in_array('service_order', json_decode($page->templates)) ? 'selected' : '' }} value="service_order"
                                 >{{ __('admin.service_order') }}</option>
-                            <option {{ $page->templates && in_array('jop_application', json_decode($page->templates)) ? 'selected' : '' }} value="jop_application"
-                                >{{ __('admin.jop_application') }}</option>
+                            <option {{ $page->templates && in_array('job_application', json_decode($page->templates)) ? 'selected' : '' }} value="job_application"
+                                >{{ __('admin.job_application') }}</option>
                             <option {{ $page->templates && in_array('contact_us', json_decode($page->templates)) ? 'selected' : '' }} value="contact_us"
                                 >{{ __('admin.contact_us') }}</option>
                         </select>

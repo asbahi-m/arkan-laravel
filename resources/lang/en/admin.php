@@ -10,6 +10,7 @@ return [
     'clients' => 'Clients',
     'pages' => 'Pages',
     'orders' => 'Orders',
+    'careers' => 'Careers',
 
     // Actions
     'action' => 'Action',
@@ -135,7 +136,6 @@ return [
     '' => '',
     '' => '',
 
-
     // Orders Page
     'order' => 'Order',
     'order_accept' => 'Order Accept',
@@ -155,6 +155,25 @@ return [
     'order_accept_success' => 'The order has been successfully accepted',
     'order_reject_success' => 'The order has been rejected',
     'order_delete_success' => 'The order has been deleted',
+    'received_order_msg' => 'We have received your message regarding your service order',
+    'review_order_msg' => 'We will review your order, and get back to you.',
+
+
+    // Careers Page
+    'career' => 'Career',
+    'job' => 'Job',
+    'job_accept' => 'Job application accepted',
+    'job_reject' => 'Job application rejected',
+    'download' => 'Download',
+    'cv' => 'CV',
+    'job_accept_reply_msg' => 'You have been accepted with us, and we will contact you via email for more details.',
+    'job_reject_reply_msg' => 'Sorry, you were not accepted.',
+    'job_apply_success' => 'You have successfully applied for the job',
+    'job_accept_success' => 'Job Apply has been successfully accepted',
+    'job_reject_success' => 'Job Apply has been rejected',
+    'job_delete_success' => 'Job Apply has been deleted',
+    'received_job_msg' => 'We have received your job application.',
+    'review_job_msg' => 'We will review your information and get back to you shortly.',
 
     // Messages
     'confirm_sure' => 'Are you sure?',
@@ -163,7 +182,7 @@ return [
 
     // Templates
     'service_order' => 'Service Order',
-    'jop_application' => 'Job Application',
+    'job_application' => 'Job Application',
     'contact_us' => 'Contact Us',
     '' => '',
     '' => '',
@@ -202,10 +221,9 @@ return [
     'blank' => 'Blank',
 
     // Email Message
+    'message' => 'Message',
     'hello' => 'Hello',
     'welcome_back' => 'welcome back!',
-    'received_order_msg' => 'We have received your message regarding your service order',
-    'review_order_msg' => 'We will review your order, and get back to you.',
     'yours_sincerly' => 'yours sincerly',
     '' => '',
 

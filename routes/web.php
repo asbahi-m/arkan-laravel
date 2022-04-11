@@ -10,6 +10,7 @@ use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CareerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,14 +104,25 @@ Route::middleware([
     Route::post('/page/update/{page}', [PageController::class, 'update'])->name('page.update');
     Route::get('/page/delete', [PageController::class, 'delete'])->name('page.delete');
 
-    // Order Route
-    Route::controller(OrderController::class)->name('order.')->group(function () {
-        Route::get('order', 'index')->name('index');
-        // Route::get('order/create', 'create')->name('create');
-        Route::post('order/store', 'store')->name('store');
-        Route::get('order/{order}', 'show')->name('show');
-        Route::delete('order/destroy', 'destroy')->name('destroy');
-        Route::put('order/accept', 'accept')->name('accept');
-        Route::put('order/reject', 'reject')->name('reject');
+    // Order Routes
+    Route::controller(OrderController::class)->prefix('order')->name('order.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{order}', 'show')->name('show');
+        Route::delete('/destroy', 'destroy')->name('destroy');
+        Route::put('/accept', 'accept')->name('accept');
+        Route::put('/reject', 'reject')->name('reject');
+    });
+
+    // Career Routes
+    Route::controller(CareerController::class)->prefix('career')->name('career.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{career}', 'show')->name('show');
+        Route::delete('/destroy', 'destroy')->name('destroy');
+        Route::put('/accept', 'accept')->name('accept');
+        Route::put('/reject', 'reject')->name('reject');
     });
 });

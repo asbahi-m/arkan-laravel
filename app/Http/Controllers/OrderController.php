@@ -12,6 +12,11 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     public function index(Request $request) {
+        $orders_count = Order::count();
+        $pending_count = Order::where('status', 'pending')->count();
+        $accepted_count = Order::where('status', 'accepted')->count();
+        $rejected_count = Order::where('status', 'rejected')->count();
+
         $orders = Order::query();
 
         $orders->when($request['status'], function ($q) use ($request) {
@@ -48,7 +53,7 @@ class OrderController extends Controller
 
         $orders = $orders->paginate(20)->withQueryString();
 
-        return view('admin.order.index', compact('orders'));
+        return view('admin.order.index', compact('orders', 'orders_count', 'pending_count', 'accepted_count', 'rejected_count'));
     }
 
     public function create() {

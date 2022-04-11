@@ -8,13 +8,12 @@
     </div>
 
     <!-- Edit Modal -->
-    <div class="modal fade" id="order-modal">
+    <div class="modal fade" id="career-modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('admin.order_accept') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                    </button>
+                    <h5 class="modal-title">{{ __('admin.career_accept') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>
                 <div class="basic-form">
                     <form method="POST" action="">
@@ -25,10 +24,9 @@
                                 <label class="text-label" for="reply-msg">{{ __('admin.reply_msg') }}:</label>
                                 <textarea class="form-control" name="reply_msg" id="reply-msg" rows="2"
                                             required>{{ old('reply_msg') }}</textarea>
-                                <input type="hidden" name="order_id" value="">
-                                <input type="hidden" name="order_name" value="">
-                                <input type="hidden" name="order_email" value="">
-                                <input type="hidden" name="order_service" value="">
+                                <input type="hidden" name="career_id" value="">
+                                <input type="hidden" name="career_name" value="">
+                                <input type="hidden" name="career_email" value="">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -46,21 +44,21 @@
 
     <div class="card">
         <div class="card-header flex-column flex-sm-row">
-            <h4 class="card-title">{{ __('admin.orders') }}</h4>
+            <h4 class="card-title">{{ __('admin.careers') }}</h4>
             <div class="filter d-flex flex-wrap">
-                <a href="{{ route('order.index') }}" class="btn {{!request('status') ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
+                <a href="{{ route('career.index') }}" class="btn {{!request('status') ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
                     <span>{{ __('admin.all') }}</span>
-                    <span class="badge badge-light">{{ $orders_count }}</span>
+                    <span class="badge badge-light">{{ $careers_count }}</span>
                 </a>
-                <a href="{{ route('order.index', ['status' => 'pending']) }}" class="btn {{request('status') == 'pending' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
+                <a href="{{ route('career.index', ['status' => 'pending']) }}" class="btn {{request('status') == 'pending' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
                     <span>{{ __('admin.pending') }}</span>
                     <span class="badge badge-light">{{ $pending_count }}</span>
                 </a>
-                <a href="{{ route('order.index', ['status' => 'accepted']) }}" class="btn {{request('status') == 'accepted' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
+                <a href="{{ route('career.index', ['status' => 'accepted']) }}" class="btn {{request('status') == 'accepted' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
                     <span>{{ __('admin.accepted') }}</span>
                     <span class="badge badge-success">{{ $accepted_count }}</span>
                 </a>
-                <a href="{{ route('order.index', ['status' => 'rejected']) }}" class="btn {{request('status') == 'rejected' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
+                <a href="{{ route('career.index', ['status' => 'rejected']) }}" class="btn {{request('status') == 'rejected' ? 'btn-primary' : 'btn-info'}} btn-xs m-1">
                     <span>{{ __('admin.rejected') }}</span>
                     <span class="badge badge-warning">{{ $rejected_count }}</span>
                 </a>
@@ -73,37 +71,33 @@
                         <tr>
                             <th>#</th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'name' ? 'sortByDesc' : 'sortBy') => 'name'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'name' ? 'sortByDesc' : 'sortBy') => 'name'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'name' ? '-asc' : (request('sortByDesc') == 'name' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.name') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'email' ? 'sortByDesc' : 'sortBy') => 'email'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'email' ? 'sortByDesc' : 'sortBy') => 'email'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'email' ? '-asc' : (request('sortByDesc') == 'email' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.email') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'phone' ? 'sortByDesc' : 'sortBy') => 'phone'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'phone' ? 'sortByDesc' : 'sortBy') => 'phone'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'phone' ? '-asc' : (request('sortByDesc') == 'phone' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.phone') }}</strong>
                             </th>
+                            <th><strong>{{ __('admin.cv') }}</strong></th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'service' ? 'sortByDesc' : 'sortBy') => 'service'])) }}">
-                                    <i class="fa fa-sort{{ request('sortBy') == 'service' ? '-asc' : (request('sortByDesc') == 'service' ? '-desc' : '') }}"></i></a>
-                                <strong>{{ __('admin.service') }}</strong>
-                            </th>
-                            <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'created_at' ? 'sortByDesc' : 'sortBy') => 'created_at'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'created_at' ? 'sortByDesc' : 'sortBy') => 'created_at'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'created_at' ? '-asc' : (request('sortByDesc') == 'created_at' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.date') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'status' ? 'sortByDesc' : 'sortBy') => 'status'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'status' ? 'sortByDesc' : 'sortBy') => 'status'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'status' ? '-asc' : (request('sortByDesc') == 'status' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.status') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="{{ route('order.index', array_merge(request()->only(['status']), [(request('sortBy') == 'response_by' ? 'sortByDesc' : 'sortBy') => 'response_by'])) }}">
+                                <a class="text-white" href="{{ route('career.index', array_merge(request()->only(['status']), [(request('sortBy') == 'response_by' ? 'sortByDesc' : 'sortBy') => 'response_by'])) }}">
                                     <i class="fa fa-sort{{ request('sortBy') == 'response_by' ? '-asc' : (request('sortByDesc') == 'response_by' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.response_by') }}</strong>
                             </th>
@@ -111,49 +105,47 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders as $key => $order)
+                        @foreach ($careers as $key => $career)
                             <tr>
-                                <td><small>{{ $orders->firstItem() + $key }}</small></td>
-                                <td><small><strong>{{ $order->name }}</strong></small></td>
-                                <td><small>{{ $order->email }}</small></td>
-                                <td><small>{{ $order->phone }}</small></td>
-                                <td><small>{{ $order->service->name }}</small></td>
-                                <td><small>{{ Carbon::create($order->created_at)->locale('en')->isoFormat('ll') }}</small></td>
+                                <td><small>{{ $careers->firstItem() + $key }}</small></td>
+                                <td><small><strong>{{ $career->name }}</strong></small></td>
+                                <td><small>{{ $career->email }}</small></td>
+                                <td><small>{{ $career->phone }}</small></td>
+                                <td><a href="{{ asset(Storage::url($career->attachment)) }}" class="btn btn-info btn-xs">{{ __('admin.download') }}</a></td>
+                                <td><small>{{ Carbon::create($career->created_at)->locale('en')->isoFormat('ll') }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
-                                        @if ($order->status == 'pending')
+                                        @if ($career->status == 'pending')
                                             <i class="fa fa-circle text-light mr-1"></i> <span>{{ __('admin.pending') }}</span>
-                                        @elseif ($order->status == 'accepted')
+                                        @elseif ($career->status == 'accepted')
                                             <i class="fa fa-circle text-success mr-1"></i> <span>{{ __('admin.accepted') }}</span>
-                                        @elseif ($order->status == 'rejected')
+                                        @elseif ($career->status == 'rejected')
                                             <i class="fa fa-circle text-warning mr-1"></i> <span>{{ __('admin.rejected') }}</span>
                                         @endif
                                     </small>
                                 </td>
-                                <td><small>{{ $order->response_by ? App\Models\User::find($order->response_by)->name : '' }}</small></td>
+                                <td><small>{{ $career->response_by ? App\Models\User::find($career->response_by)->name : '' }}</small></td>
                                 <td>
                                     <div class="d-flex">
-                                        @if ($order->status == 'pending')
+                                        @if ($career->status == 'pending')
                                             <button class="btn btn-success shadow btn-xs sharp mr-1"
-                                                    data-toggle="modal" data-target="#order-modal"
-                                                    data-id="{{ $order->id }}"
-                                                    data-name="{{ $order->name }}"
-                                                    data-email="{{ $order->email }}"
-                                                    data-service="{{ $order->service->name }}"
-                                                    data-route="{{ route('order.accept') }}">
+                                                    data-toggle="modal" data-target="#career-modal"
+                                                    data-id="{{ $career->id }}"
+                                                    data-name="{{ $career->name }}"
+                                                    data-email="{{ $career->email }}"
+                                                    data-route="{{ route('career.accept') }}">
                                                 <i class="fa fa-check"></i></button>
                                             <button class="btn btn-warning shadow btn-xs sharp mr-1"
-                                                    data-toggle="modal" data-target="#order-modal"
-                                                    data-id="{{ $order->id }}"
-                                                    data-name="{{ $order->name }}"
-                                                    data-email="{{ $order->email }}"
-                                                    data-service="{{ $order->service->name }}"
-                                                    data-route="{{ route('order.reject') }}">
+                                                    data-toggle="modal" data-target="#career-modal"
+                                                    data-id="{{ $career->id }}"
+                                                    data-name="{{ $career->name }}"
+                                                    data-email="{{ $career->email }}"
+                                                    data-route="{{ route('career.reject') }}">
                                                 <i class="fa fa-times"></i></button>
                                         @endif
-                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick="confirmDelete({{ $order->id }})">
+                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick="confirmDelete({{ $career->id }})">
                                             <i class="fa fa-trash"></i></button>
-                                        <a href="{{ route('order.show', $order) }}" class="btn btn-dark shadow btn-xs sharp">
+                                        <a href="{{ route('career.show', $career) }}" class="btn btn-dark shadow btn-xs sharp">
                                             <i class="fa fa-eye"></i></a>
                                     </div>
                                 </td>
@@ -162,11 +154,11 @@
                     </tbody>
                 </table>
             </div>
-            <div class="py-2">{{ trans_choice('admin.pagination_info', $orders->total(), ['items' => $orders->count(), 'total' => $orders->total()]) }}</div>
-            <div>{{ $orders->links() }}</div>
+            <div class="py-2">{{ trans_choice('admin.pagination_info', $careers->total(), ['items' => $careers->count(), 'total' => $careers->total()]) }}</div>
+            <div>{{ $careers->links() }}</div>
         </div>
     </div>
-    <form method="POST" action="{{ route('order.destroy') }}" id="form-delete" class="d-none">
+    <form method="POST" action="{{ route('career.destroy') }}" id="form-delete" class="d-none">
         @csrf
         @method('DELETE')
         <input type="hidden" name="delete" value="">
@@ -176,26 +168,25 @@
 @section('script')
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
     <script>
-        // Modal Order Accept
-        $("#order-modal").on("show.bs.modal", function (event) {
+        // Modal Career Accept
+        $("#career-modal").on("show.bs.modal", function (event) {
             let btnEdit = event.relatedTarget;
             $(this).find("form").attr("action", $(btnEdit).data("route"));
-            $(this).find("[name=order_id]").val($(btnEdit).data("id"));
-            $(this).find("[name=order_name]").val($(btnEdit).data("name"));
-            $(this).find("[name=order_email]").val($(btnEdit).data("email"));
-            $(this).find("[name=order_service]").val($(btnEdit).data("service"));
+            $(this).find("[name=career_id]").val($(btnEdit).data("id"));
+            $(this).find("[name=career_name]").val($(btnEdit).data("name"));
+            $(this).find("[name=career_email]").val($(btnEdit).data("email"));
             if ($(btnEdit).hasClass("btn-success")) {
-                $(this).find(".modal-title").text("{{ __('admin.order_accept') }}");
-                $(this).find("[name=reply_msg]").val("{{ __('admin.order_accept_reply_msg') }}");
+                $(this).find(".modal-title").text("{{ __('admin.job_accept') }}");
+                $(this).find("[name=reply_msg]").val("{{ __('admin.job_accept_reply_msg') }}");
                 $(this).find("[type=submit]").text("{{ __('admin.accept') }}").addClass("btn-success").removeClass("btn-warning");
             } else {
-                $(this).find(".modal-title").text("{{ __('admin.order_reject') }}");
-                $(this).find("[name=reply_msg]").val("{{ __('admin.order_reject_reply_msg') }}");
+                $(this).find(".modal-title").text("{{ __('admin.job_reject') }}");
+                $(this).find("[name=reply_msg]").val("{{ __('admin.job_reject_reply_msg') }}");
                 $(this).find("[type=submit]").text("{{ __('admin.reject') }}").addClass("btn-warning").removeClass("btn-success");
             }
         })
-        $("#order-modal").on("hidden.bs.modal", function () {
-            $(this).find("[name^=order]").val("");
+        $("#career-modal").on("hidden.bs.modal", function () {
+            $(this).find("[name^=career]").val("");
             $(this).find("[name=reply_msg]").val("");
         })
 
