@@ -14,6 +14,7 @@
         <div class="card-body">
             <div class="basic-form">
                 <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+                    @method('PUT')
                     @csrf
                     <!-- Username -->
                     <div class="form-group">

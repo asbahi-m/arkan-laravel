@@ -76,7 +76,7 @@ class ServiceController extends Controller
             'image' => isset($request['image']) ? $image_path : null,
         ]);
 
-        return redirect()->route('services.all')->with('success', __('admin.service_add_success'));
+        return redirect()->route('service.index')->with('success', __('admin.service_add_success'));
     }
 
     public function edit(Service $service) {
@@ -119,11 +119,11 @@ class ServiceController extends Controller
             'image' => isset($request['image']) ? $image_path : $service->image,
         ]);
 
-        return redirect()->route('services.all')->with('success', __('admin.service_update_success'));
+        return redirect()->route('service.index')->with('success', __('admin.service_update_success'));
 
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $service = Service::findOrFail($request['delete']);
 
         // Delete Service Image

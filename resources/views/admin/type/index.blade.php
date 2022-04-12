@@ -134,7 +134,8 @@
                     <div class="py-2">{{ trans_choice('admin.pagination_info2', count($types), ['items' => count($types), 'total' => count($types)]) }}</div>
                 </div>
             </div>
-            <form methods="GET" action="{{ route('type.delete') }}" id="form-delete" class="d-none">
+            <form method="POST" action="{{ route('type.delete') }}" id="form-delete" class="d-none">
+                @csrf
                 @method('DELETE')
                 <input type="hidden" name="delete" value="">
             </form>

@@ -57,7 +57,7 @@ class TypeController extends Controller
     }
 
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $type = Type::findOrFail($request['delete'])->delete();
 
         return back()->with('success', __('admin.type_delete_success'));

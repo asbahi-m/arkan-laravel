@@ -13,7 +13,8 @@
         </div>
         <div class="card-body">
             <div class="basic-form">
-                <form class="form-valide-with-icon" action="{{ route('password.update') }}" method="post">
+                <form class="form-valide-with-icon" action="{{ route('password.update') }}" method="POST">
+                    @method('PUT')
                     @csrf
                     <!-- Current Passowrd -->
                     <div class="form-group">

@@ -26,8 +26,8 @@
                 </li>
             @endif
 
-            @if (Route::has('types.all'))
-                <li><a href="{{ route('types.all') }}" class="ai-icon" aria-expanded="false">
+            @if (Route::has('type.index'))
+                <li><a href="{{ route('type.index') }}" class="ai-icon" aria-expanded="false">
                         <i class="fa fa-linode"></i>
                         <span class="nav-text">{{ __('admin.types') }}</span>
                     </a>
@@ -39,8 +39,8 @@
                     <span class="nav-text">{{ __('admin.services') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('services.all'))
-                        <li><a href="{{ route('services.all') }}">{{ __('admin.services_all') }}</a></li>
+                    @if (Route::has('service.index'))
+                        <li><a href="{{ route('service.index') }}">{{ __('admin.services_all') }}</a></li>
                     @endif
                     @if (Route::has('service.create'))
                         <li><a href="{{ route('service.create') }}">{{ __('admin.service_add') }}</a></li>
@@ -53,8 +53,8 @@
                     <span class="nav-text">{{ __('admin.products') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('products.all'))
-                        <li><a href="{{ route('products.all') }}">{{ __('admin.products_all') }}</a></li>
+                    @if (Route::has('product.index'))
+                        <li><a href="{{ route('product.index') }}">{{ __('admin.products_all') }}</a></li>
                     @endif
                     @if (Route::has('product.create'))
                         <li><a href="{{ route('product.create') }}">{{ __('admin.product_add') }}</a></li>
@@ -67,8 +67,8 @@
                     <span class="nav-text">{{ __('admin.projects') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('projects.all'))
-                        <li><a href="{{ route('projects.all') }}">{{ __('admin.projects_all') }}</a></li>
+                    @if (Route::has('project.index'))
+                        <li><a href="{{ route('project.index') }}">{{ __('admin.projects_all') }}</a></li>
                     @endif
                     @if (Route::has('project.create'))
                         <li><a href="{{ route('project.create') }}">{{ __('admin.project_add') }}</a></li>
@@ -81,8 +81,8 @@
                     <span class="nav-text">{{ __('admin.features') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('features.all'))
-                        <li><a href="{{ route('features.all') }}">{{ __('admin.features_all') }}</a></li>
+                    @if (Route::has('feature.index'))
+                        <li><a href="{{ route('feature.index') }}">{{ __('admin.features_all') }}</a></li>
                     @endif
                     @if (Route::has('feature.create'))
                         <li><a href="{{ route('feature.create') }}">{{ __('admin.feature_add') }}</a></li>
@@ -95,8 +95,8 @@
                     <span class="nav-text">{{ __('admin.clients') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('clients.all'))
-                        <li><a href="{{ route('clients.all') }}">{{ __('admin.clients_all') }}</a></li>
+                    @if (Route::has('client.index'))
+                        <li><a href="{{ route('client.index') }}">{{ __('admin.clients_all') }}</a></li>
                     @endif
                     @if (Route::has('client.create'))
                         <li><a href="{{ route('client.create') }}">{{ __('admin.client_add') }}</a></li>
@@ -109,8 +109,8 @@
                     <span class="nav-text">{{ __('admin.pages') }}</span>
                 </a>
                 <ul aria-expanded="false">
-                    @if (Route::has('pages'))
-                        <li><a href="{{ route('pages') }}">{{ __('admin.pages_all') }}</a></li>
+                    @if (Route::has('page.index'))
+                        <li><a href="{{ route('page.index') }}">{{ __('admin.pages_all') }}</a></li>
                     @endif
                     @if (Route::has('page.create'))
                         <li><a href="{{ route('page.create') }}">{{ __('admin.page_add') }}</a></li>

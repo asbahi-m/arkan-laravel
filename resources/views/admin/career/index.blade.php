@@ -158,7 +158,7 @@
             <div>{{ $careers->links() }}</div>
         </div>
     </div>
-    <form method="POST" action="{{ route('career.destroy') }}" id="form-delete" class="d-none">
+    <form method="POST" action="{{ route('career.delete') }}" id="form-delete" class="d-none">
         @csrf
         @method('DELETE')
         <input type="hidden" name="delete" value="">

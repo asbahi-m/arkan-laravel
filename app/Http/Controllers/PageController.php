@@ -78,13 +78,13 @@ class PageController extends Controller
             'description' => $request['description'],
             'is_published' => $request['is_published'],
             'is_marker' => $request['is_marker'],
-            'templates' => json_encode($request['templates']),
+            'templates' => isset($request['templates']) ? json_encode($request['templates']) : null,
             'image' => isset($request['image']) ? $image_path : null,
             'view_image' => $request['view_image'],
             'slug' => $request['slug'] ? Str::slug($request['slug'], '-') : Str::slug($request['title'], '-'),
         ]);
 
-        return redirect()->route('pages')->with('success', __('admin.page_add_success'));
+        return redirect()->route('page.index')->with('success', __('admin.page_add_success'));
     }
 
     public function edit(Page $page) {
@@ -136,10 +136,10 @@ class PageController extends Controller
             'slug' => $request['slug'] ? Str::slug($request['slug'], '-') : Str::slug($request['title'], '-'),
         ]);
 
-        return redirect()->route('pages')->with('success', __('admin.page_update_success'));
+        return redirect()->route('page.index')->with('success', __('admin.page_update_success'));
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $page = Page::findOrFail($request['delete']);
 
         // Delete Page Image

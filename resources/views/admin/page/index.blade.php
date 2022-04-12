@@ -80,7 +80,8 @@
             <div>{{ $pages->links() }}</div>
         </div>
     </div>
-    <form methods="GET" action="{{ route('page.delete') }}" id="form-delete" class="d-none">
+    <form method="POST" action="{{ route('page.delete') }}" id="form-delete" class="d-none">
+        @csrf
         @method('DELETE')
         <input type="hidden" name="delete" value="">
     </form>

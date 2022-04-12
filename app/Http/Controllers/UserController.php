@@ -17,6 +17,14 @@ class UserController extends Controller
         return ['required', 'string', new Password, 'confirmed'];
     }
 
+    public function profile() {
+        return view('admin.user.profile');
+    }
+
+    public function passwordChange() {
+        return view('admin.user.change_password');
+    }
+
     public function passwordUpdate(Request $request) {
         $user = User::find(auth()->user()->id);
 

@@ -76,7 +76,7 @@ class ProjectController extends Controller
             'image' => isset($request['image']) ? $image_path : null,
         ]);
 
-        return redirect()->route('projects.all')->with('success', __('admin.project_add_success'));
+        return redirect()->route('project.index')->with('success', __('admin.project_add_success'));
     }
 
     public function edit(Project $project) {
@@ -119,11 +119,11 @@ class ProjectController extends Controller
             'image' => isset($request['image']) ? $image_path : $project->image,
         ]);
 
-        return redirect()->route('projects.all')->with('success', __('admin.project_update_success'));
+        return redirect()->route('project.index')->with('success', __('admin.project_update_success'));
 
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $project = Project::findOrFail($request['delete']);
 
         // Delete Project Image

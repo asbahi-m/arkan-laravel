@@ -109,7 +109,7 @@
             <button class="btn btn-danger btn-sm shadow sharp mr-1" onclick="confirmDelete({{ $order->id }})">
                 <i class="fa fa-trash"></i> {{ __('admin.delete') }}</button>
         </div>
-        <form method="POST" action="{{ route('order.destroy') }}" id="form-delete" class="d-none">
+        <form method="POST" action="{{ route('order.delete') }}" id="form-delete" class="d-none">
             @csrf
             @method('DELETE')
             <input type="hidden" name="delete" value="">

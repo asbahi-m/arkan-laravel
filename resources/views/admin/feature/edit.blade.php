@@ -4,7 +4,7 @@
     <div class="page-titles d-flex">
         <ul class="breadcrumb ml-auto">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('admin.dashboard') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('features.all') }}">{{ __('admin.features_all') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('feature.index') }}">{{ __('admin.features_all') }}</a></li>
         </ul>
     </div>
 

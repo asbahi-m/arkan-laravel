@@ -58,7 +58,7 @@ class ClientController extends Controller
             'image' => isset($request['image']) ? $image_path : null,
         ]);
 
-        return redirect()->route('clients.all')->with('success', __('admin.client_add_success'));
+        return redirect()->route('client.index')->with('success', __('admin.client_add_success'));
     }
 
     public function edit(Client $client) {
@@ -97,11 +97,11 @@ class ClientController extends Controller
             'image' => isset($request['image']) ? $image_path : $client->image,
         ]);
 
-        return redirect()->route('clients.all')->with('success', __('admin.client_update_success'));
+        return redirect()->route('client.index')->with('success', __('admin.client_update_success'));
 
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $client = Client::findOrFail($request['delete']);
 
         // Delete Client Image

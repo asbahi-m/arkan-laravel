@@ -82,7 +82,8 @@
             <div>{{ $features->links() }}</div>
         </div>
     </div>
-    <form methods="GET" action="{{ route('feature.delete') }}" id="form-delete" class="d-none">
+    <form method="POST" action="{{ route('feature.delete') }}" id="form-delete" class="d-none">
+        @csrf
         @method('DELETE')
         <input type="hidden" name="delete" value="">
     </form>

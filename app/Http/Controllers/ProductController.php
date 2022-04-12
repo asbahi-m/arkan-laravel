@@ -76,7 +76,7 @@ class ProductController extends Controller
             'image' => isset($request['image']) ? $image_path : null,
         ]);
 
-        return redirect()->route('products.all')->with('success', __('admin.product_add_success'));
+        return redirect()->route('product.index')->with('success', __('admin.product_add_success'));
     }
 
     public function edit(Product $product) {
@@ -119,11 +119,11 @@ class ProductController extends Controller
             'image' => isset($request['image']) ? $image_path : $product->image,
         ]);
 
-        return redirect()->route('products.all')->with('success', __('admin.product_update_success'));
+        return redirect()->route('product.index')->with('success', __('admin.product_update_success'));
 
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $product = Product::findOrFail($request['delete']);
 
         // Delete Product Image

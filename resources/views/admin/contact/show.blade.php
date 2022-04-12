@@ -95,7 +95,7 @@
             <button class="btn btn-danger btn-sm shadow sharp mr-1" onclick="confirmDelete({{ $contact->id }})">
                 <i class="fa fa-trash"></i> {{ __('admin.delete') }}</button>
         </div>
-        <form method="POST" action="{{ route('contact.destroy') }}" id="form-delete" class="d-none">
+        <form method="POST" action="{{ route('contact.delete') }}" id="form-delete" class="d-none">
             @csrf
             @method('DELETE')
             <input type="hidden" name="delete" value="">

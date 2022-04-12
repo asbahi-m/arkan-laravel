@@ -58,7 +58,7 @@ class FeatureController extends Controller
             'image' => isset($request['image']) ? $image_path : null,
         ]);
 
-        return redirect()->route('features.all')->with('success', __('admin.feature_add_success'));
+        return redirect()->route('feature.index')->with('success', __('admin.feature_add_success'));
     }
 
     public function edit(Feature $feature) {
@@ -97,11 +97,11 @@ class FeatureController extends Controller
             'image' => isset($request['image']) ? $image_path : $feature->image,
         ]);
 
-        return redirect()->route('features.all')->with('success', __('admin.feature_update_success'));
+        return redirect()->route('feature.index')->with('success', __('admin.feature_update_success'));
 
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         $feature = Feature::findOrFail($request['delete']);
 
         // Delete Feature Image
