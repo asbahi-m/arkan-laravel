@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FeatureRequest;
 use Storage;
-use Validator;
 use App\Models\Feature;
 
 class FeatureController extends Controller
@@ -29,34 +29,22 @@ class FeatureController extends Controller
         return view('admin.feature.create');
     }
 
-    public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(FeatureRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Feature Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
             $image_path = 'features/' . $image_name;
 
             $image->storePubliclyAs('features', $image_name, 'public');
+
+            $validated['image'] = $image_path;
         }
 
-        Feature::create([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : null,
-        ]);
+        Feature::create($validated);
 
         return redirect()->route('feature.index')->with('success', __('admin.feature_add_success'));
     }
@@ -65,20 +53,11 @@ class FeatureController extends Controller
         return view('admin.feature.edit', compact('feature'));
     }
 
-    public function update(Feature $feature, Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function update(Feature $feature, FeatureRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Feature Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
@@ -88,17 +67,13 @@ class FeatureController extends Controller
 
             // Delete Feature Image
             Storage::delete('public/' . $feature->image);
+
+            $validated['image'] = $image_path;
         }
 
-        $feature->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : $feature->image,
-        ]);
+        $feature->update($validated);
 
         return redirect()->route('feature.index')->with('success', __('admin.feature_update_success'));
-
     }
 
     public function destroy(Request $request) {

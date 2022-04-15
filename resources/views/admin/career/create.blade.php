@@ -43,12 +43,12 @@
                                 <span class="input-group-text"><i class="fa fa-upload"></i></span>
                             </div>
                             <div class="custom-file">
-                                <input id="file" type="file" class="custom-file-input" name="file"
-                                        value="{{ old('file') }}">
+                                <input id="attachment" type="file" class="custom-file-input" name="attachment"
+                                        value="{{ old('attachment') }}">
                                 <label class="custom-file-label">{{ __('admin.choose_file') }}</label>
                             </div>
                         </div>
-                        @error('file')
+                        @error('attachment')
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                     </div>

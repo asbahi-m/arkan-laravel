@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ContactUsRequest;
 use Mail;
 
 use App\Mail\ContactUs as ContactMail;
@@ -39,7 +40,8 @@ class ContactUsController extends Controller
         // return view('admin.contact.create');
     }
 
-    public function store(Request $request) {
+    public function store(ContactUsRequest $request) {
+        $validated = $request->safe();
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100'],
             'email' => ['required', 'email'],
@@ -47,20 +49,14 @@ class ContactUsController extends Controller
             'message' => ['required', 'string', 'min:3', 'max:6000'],
         ]);
 
-        ContactUs::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'message' => $request['message'],
-            'status' => 'unread',
-        ]);
+        ContactUs::create($validated->merge(['status' => 'unread'])->all());
 
-        Mail::to($request['email'])
+        Mail::to($validated['email'])
         ->send(new ContactMail([
             'contactNew' => [
-                'name' => $request['name'],
+                'name' => $validated['name'],
             ],
-            'subject' => __('admin.contact_us') . ' | ' . $request['name'],
+            'subject' => __('admin.contact_us') . ' | ' . $validated['name'],
         ]));
 
         return redirect()->route('contact.index')->with('success', __('admin.message_delete_success'));

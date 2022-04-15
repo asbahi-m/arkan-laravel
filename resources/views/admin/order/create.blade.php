@@ -38,13 +38,13 @@
 
                     <div class="form-group">
                         <label class="text-label">{{ __('admin.order_service') }}:</label>
-                        <select class="form-control default-select" name="service" required>
+                        <select class="form-control default-select" name="service_id" required>
                             @foreach ($services as $service)
-                                <option {{ old('service') == $service->id || $service->first()->id == $service->id ? 'selected' : '' }}
+                                <option {{ old('service_id') == $service->id || $service->first()->id == $service->id ? 'selected' : '' }}
                                     value="{{ $service->id }}">{{ $service->name }}</option>
                             @endforeach
                         </select>
-                        @error('service')
+                        @error('service_id')
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                     </div>

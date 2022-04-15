@@ -73,6 +73,7 @@
                     <!-- Page View Image -->
                     <div class="form-group">
                         <div class="custom-control custom-checkbox mb-3">
+                            <input type="hidden" name="view_image" value="0">
                             <input type="checkbox" class="custom-control-input" id="view-image" name="view_image"
                                     value="1" {{ old('view_image') == 0 && session()->has('errors') ? '' : 'checked' }}>
                             <label class="custom-control-label" for="view-image">{{ __('admin.view_image') }}</label>

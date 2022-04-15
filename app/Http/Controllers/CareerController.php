@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CareerRequest;
 use Mail;
 use Storage;
 use App\Mail\JobApplication;
@@ -52,41 +53,29 @@ class CareerController extends Controller
         // return view('admin.career.create');
     }
 
-    public function store(Request $request) {
-
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['required', 'email'],
-            'phone' => ['nullable', 'numeric', 'min:8'],
-            'file' => ['required', 'mimes:pdf', 'max:5120'],
-            'message' => ['nullable', 'string', 'min:3', 'max:1000'],
-        ]);
+    public function store(CareerRequest $request) {
+        $validated = $request->safe();
 
         // Uploade CV Attachment
-        if (isset($request['file'])) {
-            $attachment = $request->file('file');
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment');
             $attach_ext = $attachment->extension();
             $attach_name = time() . '.' . $attach_ext;
             $attach_path = 'careers/' . $attach_name;
 
             $attachment->storePubliclyAs('careers', $attach_name, 'public');
+
+            $validated['attachment'] = $attach_path;
         }
 
-        Career::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'attachment' => isset($request['file']) ? $attach_path : null,
-            'message' => $request['message'],
-            'status' => 'pending',
-        ]);
+        Career::create($validated->merge(['status' => 'pending'])->all());
 
-        Mail::to($request['email'])
+        Mail::to($validated['email'])
         ->send(new JobApplication([
             'jobNew' => [
-                'name' => $request['name'],
+                'name' => $validated['name'],
             ],
-            'subject' => __('admin.job_application') . ' | ' . $request['name'],
+            'subject' => __('admin.job_application') . ' | ' . $validated['name'],
         ]));
 
         return redirect()->route('career.index')->with('success', __('admin.job_apply_success'));

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ServiceRequest;
 use Storage;
-use Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Service;
 use App\Models\Type;
 
@@ -44,37 +43,24 @@ class ServiceController extends Controller
         return view('admin.service.create', compact('types'));
     }
 
-    public function store(Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(ServiceRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Service Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
             $image_path = 'services/' . $image_name;
 
             $image->storePubliclyAs('services', $image_name, 'public');
+
+            $validated['image'] = $image_path;
         }
 
-        Service::create([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : null,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        Service::create($validated);
 
         return redirect()->route('service.index')->with('success', __('admin.service_add_success'));
     }
@@ -84,22 +70,11 @@ class ServiceController extends Controller
         return view('admin.service.edit', compact('service', 'types'));
     }
 
-    public function update(Service $service, Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function update(Service $service, ServiceRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Service Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
@@ -109,18 +84,15 @@ class ServiceController extends Controller
 
             // Delete Service Image
             Storage::delete('public/' . $service->image);
+
+            $validated['image'] = $image_path;
         }
 
-        $service->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : $service->image,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        $service->update($validated);
 
         return redirect()->route('service.index')->with('success', __('admin.service_update_success'));
-
     }
 
     public function destroy(Request $request) {

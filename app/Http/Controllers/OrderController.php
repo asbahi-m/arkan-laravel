@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
 use Mail;
-use Rule;
 use App\Mail\ServiceOrder;
 use App\Models\Service;
 use App\Models\Order;
@@ -62,34 +62,20 @@ class OrderController extends Controller
         // return view('admin.order.create', compact('services'));
     }
 
-    public function store(Request $request) {
-        $services = Service::where('is_published', true)->get();
-        $service_ids = $services->pluck('id')->toArray();
+    public function store(OrderRequest $request) {
+        $validated = $request->safe();
 
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['required', 'email'],
-            'phone' => ['nullable', 'numeric', 'min:8'],
-            'service' => ['required', Rule::in($service_ids)],
-        ]);
+        Order::create($validated->merge(['status' => 'pending'])->all());
 
-        Order::create([
-            'service_id' => $request['service'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'phone' => $request['phone'],
-            'status' => 'pending',
-        ]);
+        $service = Service::find($validated['service_id']);
 
-        $service = Service::find($request['service']);
-
-        Mail::to($request['email'])
+        Mail::to($validated['email'])
         ->send(new ServiceOrder([
             'orderNew' => [
-                'name' => $request['name'],
+                'name' => $validated['name'],
                 'service' => $service->name,
             ],
-            'subject' => __('admin.service_order') . ' | ' . $service->name . ' | ' . $request['name'],
+            'subject' => __('admin.service_order') . ' | ' . $service->name . ' | ' . $validated['name'],
         ]));
 
         return redirect()->route('order.index')->with('success', __('admin.order_service_success'));
@@ -118,11 +104,6 @@ class OrderController extends Controller
             'status' => 'accepted',
             'response_by' => auth()->user()->id,
         ]);
-
-        // $order = Order::findOrFail($request['order_id']);
-        // $order->reply_msg = $request['reply_msg'];
-        // $order->status = 'accepted';
-        // $order->save();
 
         Mail::to($request['order_email'])
         ->send(new ServiceOrder([

@@ -38,14 +38,14 @@
                     <!-- Product Type -->
                     <div class="form-group">
                         <label class="text-label">{{ __('admin.product_type') }}:</label>
-                        <select class="form-control default-select" name="type">
+                        <select class="form-control default-select" name="type_id">
                             <option value="0">{{ __('admin.no_type') }}</option>
                             @foreach ($types as $type)
-                                <option {{ old('type') == $type->id || $type->first()->id == $type->id ? 'selected' : '' }}
+                                <option {{ old('type_id') == $type->id || $type->first()->id == $type->id ? 'selected' : '' }}
                                     value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
                         </select>
-                        @error('type')
+                        @error('type_id')
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                     </div>

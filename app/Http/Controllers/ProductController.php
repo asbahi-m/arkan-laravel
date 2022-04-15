@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use Storage;
-use Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Product;
 use App\Models\Type;
 
@@ -44,37 +43,24 @@ class ProductController extends Controller
         return view('admin.product.create', compact('types'));
     }
 
-    public function store(Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(ProductRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Product Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
             $image_path = 'products/' . $image_name;
 
             $image->storePubliclyAs('products', $image_name, 'public');
+
+            $validated['image'] = $image_path;
         }
 
-        Product::create([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : null,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        Product::create($validated);
 
         return redirect()->route('product.index')->with('success', __('admin.product_add_success'));
     }
@@ -84,22 +70,11 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product', 'types'));
     }
 
-    public function update(Product $product, Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function update(Product $product, ProductRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Product Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
@@ -109,15 +84,13 @@ class ProductController extends Controller
 
             // Delete Product Image
             Storage::delete('public/' . $product->image);
+
+            $validated['image'] = $image_path;
         }
 
-        $product->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : $product->image,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        $product->update($validated);
 
         return redirect()->route('product.index')->with('success', __('admin.product_update_success'));
 

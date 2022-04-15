@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ClientRequest;
 use Storage;
-use Validator;
 use App\Models\Client;
 
 class ClientController extends Controller
@@ -29,34 +29,22 @@ class ClientController extends Controller
         return view('admin.client.create');
     }
 
-    public function store(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'url_address' => ['nullable', 'url'],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(ClientRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Client Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
             $image_path = 'clients/' . $image_name;
 
             $image->storePubliclyAs('clients', $image_name, 'public');
+
+            $validated['image'] = $image_path;
         }
 
-        Client::create([
-            'name' => $request['name'],
-            'url_address' => $request['url_address'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : null,
-        ]);
+        Client::create($validated);
 
         return redirect()->route('client.index')->with('success', __('admin.client_add_success'));
     }
@@ -65,20 +53,11 @@ class ClientController extends Controller
         return view('admin.client.edit', compact('client'));
     }
 
-    public function update(Client $client, Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'url_address' => ['nullable', 'url'],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function update(Client $client, ClientRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Client Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
@@ -88,17 +67,13 @@ class ClientController extends Controller
 
             // Delete Client Image
             Storage::delete('public/' . $client->image);
+
+            $validated['image'] = $image_path;
         }
 
-        $client->update([
-            'name' => $request['name'],
-            'url_address' => $request['url_address'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : $client->image,
-        ]);
+        $client->update($validated);
 
         return redirect()->route('client.index')->with('success', __('admin.client_update_success'));
-
     }
 
     public function destroy(Request $request) {

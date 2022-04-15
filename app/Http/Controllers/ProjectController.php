@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectRequest;
 use Storage;
-use Validator;
-use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\Type;
 
@@ -44,37 +43,24 @@ class ProjectController extends Controller
         return view('admin.project.create', compact('types'));
     }
 
-    public function store(Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function store(ProjectRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Project Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
             $image_path = 'projects/' . $image_name;
 
             $image->storePubliclyAs('projects', $image_name, 'public');
+
+            $validated['image'] = $image_path;
         }
 
-        Project::create([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : null,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        Project::create($validated);
 
         return redirect()->route('project.index')->with('success', __('admin.project_add_success'));
     }
@@ -84,22 +70,11 @@ class ProjectController extends Controller
         return view('admin.project.edit', compact('project', 'types'));
     }
 
-    public function update(Project $project, Request $request) {
-        $types = Type::all('id')->pluck('id')->push(0)->toArray();
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
-            'type' => ['nullable', Rule::in($types)],
-            'is_published' => ['required', 'boolean'],
-            'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+    public function update(Project $project, ProjectRequest $request) {
+        $validated = $request->safe()->all();
 
         // Upload Project Image
-        if (isset($request['image'])) {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_ext = $image->extension();
             $image_name = time() . '.' . $image_ext;
@@ -109,15 +84,13 @@ class ProjectController extends Controller
 
             // Delete Project Image
             Storage::delete('public/' . $project->image);
+
+            $validated['image'] = $image_path;
         }
 
-        $project->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'type_id' => $request['type'] == 0 ? null : $request['type'],
-            'is_published' => $request['is_published'],
-            'image' => isset($request['image']) ? $image_path : $project->image,
-        ]);
+        if ($validated['type_id'] == 0) $validated['type_id'] = null;
+
+        $project->update($validated);
 
         return redirect()->route('project.index')->with('success', __('admin.project_update_success'));
 
