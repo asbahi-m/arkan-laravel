@@ -9,6 +9,7 @@ return [
     'features' => 'Features',
     'clients' => 'Clients',
     'pages' => 'Pages',
+    'sliders' => 'Sliders',
     'orders' => 'Orders',
     'careers' => 'Careers',
     'messages' => 'Messages',
@@ -135,7 +136,26 @@ return [
     'page_update_success' => 'The page has been Updated successfully',
     'page_delete_success' => 'The page has been deleted successfully',
     '' => '',
-    '' => '',
+
+    // Sliders Page
+    'place' => 'Place',
+    'slider_add' => 'Add Slider',
+    'slider_add_new' => 'Add a new slider',
+    'slider_title' => 'Slider Title',
+    'slider_subtitle' => 'Slider Subitle',
+    'slider_place' => 'Slider Place',
+    'slider_brief' => 'Slider Brief',
+    'slider_order' => 'Slider Order',
+    'slider_media' => 'Slider Media',
+    'primary_url' => 'Primary URL',
+    'primary_btn' => 'Primary Button Title',
+    'secondary_url' => 'Secondary URL',
+    'secondary_btn' => 'Secondary Button Title',
+    'slider_add_success' => 'The slider has been created successfully',
+    'slider_edit' => 'Edit Slider',
+    'slider_update_success' => 'The slider has been Updated successfully',
+    'slider_delete_success' => 'The slider has been deleted successfully',
+
 
     // Orders Page
     'order' => 'Order',
@@ -159,7 +179,6 @@ return [
     'order_delete_success' => 'The order has been deleted',
     'received_order_msg' => 'We have received your message regarding your service order',
     'review_order_msg' => 'We will review your order, and get back to you.',
-
 
     // Careers Page
     'career' => 'Career',
@@ -222,6 +241,7 @@ return [
     'unpublished' => 'Unpublished',
     'chioce_type' => 'Chioce one type',
     'choose_image' => 'Choose Image',
+    'choose_media' => 'Choose Media',
 
     'hello' => 'Hello',
     'search' => 'Search',

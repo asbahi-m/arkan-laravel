@@ -12,6 +12,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +144,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/{contact}', 'show')->name('show');
             Route::delete('/delete', 'destroy')->name('delete');
             Route::put('/reply', 'reply')->name('reply');
+        });
+
+        // Slider Routes
+        Route::controller(SliderController::class)->prefix('slider')->name('slider.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+            Route::get('/{slider}/edit', 'edit')->name('edit');
+            Route::post('/{slider}', 'update')->name('update');
+            Route::delete('/delete', 'destroy')->name('delete');
         });
     });
 });
