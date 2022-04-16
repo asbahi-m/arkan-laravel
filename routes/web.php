@@ -13,6 +13,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\OptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -154,6 +155,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/{slider}/edit', 'edit')->name('edit');
             Route::post('/{slider}', 'update')->name('update');
             Route::delete('/delete', 'destroy')->name('delete');
+        });
+
+        // Option Routes
+        Route::controller(OptionController::class)->prefix('option')->name('option.')->group(function () {
+            Route::get('/general', 'general')->name('general');
+            Route::get('/social', 'social')->name('social');
+            Route::get('/contact', 'contact')->name('contact');
+            Route::post('/general-update', 'update')->name('general.update');
+            Route::post('/social-update', 'update')->name('social.update');
+            Route::post('/contact-update', 'update')->name('contact.update');
         });
     });
 });

@@ -22,9 +22,28 @@
     {{--<link href="{{ asset('admin/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">--}}
     @yield('link')
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    @yield('style')
     <style>
         table thead th {
             white-space: nowrap;
+        }
+        .form-group {
+            margin-bottom: 2rem !important;
+        }
+        [data-sidebar-style="full"][data-layout="vertical"] .deznav .metismenu > li > a {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 14px;
+        }
+        .main-profile img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        .main-profile i {
+            top: 0;
+        }
+        .deznav .metismenu > li a > i {
+            font-size: 1.3rem;
         }
     </style>
 </head>

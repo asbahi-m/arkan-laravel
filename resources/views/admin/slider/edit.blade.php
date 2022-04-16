@@ -45,7 +45,7 @@
                         @enderror
                     </div>
 
-                    <div class="row align-items-center">
+                    <div class="form-group row align-items-center">
                         <!-- Slider Publish -->
                         <div class="form-row col-12 col-sm-12 col-md-2 my-2">
                             <div class="custom-control custom-checkbox mb-2">

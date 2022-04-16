@@ -13,6 +13,7 @@ return [
     'orders' => 'Orders',
     'careers' => 'Careers',
     'messages' => 'Messages',
+    'options' => 'Options',
 
     // Actions
     'action' => 'Action',
@@ -21,8 +22,6 @@ return [
     'delete' => 'Delete',
     'cancel' => 'Cancel',
     'edit' => 'Edit',
-    '' => '',
-    '' => '',
 
     // User Page
     'name' => 'Name',
@@ -135,7 +134,6 @@ return [
     'page_edit' => 'Edit Page',
     'page_update_success' => 'The page has been Updated successfully',
     'page_delete_success' => 'The page has been deleted successfully',
-    '' => '',
 
     // Sliders Page
     'place' => 'Place',
@@ -197,7 +195,7 @@ return [
     'received_job_msg' => 'We have received your job application.',
     'review_job_msg' => 'We will review your information and get back to you shortly.',
 
-    // Contact Us
+    // Contact Us Page
     'contact_us' => 'Contact Us',
     'unread' => 'Unread',
     'read' => 'Read',
@@ -206,6 +204,38 @@ return [
     'message_delete_success' => 'Message has been deleted',
     'message_reply_success' => 'Message has been replied',
     'received_contact_msg' => 'Thank you for contacting us, we will respond to you as soon as possible.',
+
+    // Options Page
+    'general_options' => 'General Options',
+    'social_media' => 'Social Media',
+    'contact_info' => 'Contact Info',
+    'site_name' => 'Site Name',
+    'site_identity' => 'Site Identity',
+    'site_identity_help' => 'In a few words, write the identity of the website (example: leadership and proficiency).',
+    'site_description' => 'Site Description',
+    'site_description_help' => 'Write a description about the site with no more than 255 characters.',
+    'copyrights' => 'Copyrights',
+    'keywords' => 'Keywords',
+    'keywords_help' => 'Separate tags with a comma (,).',
+    'site_email' => 'Site Email',
+    'site_email_help' => 'The main website email that is used for correspondence.',
+    'support_email' => 'Support Email',
+    'support_email_help' => 'Email for technical support and maintenance.',
+    'live_chat_url' => 'Live Chat URL',
+    'support_url' => 'Support URL',
+    'social_options' => 'Social Options',
+    'facebook' => 'Facebook',
+    'twitter' => 'Twitter',
+    'linkedin' => 'Linkedin',
+    'instagram' => 'Instagram',
+    'snapchat' => 'Snapchat',
+    'youtube' => 'Youtube',
+    'whatsapp' => 'Whatsapp',
+    'contact_options' => 'Contact Options',
+    'address' => 'Address',
+    'mobile' => 'Mobile',
+    'map' => 'Map',
+    'options_update_success' => 'Options updated successfully',
 
     // Configm Message
     'confirm_sure' => 'Are you sure?',
@@ -216,12 +246,9 @@ return [
     'service_order' => 'Service Order',
     'job_application' => 'Job Application',
     'contact_us' => 'Contact Us',
-    '' => '',
-    '' => '',
 
     // Others
-    '' => '',
-    '' => '',
+
     '' => '',
     'title' => 'Title',
     'description' => 'Description',
@@ -258,6 +285,5 @@ return [
     'hello' => 'Hello',
     'welcome_back' => 'welcome back!',
     'yours_sincerly' => 'yours sincerly',
-    '' => '',
 
 ];
