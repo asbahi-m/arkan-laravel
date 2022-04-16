@@ -8,9 +8,12 @@ use Storage;
 use Rule;
 use Str;
 use App\Models\Page;
+use App\Traits\UploadFile;
 
 class PageController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $pages = Page::query();
 
@@ -52,12 +55,7 @@ class PageController extends Controller
 
         // Upload Page Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'pages/' . $image_name;
-
-            $image->storePubliclyAs('pages', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'pages');
 
             $validated['image'] = $image_path;
         }
@@ -84,12 +82,7 @@ class PageController extends Controller
 
         // Upload Page Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'pages/' . $image_name;
-
-            $image->storePubliclyAs('pages', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'pages');
 
             // Delete Page Image
             Storage::delete('public/' . $page->image);

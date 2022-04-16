@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FeatureRequest;
 use Storage;
 use App\Models\Feature;
+use App\Traits\UploadFile;
 
 class FeatureController extends Controller
 {
+    use UploadFile;
     public function index(Request $request) {
         $features = Feature::query();
 
@@ -34,12 +36,7 @@ class FeatureController extends Controller
 
         // Upload Feature Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'features/' . $image_name;
-
-            $image->storePubliclyAs('features', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'features');
 
             $validated['image'] = $image_path;
         }
@@ -58,12 +55,7 @@ class FeatureController extends Controller
 
         // Upload Feature Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'features/' . $image_name;
-
-            $image->storePubliclyAs('features', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'features');
 
             // Delete Feature Image
             Storage::delete('public/' . $feature->image);

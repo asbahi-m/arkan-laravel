@@ -7,9 +7,12 @@ use App\Http\Requests\ProductRequest;
 use Storage;
 use App\Models\Product;
 use App\Models\Type;
+use App\Traits\UploadFile;
 
 class ProductController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $products = Product::query();
 
@@ -48,12 +51,7 @@ class ProductController extends Controller
 
         // Upload Product Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'products/' . $image_name;
-
-            $image->storePubliclyAs('products', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'products');
 
             $validated['image'] = $image_path;
         }
@@ -75,12 +73,7 @@ class ProductController extends Controller
 
         // Upload Product Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'products/' . $image_name;
-
-            $image->storePubliclyAs('products', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'products');
 
             // Delete Product Image
             Storage::delete('public/' . $product->image);

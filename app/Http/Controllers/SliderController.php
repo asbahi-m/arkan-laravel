@@ -7,9 +7,12 @@ use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
 use Rule;
 use Storage;
+use App\Traits\UploadFile;
 
 class SliderController extends Controller
 {
+    use UploadFile;
+
     public function __construct() {
         $this->places = ['home', 'services', 'products', 'projects'];
     }
@@ -35,12 +38,7 @@ class SliderController extends Controller
 
         // Upload Slider Media
         if ($request->hasFile('media')) {
-            $media = $request->file('media');
-            $media_ext = $media->extension();
-            $media_name = time() . '.' . $media_ext;
-            $media_path = 'sliders/' . $media_name;
-
-            $media->storePubliclyAs('sliders', $media_name, 'public');
+            $media_path = $this->saveFile($request->file('media'), 'sliders');
 
             $validated['media'] = $media_path;
         }
@@ -64,12 +62,7 @@ class SliderController extends Controller
 
         // Upload Slider Media
         if ($request->hasFile('media')) {
-            $media = $request->file('media');
-            $media_ext = $media->extension();
-            $media_name = time() . '.' . $media_ext;
-            $media_path = 'sliders/' . $media_name;
-
-            $media->storePubliclyAs('sliders', $media_name, 'public');
+            $media_path = $this->saveFile($request->file('media'), 'sliders');
 
             // Delete Slider Media
             Storage::delete('public/' . $slider->media);

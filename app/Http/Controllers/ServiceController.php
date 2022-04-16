@@ -7,9 +7,12 @@ use App\Http\Requests\ServiceRequest;
 use Storage;
 use App\Models\Service;
 use App\Models\Type;
+use App\Traits\UploadFile;
 
 class ServiceController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $services = Service::query();
 
@@ -48,12 +51,7 @@ class ServiceController extends Controller
 
         // Upload Service Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'services/' . $image_name;
-
-            $image->storePubliclyAs('services', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'services');
 
             $validated['image'] = $image_path;
         }
@@ -75,12 +73,7 @@ class ServiceController extends Controller
 
         // Upload Service Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'services/' . $image_name;
-
-            $image->storePubliclyAs('services', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'services');
 
             // Delete Service Image
             Storage::delete('public/' . $service->image);

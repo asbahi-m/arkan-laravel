@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Rules\Password;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Traits\UploadFile;
 
 class UserController extends Controller
 {
+    use UploadFile;
+
     protected function passwordRules()
     {
         return ['required', 'string', new Password, 'confirmed'];
@@ -57,20 +60,16 @@ class UserController extends Controller
             'avatar' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
         ]);
 
+        // Upload Profile Avatar
         if (isset($request['avatar'])) {
-            $image = $request->file('avatar');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-
-            // Upload Image
-            $image->storePubliclyAs('profile-photos', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('avatar'), 'profile-photos');
 
             // Remove Old Image
             Storage::delete('public/' . auth()->user()->profile_photo_path);
 
             // Update Database
             $user->forceFill([
-                'profile_photo_path' => 'profile-photos/' . $image_name,
+                'profile_photo_path' => $image_path,
             ])->save();
         }
 

@@ -7,9 +7,12 @@ use App\Http\Requests\ProjectRequest;
 use Storage;
 use App\Models\Project;
 use App\Models\Type;
+use App\Traits\UploadFile;
 
 class ProjectController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $projects = Project::query();
 
@@ -48,12 +51,7 @@ class ProjectController extends Controller
 
         // Upload Project Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'projects/' . $image_name;
-
-            $image->storePubliclyAs('projects', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'projects');
 
             $validated['image'] = $image_path;
         }
@@ -75,12 +73,7 @@ class ProjectController extends Controller
 
         // Upload Project Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'projects/' . $image_name;
-
-            $image->storePubliclyAs('projects', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'projects');
 
             // Delete Project Image
             Storage::delete('public/' . $project->image);

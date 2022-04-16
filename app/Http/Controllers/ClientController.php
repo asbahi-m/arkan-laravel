@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
 use Storage;
 use App\Models\Client;
+use App\Traits\UploadFile;
 
 class ClientController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $clients = Client::query();
 
@@ -34,12 +37,7 @@ class ClientController extends Controller
 
         // Upload Client Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'clients/' . $image_name;
-
-            $image->storePubliclyAs('clients', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'clients');
 
             $validated['image'] = $image_path;
         }
@@ -58,12 +56,7 @@ class ClientController extends Controller
 
         // Upload Client Image
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_ext = $image->extension();
-            $image_name = time() . '.' . $image_ext;
-            $image_path = 'clients/' . $image_name;
-
-            $image->storePubliclyAs('clients', $image_name, 'public');
+            $image_path = $this->saveFile($request->file('image'), 'clients');
 
             // Delete Client Image
             Storage::delete('public/' . $client->image);

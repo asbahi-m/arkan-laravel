@@ -7,11 +7,14 @@ use App\Http\Requests\CareerRequest;
 use Mail;
 use Storage;
 use App\Mail\JobApplication;
+use App\Traits\UploadFile;
 
 use App\Models\Career;
 
 class CareerController extends Controller
 {
+    use UploadFile;
+
     public function index(Request $request) {
         $careers_count = Career::count();
         $pending_count = Career::where('status', 'pending')->count();
@@ -58,12 +61,7 @@ class CareerController extends Controller
 
         // Uploade CV Attachment
         if ($request->hasFile('attachment')) {
-            $attachment = $request->file('attachment');
-            $attach_ext = $attachment->extension();
-            $attach_name = time() . '.' . $attach_ext;
-            $attach_path = 'careers/' . $attach_name;
-
-            $attachment->storePubliclyAs('careers', $attach_name, 'public');
+            $attach_path = $this->saveFile($request->file('attachment'), 'careers');
 
             $validated['attachment'] = $attach_path;
         }
