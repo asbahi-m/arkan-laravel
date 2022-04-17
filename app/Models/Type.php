@@ -9,6 +9,7 @@ class Type extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function service() {
         return $this->hasMany(Service::class);

@@ -11,23 +11,36 @@ class TypeController extends Controller
     public function index(Request $request) {
         $types = Type::get();
 
-        if ($request['sortBy'] == 'name') {
-            $types = $types->sortBy('name');
-        } else if (in_array($request['sortBy'], ['service', 'product', 'project'])) {
-            $types = $types->sortBy(function ($q) use($request) {
-                return $q[$request['sortBy']]->count();
-            });
-        }
-
-        if ($request['sortByDesc'] == 'name') {
-            $types = $types->sortByDesc('name');
-        } else if (in_array($request['sortByDesc'], ['service', 'product', 'project'])) {
-            $types = $types->sortByDesc(function ($q) use($request) {
-                return $q[$request['sortByDesc']]->count();
-            });
-        }
-
         return view('admin.type.index', compact('types'));
+    }
+
+    public function sortByAjax(Request $request) {
+        if ($request->ajax()) {
+            $types = Type::get();
+
+            if ($request['sortBy'] == 'name') {
+                $types = $types->sortBy('name');
+            } else if (in_array($request['sortBy'], ['service', 'product', 'project'])) {
+                $types = $types->sortBy(function ($q) use($request) {
+                    return $q[$request['sortBy']]->count();
+                });
+            }
+
+            if ($request['sortByDesc'] == 'name') {
+                $types = $types->sortByDesc('name');
+            } else if (in_array($request['sortByDesc'], ['service', 'product', 'project'])) {
+                $types = $types->sortByDesc(function ($q) use($request) {
+                    return $q[$request['sortByDesc']]->count();
+                });
+            }
+
+            $types_view = view('admin.type.row')->with(['types' => $types])->render();
+
+            return response()->json([
+                'status' => true,
+                'data' => $types_view,
+            ]);
+        }
     }
 
     public function inline_store(Request $request) {
@@ -39,7 +52,13 @@ class TypeController extends Controller
             'name' => $request['name'],
         ]);
 
-        return back()->with('success', __('admin.type_add_success'));
+        $type = Type::where('name', $request['name'])->get();
+        $row = view('admin.type.row')->with(['types' => $type])->render();
+
+        return response()->json([
+            'status' => true,
+            'row' => $row,
+        ]);
     }
 
     public function update(Request $request) {
@@ -52,15 +71,21 @@ class TypeController extends Controller
             'name' => $request['type_name'],
         ]);
 
-        return back()->with('success', __('admin.type_update_success'));
-
+        return response()->json([
+            'status' => true,
+            'id' => $type->id,
+            'name' => $type->name,
+        ]);
     }
 
 
     public function destroy(Request $request) {
         $type = Type::findOrFail($request['delete'])->delete();
 
-        return back()->with('success', __('admin.type_delete_success'));
+        return response()->json([
+            'status' => true,
+            'id' => $request['delete'],
+        ]);
     }
 
 

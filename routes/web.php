@@ -50,6 +50,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         // Types Route
         Route::controller(TypeController::class)->prefix('type')->name('type.')->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/sort', 'sortByAjax')->name('sort');
             Route::post('/inline_store', 'inline_store')->name('inline_store');
             Route::put('/update', 'update')->name('update');
             Route::delete('/delete', 'destroy')->name('delete');

@@ -241,6 +241,7 @@ return [
     'confirm_sure' => 'Are you sure?',
     'confirm_msg' => 'You won\'t be able to revert this!',
     'confirm_delete_it' => 'Yes, delete it!',
+    'deleted' => 'Deleted!',
 
     // Templates
     'service_order' => 'Service Order',
