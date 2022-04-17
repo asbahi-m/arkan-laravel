@@ -14,9 +14,9 @@ class ProductController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $products = Product::query();
+        $products = Product::query()->withCount('view');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $products->join('types', 'types.id', '=', 'products.type_id')
                 ->select('products.*', 'types.name as type_name')
@@ -26,7 +26,7 @@ class ProductController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $products->join('types', 'types.id', '=', 'products.type_id')
                 ->select('products.*', 'types.name as type_name')

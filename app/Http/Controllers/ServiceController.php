@@ -14,9 +14,9 @@ class ServiceController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $services = Service::query();
+        $services = Service::query()->withCount('view');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $services->join('types', 'types.id', '=', 'services.type_id')
                 ->select('services.*', 'types.name as type_name')
@@ -26,7 +26,7 @@ class ServiceController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $services->join('types', 'types.id', '=', 'services.type_id')
                 ->select('services.*', 'types.name as type_name')

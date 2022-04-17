@@ -250,6 +250,8 @@ return [
     // Others
 
     '' => '',
+    'views' => 'Views',
+    'view' => 'View',
     'title' => 'Title',
     'description' => 'Description',
     'author' => 'Author',

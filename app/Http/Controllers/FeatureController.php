@@ -12,13 +12,13 @@ class FeatureController extends Controller
 {
     use UploadFile;
     public function index(Request $request) {
-        $features = Feature::query();
+        $features = Feature::query()->withCount('view');
 
-        if (in_array($request['sortBy'], ['name', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortBy'], ['name', 'description', 'is_published', 'view_count', 'created_at'])) {
             $features->orderBy($request['sortBy']);
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'description', 'is_published', 'view_count', 'created_at'])) {
             $features->orderByDesc($request['sortByDesc']);
         }
 

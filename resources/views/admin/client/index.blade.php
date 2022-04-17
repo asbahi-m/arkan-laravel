@@ -34,6 +34,11 @@
                                     <i class="fa fa-sort{{ request('sortBy') == 'is_published' ? '-asc' : (request('sortByDesc') == 'is_published' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.status') }}</strong>
                             </th>
+                            <th>
+                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'view_count' ? 'Desc' : '' }}=view_count">
+                                    <i class="fa fa-sort{{ request('sortBy') == 'view_count' ? '-asc' : (request('sortByDesc') == 'view_count' ? '-desc' : '') }}"></i></a>
+                                <strong>{{ __('admin.views') }}</strong>
+                            </th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>
                     </thead>
@@ -55,6 +60,7 @@
                                         @endif
                                     </small>
                                 </td>
+                                <td><small>{{ $client->view_count }}</small></td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('client.edit', $client) }}" class="btn btn-info shadow btn-xs sharp mr-1">

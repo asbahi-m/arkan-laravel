@@ -13,4 +13,8 @@ class Service extends Model
     public function type() {
         return $this->belongsTo(Type::class);
     }
+
+    public function view() {
+        return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
+    }
 }

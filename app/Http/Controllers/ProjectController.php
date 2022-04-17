@@ -14,9 +14,9 @@ class ProjectController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $projects = Project::query();
+        $projects = Project::query()->withCount('view');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $projects->join('types', 'types.id', '=', 'projects.type_id')
                 ->select('projects.*', 'types.name as type_name')
@@ -26,7 +26,7 @@ class ProjectController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $projects->join('types', 'types.id', '=', 'projects.type_id')
                 ->select('projects.*', 'types.name as type_name')

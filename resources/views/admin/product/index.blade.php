@@ -28,11 +28,11 @@
                                     <i class="fa fa-sort{{ request('sortBy') == 'type' ? '-asc' : (request('sortByDesc') == 'type' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.type') }}</strong>
                             </th>
-                            <th>
+                            {{-- <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'description' ? 'Desc' : '' }}=description">
                                     <i class="fa fa-sort{{ request('sortBy') == 'description' ? '-asc' : (request('sortByDesc') == 'description' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.description') }}</strong>
-                            </th>
+                            </th> --}}
                             <th><strong>{{ __('admin.image') }}</strong></th>
                             <th>
                                 <a class="text-white" href="?sortBy{{ request('sortBy') == 'created_at' ? 'Desc' : '' }}=created_at">
@@ -44,6 +44,11 @@
                                     <i class="fa fa-sort{{ request('sortBy') == 'is_published' ? '-asc' : (request('sortByDesc') == 'is_published' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.status') }}</strong>
                             </th>
+                            <th>
+                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'view_count' ? 'Desc' : '' }}=view_count">
+                                    <i class="fa fa-sort{{ request('sortBy') == 'view_count' ? '-asc' : (request('sortByDesc') == 'view_count' ? '-desc' : '') }}"></i></a>
+                                <strong>{{ __('admin.views') }}</strong>
+                            </th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>
                     </thead>
@@ -53,9 +58,9 @@
                                 <td><small>{{ $products->firstItem() + $key }}</small></td>
                                 <td><small><strong>{{ $product->name }}</strong></small></td>
                                 <td><small>{{ $product->type ? Str::upper($product->type->name) : '' }}</small></td>
-                                <td style="width: 33.33%">
+                                {{-- <td style="width: 33.33%">
                                     <small>{{ Str::limit(strip_tags($product->description), '80', '...') }}</small>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <img src="{{ asset(Storage::url($product->image)) }}" class="rounded-lg" width="80" alt=""/>
                                 </td>
@@ -69,6 +74,7 @@
                                         @endif
                                     </small>
                                 </td>
+                                <td><small>{{ $product->view_count }}</small></td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('product.edit', $product) }}" class="btn btn-info shadow btn-xs sharp mr-1">

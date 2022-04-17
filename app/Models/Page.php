@@ -13,4 +13,8 @@ class Page extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function view() {
+        return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
+    }
 }
