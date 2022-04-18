@@ -3,81 +3,154 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Fortify\Rules\Password;
-use Illuminate\Validation\Rule;
 use App\Models\User;
-use App\Traits\UploadFile;
+use Laravel\Fortify\Rules\Password;
+use Arr;
+use Rule;
+use Hash;
+use Storage;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
-    use UploadFile;
+    public function __construct() {
+        $this->middleware('super')->except('index');
+    }
 
-    protected function passwordRules()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return ['required', 'string', new Password, 'confirmed'];
-    }
-
-    public function profile() {
-        return view('admin.user.profile');
-    }
-
-    public function passwordChange() {
-        return view('admin.user.change_password');
-    }
-
-    public function passwordUpdate(Request $request) {
-        $user = User::find(auth()->user()->id);
-
-        $validator = Validator::make($request->all(), [
-            'current_password' => ['required', 'string'],
-            'password' => $this->passwordRules(),
-        ]);
-        $validator->after(function ($validator) use ($request, $user) {
-            if (! isset($request['current_password']) || ! Hash::check($request['current_password'], $user->password)) {
-                $validator->errors()->add('current_password', __('admin.current_password_no_match'));
-            }
+        // dd(request()->all());
+        $users = User::query();
+        $users->when(in_array(request('sortBy'), ['name', 'email', 'email_verified_at', 'is_super_admin']), function ($q) {
+            $q->orderBy(request('sortBy'));
+        })->when(in_array(request('sortByDesc'), ['name', 'email', 'email_verified_at', 'is_super_admin']), function ($q) {
+            $q->orderByDesc(request('sortByDesc'));
         });
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
 
-        $user->forceFill([
-            'password' => Hash::make($request['password']),
-        ])->save();
-
-        return back()->with('success', __('admin.password_change_succsess'));
-
+        $users = $users->paginate(20)->withQueryString();
+        return view('admin.user.index', compact('users'));
     }
 
-    public function profileUpdate(Request $request) {
-        $user = User::find(auth()->user()->id);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.user.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         $request->validate([
-            'name' => ['required', 'string', Rule::unique('users')->ignore($user->id) , 'max:40'],
-            'email' => ['required', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
-            'avatar' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
+            'name' => ['required', 'string', 'min:3', 'max:40', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
+            'password' => ['required', 'string', new Password, 'confirmed'],
+            'is_super_admin' => ['nullable', 'boolean'],
         ]);
 
-        // Upload Profile Avatar
-        if (isset($request['avatar'])) {
-            $image_path = $this->saveFile($request->file('avatar'), 'profile-photos');
-
-            // Remove Old Image
-            Storage::delete('public/' . auth()->user()->profile_photo_path);
-
-            // Update Database
-            $user->forceFill([
-                'profile_photo_path' => $image_path,
-            ])->save();
-        }
-
-        $user->forceFill([
+        User::create([
             'name' => $request['name'],
             'email' => $request['email'],
-        ])->save();
+            'password' => Hash::make($request['password']),
+            'is_super_admin' => isset($request['is_super_admin']) ? true : false,
+        ]);
 
-        return back()->with('success', __('admin.profile_update_succsess'));
+        $user = User::where('email', $request['email'])->first();
+
+        event(new Registered($user));
+
+        return redirect()->route('user.index')->with('success', __('admin.user_add_success'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        if ($user->id == 1 && auth()->user()->id != 1) {
+            return redirect()->route('user.index')->with('warning', __('admin.user_cannot_update'));
+        }
+
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:40', Rule::unique('users')->ignore($user->id)],
+            'email' => ['required', 'string', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable', 'string', new Password, 'confirmed'],
+            'is_super_admin' => ['nullable', 'boolean'],
+        ]);
+
+        if ($request['email'] !== $user->email && $user instanceof MustVerifyEmail) {
+            $user->email_verified_at = null;
+        }
+
+        $user->update([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => $request['password'] ? Hash::make($request['password']) : $user->password,
+            'is_super_admin' => isset($request['is_super_admin']) ? true : false,
+        ]);
+
+        return redirect()->route('user.index')->with('success', __('admin.user_update_success'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $user = User::findOrFail($request['delete']);
+
+        if ($user->id == auth()->user()->id || $user->id == 1) {
+            return redirect()->route('user.index')->with('warning', __('admin.user_cannot_delete'));
+        }
+
+        // Delete User Avatar
+        Storage::delete('public/' . $user->profile_photo_path);
+
+        $user->delete();
+
+        return back()->with('success', __('admin.user_delete_success'));
     }
 }

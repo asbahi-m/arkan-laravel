@@ -119,7 +119,7 @@
                                 alt="" style="width: auto"/>
                             <div class="header-info">
                                 <span>{{ auth()->user()->name }}</span>
-                                <small>{{ __('Super Admin') }}</small>
+                                <small>{{ auth()->user()->is_super_admin ? __('admin.super_admin') : __('admin.admin') }}</small>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">

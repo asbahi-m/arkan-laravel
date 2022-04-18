@@ -154,6 +154,20 @@
             @endif
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <i class="fa fa-users"></i>
+                    <span class="nav-text">{{ __('admin.users') }}</span>
+                </a>
+                <ul aria-expanded="false">
+                    @if (Route::has('user.index'))
+                        <li><a href="{{ route('user.index') }}">{{ __('admin.users_all') }}</a></li>
+                    @endif
+                    @if (Route::has('user.create'))
+                        <li><a href="{{ route('user.create') }}">{{ __('admin.user_add') }}</a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="fa fa-sliders"></i>
                     <span class="nav-text">{{ __('admin.options') }}</span>
                 </a>

@@ -9,6 +9,10 @@ use Route;
 
 class OptionController extends Controller
 {
+    public function __construct() {
+        $this->middleware('super')->only('update');
+    }
+
     public function general() {
         $options = Option::where('option', 'general_options')->get()->map(function ($item, $key) {
             return [$item['key'] => $item['value']];

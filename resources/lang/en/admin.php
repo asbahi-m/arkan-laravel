@@ -13,6 +13,7 @@ return [
     'orders' => 'Orders',
     'careers' => 'Careers',
     'messages' => 'Messages',
+    'users' => 'Users',
     'options' => 'Options',
 
     // Actions
@@ -24,8 +25,17 @@ return [
     'edit' => 'Edit',
 
     // User Page
+    'users_all' => 'All User',
+    'user_add' => 'Add User',
+    'user_add_new' => 'Add a new user',
+    'user_edit' => 'Edit User',
     'name' => 'Name',
     'email' => 'Email',
+    'verified' => 'Verified',
+    'unverified' => 'Unverified',
+    'role' => 'Role',
+    'super_admin' => 'Super Admin',
+    'admin' => 'Admin',
     'phone' => 'Phone',
     'profile' => 'Profile',
     'your_profile' => 'Your Profile',
@@ -40,11 +50,18 @@ return [
     'password_update_succsess' => 'The password has been changed successfully',
     'current_password_no_match' => 'The provided password does not match your current password.',
     'username' => 'Username',
-    'email' => 'Email',
+    'email_address' => 'Email Address',
     'avatar' => 'Avatar',
     'choose_file' => 'Choose file',
     'choose_avatar' => 'Choose Avatar',
     'profile_update_succsess' => 'Your profile has been updated successfully',
+    'user_add_success' => 'User created successfully',
+    'user_update_success' => 'User updated successfully',
+    'user_cannot_update' => 'This user can\'t be updated',
+    'user_delete_success' => 'User deleted successfully',
+    'user_cannot_delete' => 'This user can\'t be deleted',
+    '' => '',
+    '' => '',
 
     // Types Page
     'types_all' => 'All Types',

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProductController;
@@ -32,19 +33,21 @@ Route::get('/', function () {
 
 Route::redirect('/cpanel', '/dashboard');
 
-
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.index');
     })->name('dashboard');
 
     Route::group(['prefix' => 'cpanel'], function () {
-        // Users Route
-        Route::controller(UserController::class)->group(function () {
-            Route::get('/profile', 'profile')->name('profile');
-            Route::put('/profile/update', 'profileUpdate')->name('profile.update');
-            Route::get('/profile/change-password', 'passwordChange')->name('password.show');
-            Route::put('/profile/update-password', 'passwordUpdate')->name('password.update');
+        // User Route
+        Route::resource('user', UserController::class);
+
+        // Profile Route
+        Route::controller(ProfileController::class)->prefix('profile')->group(function () {
+            Route::get('/', 'profile')->name('profile');
+            Route::put('/update', 'profileUpdate')->name('profile.update');
+            Route::get('/change-password', 'passwordChange')->name('password.show');
+            Route::put('/update-password', 'passwordUpdate')->name('password.update');
         });
 
         // Types Route
