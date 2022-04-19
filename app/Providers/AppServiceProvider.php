@@ -14,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // $this->app->bind('path.public', function() {
+        //     return base_path('../public_html/arkan');
+        // });
+        // $this->app->instance('path.public', '/../public_html/arkan/storage');
     }
 
     /**

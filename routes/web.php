@@ -31,7 +31,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::redirect('/cpanel', '/dashboard');
+Route::redirect('/cpanel', url('dashboard'));
+Route::redirect('/user/profile', url('cpanel/profile'));
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::get('/dashboard', function () {
