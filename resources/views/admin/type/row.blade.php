@@ -2,9 +2,27 @@
     <tr class="row-{{ $type->id }}">
         <td class="index"><small>{{ ++$key }}</small></td>
         <td class="type-name"><small><strong>{{ Str::upper($type->name) }}</strong></small></td>
-        <td>{{ count($type->service) }}</td>
-        <td>{{ count($type->product) }}</td>
-        <td>{{ count($type->project) }}</td>
+        <td>
+            @if ($type->services->count())
+                <a class="px-3" href="{{ route('service.index', ['type' => $type->name]) }}">{{ $type->services->count() }}</a>
+            @else
+                <span class="px-3">0</span>
+            @endif
+        </td>
+        <td>
+            @if ($type->products->count())
+                <a class="px-3" href="{{ route('product.index', ['type' => $type->name]) }}">{{ $type->products->count() }}</a>
+            @else
+                <span class="px-3">0</span>
+            @endif
+        </td>
+        <td>
+            @if ($type->projects->count())
+                <a class="px-3" href="{{ route('project.index', ['type' => $type->name]) }}">{{ $type->projects->count() }}</a>
+            @else
+                <span class="px-3">0</span>
+            @endif
+        </td>
         <td>
             <div class="d-flex">
                 <button class="btn btn-info shadow btn-xs sharp mr-1"

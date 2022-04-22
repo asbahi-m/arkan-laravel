@@ -82,15 +82,15 @@
                                         <strong>{{ __('admin.name') }}</strong>
                                     </th>
                                     <th>
-                                        <a type="button" class="sort" data-sort="service"><i class="fa fa-sort"></i></a>
+                                        <a type="button" class="sort" data-sort="services"><i class="fa fa-sort"></i></a>
                                         <strong>{{ __('admin.services') }}</strong>
                                     </th>
                                     <th>
-                                        <a type="button" class="sort" data-sort="product"><i class="fa fa-sort"></i></a>
+                                        <a type="button" class="sort" data-sort="products"><i class="fa fa-sort"></i></a>
                                         <strong>{{ __('admin.products') }}</strong>
                                     </th>
                                     <th>
-                                        <a type="button" class="sort" data-sort="project"><i class="fa fa-sort"></i></a>
+                                        <a type="button" class="sort" data-sort="projects"><i class="fa fa-sort"></i></a>
                                         <strong>{{ __('admin.projects') }}</strong>
                                     </th>
                                     <th>{{ __('admin.action') }}</th>

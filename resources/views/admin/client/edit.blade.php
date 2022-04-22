@@ -41,7 +41,7 @@
                         <div class="custom-control custom-checkbox mb-3">
                             <input type="hidden" name="is_published" value="0">
                             <input type="checkbox" class="custom-control-input" id="publish" name="is_published"
-                                    value="1" {{ $client->is_published ? 'checked' : '' }}>
+                                    value="1" {{ $client->is_published == 'published' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="publish">{{ __('admin.publish') }}</label>
                         </div>
                         @error('is_published')

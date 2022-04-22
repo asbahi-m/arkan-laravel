@@ -35,8 +35,8 @@
                                 <strong>{{ __('admin.status') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'view_count' ? 'Desc' : '' }}=view_count">
-                                    <i class="fa fa-sort{{ request('sortBy') == 'view_count' ? '-asc' : (request('sortByDesc') == 'view_count' ? '-desc' : '') }}"></i></a>
+                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'views_count' ? 'Desc' : '' }}=views_count">
+                                    <i class="fa fa-sort{{ request('sortBy') == 'views_count' ? '-asc' : (request('sortByDesc') == 'views_count' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.views') }}</strong>
                             </th>
                             <th>{{ __('admin.action') }}</th>
@@ -53,14 +53,11 @@
                                 <td><small>{{ Carbon::create($client->created_at)->locale('en')->isoFormat('ll') }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
-                                        @if ($client->is_published)
-                                            <i class="fa fa-circle text-success mr-1"></i> <span>{{ __('admin.published') }}</span>
-                                        @else
-                                            <i class="fa fa-circle text-dark mr-1"></i> <span>{{ __('admin.unpublished') }}</span>
-                                        @endif
+                                        <i class="fa fa-circle text-{{ $client->is_published == 'published' ? 'success' : 'dark' }} mr-1"></i>
+                                        <span>{{ __('admin.' . $client->is_published) }}</span>
                                     </small>
                                 </td>
-                                <td><small>{{ $client->view_count }}</small></td>
+                                <td><small>{{ $client->views_count }}</small></td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('client.edit', $client) }}" class="btn btn-info shadow btn-xs sharp mr-1">

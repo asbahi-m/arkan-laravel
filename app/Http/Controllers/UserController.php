@@ -33,7 +33,7 @@ class UserController extends Controller
             $q->orderByDesc(request('sortByDesc'));
         });
 
-        $users = $users->paginate(20)->withQueryString();
+        $users = $users->paginate(PAGINATION_NUMBER)->withQueryString();
         return view('admin.user.index', compact('users'));
     }
 

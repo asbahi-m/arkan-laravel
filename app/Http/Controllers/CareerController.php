@@ -47,7 +47,7 @@ class CareerController extends Controller
             }
         }
 
-        $careers = $careers->latest()->paginate(20)->withQueryString();
+        $careers = $careers->latest()->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.career.index', compact('careers', 'careers_count', 'pending_count', 'accepted_count', 'rejected_count'));
     }

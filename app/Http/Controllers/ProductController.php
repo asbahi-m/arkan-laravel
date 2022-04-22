@@ -14,9 +14,15 @@ class ProductController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $products = Product::query()->withCount('view');
+        $products = Product::query()->withCount('views');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if ($request['type']) {
+            $products->whereHas('type', function ($q) use ($request) {
+                $q->where('name', $request['type']);
+            });
+        }
+
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $products->join('types', 'types.id', '=', 'products.type_id')
                 ->select('products.*', 'types.name as type_name')
@@ -26,7 +32,7 @@ class ProductController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $products->join('types', 'types.id', '=', 'products.type_id')
                 ->select('products.*', 'types.name as type_name')
@@ -36,7 +42,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $products->paginate(20)->withQueryString();
+        $products = $products->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.product.index', compact('products'));
     }

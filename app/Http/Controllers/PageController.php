@@ -15,9 +15,9 @@ class PageController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $pages = Page::query()->withCount('view');
+        $pages = Page::query()->withCount('views');
 
-        if (in_array($request['sortBy'], ['title', 'author', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortBy'], ['title', 'author', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortBy'] == 'author') {
                 $pages->join('users', 'users.id', '=', 'pages.user_id')
                 ->select('pages.*', 'users.name as username')
@@ -27,7 +27,7 @@ class PageController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['title', 'author', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['title', 'author', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'author') {
                 $pages->join('users', 'users.id', '=', 'pages.user_id')
                 ->select('pages.*', 'users.name as username')
@@ -37,7 +37,7 @@ class PageController extends Controller
             }
         }
 
-        $pages = $pages->paginate(20)->withQueryString();
+        $pages = $pages->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.page.index', compact('pages'));
     }

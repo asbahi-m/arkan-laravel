@@ -14,9 +14,15 @@ class ServiceController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $services = Service::query()->withCount('view');
+        $services = Service::query()->withCount('views');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if ($request['type']) {
+            $services->whereHas('type', function ($q) use ($request) {
+                $q->where('name', $request['type']);
+            });
+        }
+
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $services->join('types', 'types.id', '=', 'services.type_id')
                 ->select('services.*', 'types.name as type_name')
@@ -26,7 +32,7 @@ class ServiceController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $services->join('types', 'types.id', '=', 'services.type_id')
                 ->select('services.*', 'types.name as type_name')
@@ -36,7 +42,7 @@ class ServiceController extends Controller
             }
         }
 
-        $services = $services->paginate(20)->withQueryString();
+        $services = $services->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.service.index', compact('services'));
     }

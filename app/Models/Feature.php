@@ -10,7 +10,12 @@ class Feature extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function view() {
+    public function views() {
         return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
+    }
+
+    ## Accessor
+    protected function getIsPublishedAttribute($value) {
+        return $value == 1 ? 'published' : 'unpublished';
     }
 }

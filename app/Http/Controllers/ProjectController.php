@@ -14,9 +14,15 @@ class ProjectController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $projects = Project::query()->withCount('view');
+        $projects = Project::query()->withCount('views');
 
-        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if ($request['type']) {
+            $projects->whereHas('type', function ($q) use ($request) {
+                $q->where('name', $request['type']);
+            });
+        }
+
+        if (in_array($request['sortBy'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortBy'] == 'type') {
                 $projects->join('types', 'types.id', '=', 'projects.type_id')
                 ->select('projects.*', 'types.name as type_name')
@@ -26,7 +32,7 @@ class ProjectController extends Controller
             }
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'type', 'description', 'is_published', 'views_count', 'created_at'])) {
             if ($request['sortByDesc'] == 'type') {
                 $projects->join('types', 'types.id', '=', 'projects.type_id')
                 ->select('projects.*', 'types.name as type_name')
@@ -36,7 +42,7 @@ class ProjectController extends Controller
             }
         }
 
-        $projects = $projects->paginate(20)->withQueryString();
+        $projects = $projects->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.project.index', compact('projects'));
     }

@@ -31,7 +31,7 @@ class ContactUsController extends Controller
             $contacts->orderByDesc($request['sortByDesc']);
         }
 
-        $contacts = $contacts->latest()->paginate(20)->withQueryString();
+        $contacts = $contacts->latest()->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.contact.index', compact('contacts', 'msgs_count', 'unread_count', 'read_count'));
     }

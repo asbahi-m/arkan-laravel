@@ -13,17 +13,17 @@ class ClientController extends Controller
     use UploadFile;
 
     public function index(Request $request) {
-        $clients = Client::query()->withCount('view');
+        $clients = Client::query()->withCount('views');
 
-        if (in_array($request['sortBy'], ['name', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortBy'], ['name', 'is_published', 'views_count', 'created_at'])) {
             $clients->orderBy($request['sortBy']);
         }
 
-        if (in_array($request['sortByDesc'], ['name', 'is_published', 'view_count', 'created_at'])) {
+        if (in_array($request['sortByDesc'], ['name', 'is_published', 'views_count', 'created_at'])) {
             $clients->orderByDesc($request['sortByDesc']);
         }
 
-        $clients = $clients->paginate(20)->withQueryString();
+        $clients = $clients->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.client.index', compact('clients'));
     }

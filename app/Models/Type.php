@@ -11,15 +11,15 @@ class Type extends Model
     protected $guarded = [];
     protected $hidden = ['created_at', 'updated_at'];
 
-    public function service() {
+    public function services() {
         return $this->hasMany(Service::class);
     }
 
-    public function product() {
+    public function products() {
         return $this->hasMany(Product::class);
     }
 
-    public function project() {
+    public function projects() {
         return $this->hasMany(Project::class);
     }
 }

@@ -44,11 +44,8 @@
                                 <td><small>{{ $slider->order }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
-                                        @if ($slider->is_published)
-                                            <i class="fa fa-circle text-success mr-1"></i> <span>{{ __('admin.published') }}</span>
-                                        @else
-                                            <i class="fa fa-circle text-dark mr-1"></i> <span>{{ __('admin.unpublished') }}</span>
-                                        @endif
+                                        <i class="fa fa-circle text-{{ $slider->is_published == 'published' ? 'success' : 'dark' }} mr-1"></i>
+                                        <span>{{ __('admin.' . $slider->is_published) }}</span>
                                     </small>
                                 </td>
                                 <td>

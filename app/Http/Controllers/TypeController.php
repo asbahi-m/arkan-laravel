@@ -20,7 +20,7 @@ class TypeController extends Controller
 
             if ($request['sortBy'] == 'name') {
                 $types = $types->sortBy('name');
-            } else if (in_array($request['sortBy'], ['service', 'product', 'project'])) {
+            } else if (in_array($request['sortBy'], ['services', 'products', 'projects'])) {
                 $types = $types->sortBy(function ($q) use($request) {
                     return $q[$request['sortBy']]->count();
                 });
@@ -28,7 +28,7 @@ class TypeController extends Controller
 
             if ($request['sortByDesc'] == 'name') {
                 $types = $types->sortByDesc('name');
-            } else if (in_array($request['sortByDesc'], ['service', 'product', 'project'])) {
+            } else if (in_array($request['sortByDesc'], ['services', 'products', 'projects'])) {
                 $types = $types->sortByDesc(function ($q) use($request) {
                     return $q[$request['sortByDesc']]->count();
                 });

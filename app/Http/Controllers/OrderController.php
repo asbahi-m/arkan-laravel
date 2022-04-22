@@ -51,7 +51,7 @@ class OrderController extends Controller
             }
         }
 
-        $orders = $orders->latest()->paginate(20)->withQueryString();
+        $orders = $orders->latest()->paginate(PAGINATION_NUMBER)->withQueryString();
 
         return view('admin.order.index', compact('orders', 'orders_count', 'pending_count', 'accepted_count', 'rejected_count'));
     }
