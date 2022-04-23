@@ -88,6 +88,7 @@ return [
     'service_delete_success' => 'The service has been deleted successfully',
 
     // Products Page
+    'product' => 'Product',
     'products_all' => 'All Products',
     'product_add' => 'Add Product',
     'product_add_new' => 'Add a new product',
@@ -101,6 +102,7 @@ return [
     'product_delete_success' => 'The product has been deleted successfully',
 
     // Projects
+    'project' => 'Project',
     'projects_all' => 'All Projects',
     'project_add' => 'Add Project',
     'project_add_new' => 'Add a new project',
@@ -114,6 +116,7 @@ return [
     'project_delete_success' => 'The project has been deleted successfully',
 
     // Features Page
+    'feature' => 'Feature',
     'features_all' => 'All Features',
     'feature_add' => 'Add Feature',
     'feature_add_new' => 'Add a new feature',
@@ -126,6 +129,7 @@ return [
     'feature_delete_success' => 'The feature has been deleted successfully',
 
     // Clients Page
+    'client' => 'Client',
     'clients_all' => 'All Clients',
     'client_add' => 'Add Client',
     'client_add_new' => 'Add a new client',
@@ -138,6 +142,7 @@ return [
     'client_delete_success' => 'The client has been deleted successfully',
 
     // Pages
+    'page' => 'Page',
     'pages_all' => 'All Pages',
     'page_add' => 'Add Page',
     'page_add_new' => 'Add a new page',
@@ -266,10 +271,14 @@ return [
     'contact_us' => 'Contact Us',
 
     // Others
-
+    '' => '',
     '' => '',
     'views' => 'Views',
     'view' => 'View',
+    'views_last_week' => 'Views Last Week',
+    'views_today' => 'Views Today',
+    'views_weekly' => 'Views Weekly',
+    'total_views' => 'Total Views',
     'title' => 'Title',
     'description' => 'Description',
     'author' => 'Author',

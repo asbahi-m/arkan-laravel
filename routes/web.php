@@ -15,6 +15,7 @@ use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,8 @@ Route::redirect('/cpanel', url('dashboard'));
 Route::redirect('/user/profile', url('cpanel/profile'));
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.index');
-    })->name('dashboard');
+    // Dashboard Route
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::group(['prefix' => 'cpanel'], function () {
         // User Route

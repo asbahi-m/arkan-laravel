@@ -9,7 +9,9 @@ class View extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public $timestamps = false;
+    // public $timestamps = false;
+    const CREATED_AT = 'viewed_at';
+    protected $dateFormat = 'U';
 
     public function service() {
         return $this->belongsTo(Service::class, 'view_id')->where('view_model', 'Service');
