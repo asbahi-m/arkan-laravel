@@ -32,8 +32,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-sm light" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success btn-sm mr-2">{{ __('admin.accept') }}</button>
+                            <button type="button" class="btn btn-danger btn-sm light" data-dismiss="modal">{{ __('admin.close' )}}</button>
                         </div>
                     </form>
                 </div>
@@ -118,7 +118,7 @@
                                 <td><small>{{ $order->email }}</small></td>
                                 <td><small>{{ $order->phone }}</small></td>
                                 <td><small>{{ $order->service->name }}</small></td>
-                                <td><small>{{ Carbon::create($order->created_at)->locale('en')->isoFormat('ll') }}</small></td>
+                                <td><small>{{ Carbon::create($order->created_at)->locale(app()->getLocale())->isoFormat('ll') }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
                                         @if ($order->status == 'pending')

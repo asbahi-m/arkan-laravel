@@ -33,8 +33,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger btn-sm light" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success btn-sm mr-2">{{ __('admin.accept') }}</button>
+                            <button type="button" class="btn btn-danger btn-sm light" data-dismiss="modal">{{ __('admin.close' )}}</button>
                         </div>
                     </form>
                 </div>

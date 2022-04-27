@@ -7,7 +7,7 @@
                 <div class="card-body p-4">
                     <div class="media ai-icon">
                         <span class="mr-3 bgl-primary text-primary">
-                            <i class="fa fa-cubes"></i>
+                            <i class="flaticon-077-menu-1"></i>
                         </span>
                         <div class="media-body">
                             <p class="mb-1">{{ __('admin.services') }}</p>
@@ -113,7 +113,7 @@
                 <div class="col-sm-6 col-md-4 col-lg-12">
                     <div class="widget-stat card">
                         <div class="card-body p-4">
-                            <h4 class="card-title">{{ __('admin.views_weekly') }}</h4>
+                            <h4 class="card-title">{{ __('admin.total_views') }}</h4>
                             <h3>{{ $views_count }}</h3>
                             <div class="progress mb-2">
                                 <div class="progress-bar progress-animated bg-primary" style="width: 80%"></div>

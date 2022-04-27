@@ -1,3 +1,6 @@
+@php
+    $locales = App\Models\Locale::whereNull('is_disabled')->get();
+@endphp
 <div class="nav-header">
     <!-- Brand -->
     <a href="{{ route('dashboard') }}" class="brand-logo">
@@ -28,6 +31,21 @@
                     </div>
                 </div>
                 <ul class="navbar-nav header-right main-notification">
+                    <!-- Set Locales -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link p-3 rounded" href="#" role="button" data-toggle="dropdown">
+                            <i class="fa fa-language"></i> {{ Str::upper(app()->getLocale()) }}</a>
+                        @if ($locales->count() > 1)
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @foreach ($locales as $locale)
+                                    @if ($locale->short_sign != app()->getLocale())
+                                        <a href="{{ route('setLocale', $locale['short_sign']) }}" class="dropdown-item ai-icon">{{ __('admin.' . Str::lower($locale->name)) }}</a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
+                    </li>
+
                     <!-- Notification -->
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link  ai-icon" href="javascript:void(0)" role="button" data-toggle="dropdown">

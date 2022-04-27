@@ -75,7 +75,7 @@
                                 <td style="width: 33.33%">
                                     <small>{{ Str::limit(strip_tags($contact->message), '80', '...') }}</small>
                                 </td>
-                                <td><small>{{ Carbon::create($contact->created_at)->locale('en')->isoFormat('ll') }}</small></td>
+                                <td><small>{{ Carbon::create($contact->created_at)->locale(app()->getLocale())->isoFormat('ll') }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
                                         @if ($contact->status == 'unread')

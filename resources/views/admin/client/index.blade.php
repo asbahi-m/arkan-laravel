@@ -50,7 +50,7 @@
                                 <td>
                                     <img src="{{ asset(Storage::url($client->image)) }}" class="img-thumbnail rounded-lg" width="120" alt=""/>
                                 </td>
-                                <td><small>{{ Carbon::create($client->created_at)->locale('en')->isoFormat('ll') }}</small></td>
+                                <td><small>{{ Carbon::create($client->created_at)->locale(app()->getLocale())->isoFormat('ll') }}</small></td>
                                 <td>
                                     <small class="d-flex align-items-center">
                                         <i class="fa fa-circle text-{{ $client->is_published == 'published' ? 'success' : 'dark' }} mr-1"></i>

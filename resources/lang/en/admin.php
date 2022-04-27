@@ -23,6 +23,7 @@ return [
     'delete' => 'Delete',
     'cancel' => 'Cancel',
     'edit' => 'Edit',
+    'close' => 'Close',
 
     // User Page
     'users_all' => 'All User',
@@ -272,7 +273,8 @@ return [
 
     // Others
     '' => '',
-    '' => '',
+    'arabic' => 'Arabic',
+    'english' => 'English',
     'views' => 'Views',
     'view' => 'View',
     'views_last_week' => 'Views Last Week',
@@ -295,16 +297,14 @@ return [
     'publish' => 'Publish',
     'published' => 'Published',
     'unpublished' => 'Unpublished',
-    'chioce_type' => 'Chioce one type',
+    'choice_type' => 'Choice one type',
     'choose_image' => 'Choose Image',
     'choose_media' => 'Choose Media',
 
-    'hello' => 'Hello',
     'search' => 'Search',
     'search_placeholder' => 'Find something here...',
     // 'pagination_info' => '{0} There are none|{1} Showing :Items item|[2,*] Showing :Items items out of :Total in total',
     'pagination_info' => '{0} There are none|[1,*] Showing :Items of :Total results',
-    'pagination_info2' => '{0} There are none|[1,*] Showing :Items of :Total results',
     'no_data' => 'There is no data entered.',
     'all' => 'All',
     'blank' => 'Blank',
@@ -313,6 +313,6 @@ return [
     'message' => 'Message',
     'hello' => 'Hello',
     'welcome_back' => 'welcome back!',
-    'yours_sincerly' => 'yours sincerly',
+    'yours_sincerely' => 'yours sincerly',
 
 ];

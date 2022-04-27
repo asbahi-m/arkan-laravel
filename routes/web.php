@@ -16,6 +16,11 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\DashboardController;
+use App\Models\Locale;
+
+$locales = Locale::whereNull('is_disabled')->pluck('short_sign')->implode('|');
+define('LOCALES', $locales);
+define('PAGINATION_NUMBER', 20);
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +32,6 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-define('PAGINATION_NUMBER', 20);
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,9 +40,15 @@ Route::get('/', function () {
 Route::redirect('/cpanel', url('dashboard'));
 Route::redirect('/user/profile', url('cpanel/profile'));
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'setLocale'])->group(function () {
     // Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Set Locale for Admin Pages
+    Route::get('dashboard/{locale}', function ($locale) {
+        Session::put('locale', $locale);
+        return back();
+    })->name('setLocale')->where('locale', LOCALES);
 
     Route::group(['prefix' => 'cpanel'], function () {
         // User Route

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir={{ app()->isLocale('ar') ? 'rtl' : 'ltr' }} class="{{ app()->isLocale('ar') ? 'rtl' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,9 +21,18 @@
     <link href="{{ asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
     {{--<link href="{{ asset('admin/vendor/owl-carousel/owl.carousel.css') }}" rel="stylesheet">--}}
     @yield('link')
+    @if (app()->isLocale('ar'))
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @endif
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
     @yield('style')
     <style>
+        [dir=rtl] body {
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+        }
         table thead th {
             white-space: nowrap;
         }
@@ -47,7 +56,7 @@
         }
     </style>
 </head>
-<body>
+<body direction={{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}>
     <!-- Preloader -->
     <div id="preloader">
         <div class="sk-three-bounce">

@@ -18,6 +18,6 @@
     @endif
 
     <hr style="color: #fff" />
-    <div>{{ __('admin.yours_sincerly') }}</div>
+    <div>{{ __('admin.yours_sincerely') }}</div>
     <div style="color: #666"><a href="{{ url('/') }}">{{ config('app.name') }}</a></div>
 </div>

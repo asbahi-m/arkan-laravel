@@ -61,7 +61,7 @@ class DashboardController extends Controller
                     $item->put($date, collect([]));
             }
             return [
-                'name' => __('admin.' . Str::lower($key)),
+                'name' => __('admin.' . Str::plural(Str::lower($key))),
                 'data' => $item->sortKeys()->transform(function ($i) {
                     return $i->count() * 10 + 2;
                 })->values()->toArray(),
