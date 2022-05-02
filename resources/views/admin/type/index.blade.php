@@ -18,12 +18,19 @@
                 </div>
                 <div class="basic-form">
                     <form id="form-edit-type">
+                        @csrf
                         <div class="modal-body">
-                            @csrf
-                            @method('PUT')
                             <div class="form-group">
                                 <label class="text-label" for="edit-type-name">{{ __('admin.type_name') }}:</label>
+                                @forelse ($locales as $locale)
+                                    <div class="locale">
+                                        <input type="text" id="edit-type-name" class="form-control" name="type_name[{{ $locale->short_sign }}]"
+                                                lang="{{ $locale->short_sign }}" value="">
+                                        <small>{{ $locale->short_sign }}</small>
+                                    </div>
+                                @empty
                                 <input type="text" id="edit-type-name" class="form-control" name="type_name" value="" required>
+                                @endforelse
                                 <input type="hidden" name="type_id" value="">
                             </div>
                         </div>
@@ -52,8 +59,16 @@
                             <div class="form-group row">
                                 <label class="text-label col-auto" for="type-name">{{ __('admin.type_name') }}:</label>
                                 <div class="col-12 col-sm col-xl-12">
+                                    @forelse ($locales as $locale)
+                                    <div class="locale">
+                                        <input type="text" id="type-name" class="form-control" name="name[{{ $locale->short_sign }}]"
+                                                lang="{{ $locale->short_sign }}" value="{{ old('name.' . $locale->short_sign) }}">
+                                        <small>{{ $locale->short_sign }}</small>
+                                    </div>
+                                    @empty
                                     <input type="text" id="type-name" class="form-control" name="name"
                                             value="{{ old('name') }}" required>
+                                    @endforelse
                                 </div>
                             </div>
                             <!-- Submit -->
@@ -101,7 +116,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="py-2">{{ trans_choice('admin.pagination_info2', count($types), ['items' => count($types), 'total' => count($types)]) }}</div>
+                    <div class="py-2">{{ trans_choice('admin.pagination_info', count($types), ['items' => count($types), 'total' => count($types)]) }}</div>
                 </div>
             </div>
             <form id="form-delete" class="d-none">
@@ -120,12 +135,17 @@
         // Modal Edit
         $("#edit-type").on("show.bs.modal", function (event) {
             let btnEdit = event.relatedTarget;
+            let JSONTypeName = JSON.parse($(btnEdit).attr("data-name"));
+            for (const key in JSONTypeName) {
+                $(this).find(`[name='type_name[${key}]']`).val(JSONTypeName[key]);
+            };
             $(this).find("[name=type_name]").val($(btnEdit).data("name"));
             $(this).find("[name=type_id]").val($(btnEdit).data("id"));
         })
 
         $("#edit-type").on("hidden.bs.modal", function () {
             $(this).find("[name=type_id]").val("");
+            $(this).find("[name^=type_name]").val("");
         })
 
         $(".show-add-type").on("click", function () {
@@ -173,17 +193,19 @@
             $(".invalid-feedback").remove();
 
             // Get Input Type Name;
-            let name = $(e.delegateTarget).find('[name=name]');
+            let form = $(e.delegateTarget)[0];
+            let formData = new FormData(form);
 
             $.ajax({
                 type: "post",
                 url: "{{ route('type.inline_store') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "name": name.val(),
-                },
-                // processData: false,
-                // contentType: false,
+                // data: {
+                //     "_token": "{{ csrf_token() }}",
+                //     "name": name.val(),
+                // },
+                data: formData,
+                processData: false,
+                contentType: false,
                 cache: false,
                 success: function (data) {
                     if (data.status) {
@@ -196,14 +218,21 @@
                         $(".index small").each(function (index) {
                             $(this).text(++index);
                         });
-                        name.val('');
+                        $("input[type=text]").val("");
                         console.log(data);
                     }
                 },
                 error: function (reject) {
                     let errors = reject.responseJSON.errors;
-                    name.after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
-                            ${errors.name[0]}</div>`);
+                    for (const key in errors) {
+                        let name = key;
+                        let index = key.lastIndexOf('.');
+                        if (index != -1) name = `${name.slice(0, index)}[${name.slice(index + 1)}]`;
+                        $(`[name='${name}']`).after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
+                            ${errors[key][0]}</div>`);
+                    }
+                    // name.after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
+                    //         ${errors.name[0]}</div>`);
                 },
             });
         })
@@ -216,30 +245,39 @@
             $(".invalid-feedback").remove();
 
             // Get Inputs;
-            let id = $(e.delegateTarget).find('[name=type_id]');
-            let name = $(e.delegateTarget).find('[name=type_name]');
+            let form = $(e.delegateTarget)[0];
+            let formData = new FormData(form);
 
             $.ajax({
-                type: "put",
+                type: "post",
                 url: "{{ route('type.update') }}",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "type_id": id.val(),
-                    "type_name": name.val(),
-                },
-                // processData: false,
-                // contentType: false,
+                // data: {
+                //     "_token": "{{ csrf_token() }}",
+                //     "type_id": id.val(),
+                //     "type_name": name.val(),
+                // },
+                data: formData,
+                processData: false,
+                contentType: false,
                 cache: false,
                 success: function (data) {
                     if (data.status) {
                         $(".row-" + data.id + " .type-name strong").text(data.name.toUpperCase());
                         $("[data-dismiss='modal']").trigger('click');
+                        $(".row-" + data.id + " button[data-name]").attr("data-name", JSON.stringify(data.t_types));
                     }
                 },
                 error: function (reject) {
                     let errors = reject.responseJSON.errors;
-                    name.after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
-                            ${errors.type_name[0]}</div>`);
+                    for (const key in errors) {
+                        let name = key;
+                        let index = key.lastIndexOf('.');
+                        if (index != -1) name = `${name.slice(0, index)}[${name.slice(index + 1)}]`;
+                        $(`[name='${name}']`).after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
+                            ${errors[key][0]}</div>`);
+                    }
+                    // name.after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
+                    //         ${errors.type_name[0]}</div>`);
                 },
             });
         })

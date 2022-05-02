@@ -54,6 +54,29 @@
         .deznav .metismenu > li a > i {
             font-size: 1.3rem;
         }
+        .locale {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .locale [lang] {
+            direction: ltr;
+        }
+        .locale [lang=ar] {
+            direction: rtl;
+        }
+        .locale small {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translate(-50%, -50%);
+            background: #eee;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body direction={{ app()->isLocale('ar') ? 'rtl' : 'ltr' }}>

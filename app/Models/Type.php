@@ -22,4 +22,8 @@ class Type extends Model
     public function projects() {
         return $this->hasMany(Project::class);
     }
+
+    public function t_types() {
+        return $this->hasMany(T_type::class);
+    }
 }

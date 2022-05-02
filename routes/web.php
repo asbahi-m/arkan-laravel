@@ -20,6 +20,7 @@ use App\Models\Locale;
 
 $locales = Locale::whereNull('is_disabled')->pluck('short_sign')->implode('|');
 define('LOCALES', $locales);
+define('DEFAULT_LOCALE', config('app.locale'));
 define('PAGINATION_NUMBER', 20);
 
 /*
@@ -46,7 +47,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     // Set Locale for Admin Pages
     Route::get('dashboard/{locale}', function ($locale) {
-        Session::put('locale', $locale);
+        session()->put('locale', $locale);
         return back();
     })->name('setLocale')->where('locale', LOCALES);
 
@@ -67,7 +68,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
             Route::get('/', 'index')->name('index');
             Route::get('/sort', 'sortByAjax')->name('sort');
             Route::post('/inline_store', 'inline_store')->name('inline_store');
-            Route::put('/update', 'update')->name('update');
+            Route::post('/update', 'update')->name('update');
             Route::delete('/delete', 'destroy')->name('delete');
         });
 
