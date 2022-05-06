@@ -24,8 +24,8 @@
                                 <strong>{{ __('admin.name') }}</strong>
                             </th>
                             <th>
-                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'type' ? 'Desc' : '' }}=type">
-                                    <i class="fa fa-sort{{ request('sortBy') == 'type' ? '-asc' : (request('sortByDesc') == 'type' ? '-desc' : '') }}"></i></a>
+                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'type_name' ? 'Desc' : '' }}=type_name">
+                                    <i class="fa fa-sort{{ request('sortBy') == 'type_name' ? '-asc' : (request('sortByDesc') == 'type_name' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.type') }}</strong>
                             </th>
                             {{-- <th>
@@ -57,7 +57,7 @@
                             <tr>
                                 <td><small>{{ $services->firstItem() + $key }}</small></td>
                                 <td><small><strong>{{ $service->name }}</strong></small></td>
-                                <td><small>{{ $service->type ? Str::upper($service->type->name) : '' }}</small></td>
+                                <td><small>{{ $service->type ? Str::upper($service->type_name) : '' }}</small></td>
                                 {{-- <td style="width: 33.33%">
                                     <small>{{ Str::limit(strip_tags($service->description), '80', '...') }}</small>
                                 </td> --}}
@@ -76,7 +76,7 @@
                                     <div class="d-flex">
                                         <a href="{{ route('service.edit', $service) }}" class="btn btn-info shadow btn-xs sharp mr-1">
                                             <i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick="confirmDelete({{ $service->id }})">
+                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick='confirmDelete("{{ $service->id }}")'>
                                             <i class="fa fa-trash"></i></button>
                                         <a href="#" target="_blank" class="btn btn-dark shadow btn-xs sharp">
                                             <i class="fa fa-eye"></i></a>

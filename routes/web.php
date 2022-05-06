@@ -18,8 +18,6 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Locale;
 
-$locales = Locale::whereNull('is_disabled')->pluck('short_sign')->implode('|');
-define('LOCALES', $locales);
 define('DEFAULT_LOCALE', config('app.locale'));
 define('PAGINATION_NUMBER', 20);
 
@@ -46,10 +44,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Set Locale for Admin Pages
-    Route::get('dashboard/{locale}', function ($locale) {
-        session()->put('locale', $locale);
-        return back();
-    })->name('setLocale')->where('locale', LOCALES);
+    $locales = Locale::whereNull('is_disabled')->pluck('short_sign')->implode('|');
+    if ($locales) {
+        Route::get('dashboard/{locale}', function ($locale) {
+            session()->put('locale', $locale);
+            return back();
+        })->name('setLocale')->where('locale', $locales);
+    }
 
     Route::group(['prefix' => 'cpanel'], function () {
         // User Route

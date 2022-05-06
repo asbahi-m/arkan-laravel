@@ -19,20 +19,53 @@
                     <!-- Service Name -->
                     <div class="form-group">
                         <label class="text-label" for="service-name">{{ __('admin.service_name') }}:</label>
-                        <input type="text" id="service-name" class="form-control" name="name"
-                                value="{{ $service->name }}" required>
-                        @error('name')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_service = $service->t_services->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $service_name = $locale->short_sign == DEFAULT_LOCALE ? $service->name : '';
+                            @endphp
+                            <div class="locale">
+                                <input type="text" id="service-name" class="form-control" name="name[{{ $locale->short_sign }}]"
+                                        lang="{{ $locale->short_sign }}" value="{{ $t_service ? $t_service->name : $service_name }}">
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('name.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <input type="text" id="service-name" class="form-control" name="name" value="{{ $service->name }}" required>
+                            @error('name')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Service Description -->
                     <div class="form-group">
                         <label class="text-label" for="service-desc">{{ __('admin.service_desc') }}:</label>
-                        <textarea class="form-control summernote" name="description" rows="4">{{ $service->description }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_service = $service->t_services->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $service_desc = $locale->short_sign == DEFAULT_LOCALE ? $service->description : '';
+                            @endphp
+                            <div class="locale">
+                                <textarea class="form-control summernote" name="description[{{ $locale->short_sign }}]" rows="4"
+                                        lang="{{ $locale->short_sign }}">{{ $t_service ? $t_service->description : $service_desc }}</textarea>
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('description.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <textarea class="form-control summernote" name="description" rows="4">{{ $service->description }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Service Type -->
@@ -80,7 +113,7 @@
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                         <img id="show-image" class="img-thumbnail mb-3"
-                                style="max-width: 200px; display: {{ isset($service->image) ? 'block' : 'none' }}"
+                                style="max-width: 200px; display: '{{ isset($service->image) ? 'block' : 'none' }}'"
                                 src="{{ isset($service->image) ? asset(Storage::url($service->image)) : '' }}" alt="" />
                     </div>
 

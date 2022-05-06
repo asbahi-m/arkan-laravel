@@ -135,11 +135,15 @@
         // Modal Edit
         $("#edit-type").on("show.bs.modal", function (event) {
             let btnEdit = event.relatedTarget;
-            let JSONTypeName = JSON.parse($(btnEdit).attr("data-name"));
-            for (const key in JSONTypeName) {
-                $(this).find(`[name='type_name[${key}]']`).val(JSONTypeName[key]);
-            };
-            $(this).find("[name=type_name]").val($(btnEdit).data("name"));
+            let dataName = $(btnEdit).attr("data-name");
+            if (isJson(dataName)) {
+                let JSONTypeName = JSON.parse(dataName);
+                for (const key in JSONTypeName) {
+                    $(this).find(`[name='type_name[${key}]']`).val(JSONTypeName[key]);
+                };
+            } else {
+                $(this).find("[name=type_name]").val(dataName);
+            }
             $(this).find("[name=type_id]").val($(btnEdit).data("id"));
         })
 
@@ -219,7 +223,6 @@
                             $(this).text(++index);
                         });
                         $("input[type=text]").val("");
-                        console.log(data);
                     }
                 },
                 error: function (reject) {
@@ -231,8 +234,6 @@
                         $(`[name='${name}']`).after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
                             ${errors[key][0]}</div>`);
                     }
-                    // name.after(`<div class="invalid-feedback animated fadeInUp" style="display: block;">
-                    //         ${errors.name[0]}</div>`);
                 },
             });
         })
@@ -264,7 +265,7 @@
                     if (data.status) {
                         $(".row-" + data.id + " .type-name strong").text(data.name.toUpperCase());
                         $("[data-dismiss='modal']").trigger('click');
-                        $(".row-" + data.id + " button[data-name]").attr("data-name", JSON.stringify(data.t_types));
+                        $(".row-" + data.id + " button[data-name]").attr("data-name", data.t_types);
                     }
                 },
                 error: function (reject) {
@@ -325,6 +326,16 @@
                         })
                     }
                 })
+        }
+
+        // Test Json
+        function isJson(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
         }
     </script>
 @endsection
