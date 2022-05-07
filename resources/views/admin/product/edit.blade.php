@@ -114,7 +114,7 @@
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                         <img id="show-image" class="img-thumbnail mb-3"
-                                style="max-width: 200px; display: '{{ isset($service->image) ? 'block' : 'none' }}'"
+                                style="max-width: 200px; display: '{{ isset($product->image) ? 'block' : 'none' }}'"
                                 src="{{ isset($product->image) ? asset(Storage::url($product->image)) : '' }}" alt="" />
                     </div>
 

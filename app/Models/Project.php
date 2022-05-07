@@ -18,6 +18,10 @@ class Project extends Model
         return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
     }
 
+    public function t_projects() {
+        return $this->hasMany(T_project::class);
+    }
+
     ## Accessor
     protected function getIsPublishedAttribute($value) {
         return $value == 1 ? 'published' : 'unpublished';
