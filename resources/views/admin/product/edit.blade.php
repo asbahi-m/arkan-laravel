@@ -19,20 +19,54 @@
                     <!-- Product Name -->
                     <div class="form-group">
                         <label class="text-label" for="product-name">{{ __('admin.product_name') }}:</label>
-                        <input type="text" id="product-name" class="form-control" name="name"
-                                value="{{ $product->name }}" required>
-                        @error('name')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_product = $product->t_products->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $product_name = $locale->short_sign == DEFAULT_LOCALE ? $product->name : '';
+                            @endphp
+                            <div class="locale">
+                                <input type="text" id="product-name" class="form-control" name="name[{{ $locale->short_sign }}]"
+                                        lang="{{ $locale->short_sign }}" value="{{ $t_product ? $t_product->name : $product_name }}">
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('name.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <input type="text" id="product-name" class="form-control" name="name"
+                                    value="{{ $product->name }}" required>
+                            @error('name')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Product Description -->
                     <div class="form-group">
                         <label class="text-label" for="product-desc">{{ __('admin.product_desc') }}:</label>
-                        <textarea class="form-control summernote" name="description" rows="4">{{ $product->description }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_product = $product->t_products->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $product_desc = $locale->short_sign == DEFAULT_LOCALE ? $product->description : '';
+                            @endphp
+                            <div class="locale">
+                                <textarea class="form-control summernote" name="description[{{ $locale->short_sign }}]" rows="4"
+                                        lang="{{ $locale->short_sign }}">{{ $t_product ? $t_product->description : $product_desc }}</textarea>
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('description.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <textarea class="form-control summernote" name="description" rows="4">{{ $product->description }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Product Type -->
@@ -80,7 +114,7 @@
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                         <img id="show-image" class="img-thumbnail mb-3"
-                                style="max-width: 200px; display: {{ isset($product->image) ? 'block' : 'none' }}"
+                                style="max-width: 200px; display: '{{ isset($service->image) ? 'block' : 'none' }}'"
                                 src="{{ isset($product->image) ? asset(Storage::url($product->image)) : '' }}" alt="" />
                     </div>
 

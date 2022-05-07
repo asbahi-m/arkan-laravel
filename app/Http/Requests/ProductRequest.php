@@ -4,10 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Type;
-use Rule;
+use Illuminate\Validation\Rule;
+use App\Traits\GetLocales;
 
 class ProductRequest extends FormRequest
 {
+    use GetLocales;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,12 +28,21 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $types = Type::pluck('id')->push(0)->toArray();
-        return [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
+        $locales = $this->locales();
+        $rules = [
+            // 'name' => ['required', 'string', 'min:3', 'max:100'],
+            // 'description' => ['nullable', 'string'],
             'type_id' => ['nullable', Rule::in($types)],
             'is_published' => ['required', 'boolean'],
             'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
         ];
+        if ($locales->count()) {
+            $rules['name.*'] = ['required', 'string', 'min:3', 'max:100'];
+            $rules['description.*'] = ['nullable', 'string'];
+        } else {
+            $rules['name'] = ['required', 'string', 'min:3', 'max:100'];
+            $rules['description'] = ['nullable', 'string'];
+        }
+        return $rules;
     }
 }
