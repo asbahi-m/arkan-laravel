@@ -14,6 +14,10 @@ class Feature extends Model
         return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
     }
 
+    public function t_features() {
+        return $this->hasMany(T_feature::class);
+    }
+
     ## Accessor
     protected function getIsPublishedAttribute($value) {
         return $value == 1 ? 'published' : 'unpublished';

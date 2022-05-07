@@ -70,7 +70,7 @@
                                     <div class="d-flex">
                                         <a href="{{ route('feature.edit', $feature) }}" class="btn btn-info shadow btn-xs sharp mr-1">
                                             <i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick="confirmDelete({{ $feature->id }})">
+                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick='confirmDelete("{{ $feature->id }}")'>
                                             <i class="fa fa-trash"></i></button>
                                         <a href="#" target="_blank" class="btn btn-dark shadow btn-xs sharp">
                                             <i class="fa fa-eye"></i></a>

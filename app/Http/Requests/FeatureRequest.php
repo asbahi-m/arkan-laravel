@@ -3,9 +3,11 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Traits\GetLocales;
 
 class FeatureRequest extends FormRequest
 {
+    use GetLocales;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,11 +25,20 @@ class FeatureRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'description' => ['nullable', 'string'],
+        $locales = $this->locales();
+        $rules = [
+            // 'name' => ['required', 'string', 'min:3', 'max:100'],
+            // 'description' => ['nullable', 'string'],
             'is_published' => ['required', 'boolean'],
             'image' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
         ];
+        if ($locales->count()) {
+            $rules['name.*'] = ['required', 'string', 'min:3', 'max:100'];
+            $rules['description.*'] = ['nullable', 'string'];
+        } else {
+            $rules['name'] = ['required', 'string', 'min:3', 'max:100'];
+            $rules['description'] = ['nullable', 'string'];
+        }
+        return $rules;
     }
 }

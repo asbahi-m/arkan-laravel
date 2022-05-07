@@ -19,20 +19,54 @@
                     <!-- Feature Name -->
                     <div class="form-group">
                         <label class="text-label" for="feature-name">{{ __('admin.feature_name') }}:</label>
-                        <input type="text" id="feature-name" class="form-control" name="name"
-                                value="{{ $feature->name }}" required>
-                        @error('name')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_feature = $feature->t_features->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $feature_name = $locale->short_sign == DEFAULT_LOCALE ? $feature->name : '';
+                            @endphp
+                            <div class="locale">
+                                <input type="text" id="feature-name" class="form-control" name="name[{{ $locale->short_sign }}]"
+                                        lang="{{ $locale->short_sign }}" value="{{ $t_feature ? $t_feature->name : $feature_name }}">
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('name.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <input type="text" id="feature-name" class="form-control" name="name"
+                                    value="{{ $feature->name }}" required>
+                            @error('name')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Feature Description -->
                     <div class="form-group">
                         <label class="text-label" for="feature-desc">{{ __('admin.feature_desc') }}:</label>
-                        <textarea class="form-control summernote" name="description" rows="4">{{ $feature->description }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            @php
+                                $t_feature = $feature->t_features->filter(function ($value) use ($locale) {
+                                    return $value['locale_id'] == $locale->id;
+                                })->first();
+                                $feature_desc = $locale->short_sign == DEFAULT_LOCALE ? $feature->description : '';
+                            @endphp
+                            <div class="locale">
+                                <textarea class="form-control summernote" name="description[{{ $locale->short_sign }}]" rows="4"
+                                        lang="{{ $locale->short_sign }}">{{ $t_feature ? $t_feature->description : $feature_desc }}</textarea>
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('description.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <textarea class="form-control summernote" name="description" rows="4">{{ $feature->description }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Feature Publish -->
@@ -65,7 +99,7 @@
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                         <img id="show-image" class="img-thumbnail mb-3"
-                                style="max-width: 200px; display: {{ isset($feature->image) ? 'block' : 'none' }}"
+                                style="max-width: 200px; display: '{{ isset($feature->image) ? 'block' : 'none' }}'"
                                 src="{{ isset($feature->image) ? asset(Storage::url($feature->image)) : '' }}" alt="" />
                     </div>
 
