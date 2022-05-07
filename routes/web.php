@@ -18,8 +18,8 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\DashboardController;
 use App\Models\Locale;
 
-define('DEFAULT_LOCALE', config('app.locale'));
-define('PAGINATION_NUMBER', 20);
+if (!defined('DEFAULT_LOCALE')) define('DEFAULT_LOCALE', config('app.locale'));
+if (!defined('PAGINATION_NUMBER')) define('PAGINATION_NUMBER', '20');
 
 /*
 |--------------------------------------------------------------------------

@@ -33,6 +33,22 @@
             font-family: 'Cairo', sans-serif;
             font-size: 16px;
         }
+        @media only screen and (max-width: 575.98px) {
+            [data-sidebar-style="overlay"] .header {
+                padding-left: 4rem;
+            }
+            [direction="rtl"][data-sidebar-style="overlay"] .header {
+                padding-left: unset;
+                padding-right: 4rem;
+            }
+            [direction="rtl"][data-sidebar-style="overlay"] .header .header-content {
+                padding-right: 3.5rem;
+            }
+        }
+        [data-theme-version="dark"] .dropdown-menu,
+        [data-theme-version="dark"] .header-right .dropdown-menu {
+            box-shadow: 0px 0px 0px 1px rgb(44, 37, 74);
+        }
         table thead th {
             white-space: nowrap;
         }
@@ -53,6 +69,40 @@
         }
         .deznav .metismenu > li a > i {
             font-size: 1.3rem;
+        }
+        .header-left .nav-link {
+            color: #fff;
+            background: #2C254A;
+            position: relative;
+            border-radius: 15px;
+            font-size: 14px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        .header-left .nav-link .badge {
+            position: absolute;
+            right: -4px;
+            top: -4px;
+            font-size: 12px;
+            height: 18px;
+            width: 18px;
+            line-height: 18px;
+            padding: 0
+        }
+        [dir=rtl] .header-left .nav-link .badge {
+            left: -4px;
+            right: unset;
+        }
+        @media (min-width: 576px) {
+            .header-left .nav-link {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .header-left .nav-link i {
+                font-size: 20px;
+            }
         }
         .locale {
             position: relative;

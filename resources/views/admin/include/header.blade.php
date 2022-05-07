@@ -1,5 +1,8 @@
 @php
     $locales = App\Models\Locale::whereNull('is_disabled')->get();
+    $orders_count = App\Models\Order::where('status', 'pending')->count();
+    $careers_count = App\Models\Career::where('status', 'pending')->count();
+    $msgs_count = App\Models\ContactUs::where('status', 'unread')->count();
 @endphp
 <div class="nav-header">
     <!-- Brand -->
@@ -19,8 +22,8 @@
     <div class="header-content">
         <nav class="navbar navbar-expand">
             <div class="collapse navbar-collapse justify-content-between">
-                <div class="header-left">
-                    <!-- Search Feild -->
+                <ul class="header-left">
+                    {{--<!-- Search Feild -->
                     <div class="input-group search-area right d-lg-inline-flex d-none">
                         <input type="search" class="form-control" placeholder="{{ __('admin.search_placeholder') }}">
                         <div class="input-group-append">
@@ -28,13 +31,37 @@
                                 <a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a>
                             </span>
                         </div>
-                    </div>
-                </div>
+                    </div>--}}
+                    @if (Route::has('order.index'))
+                        <li class="nav-item"><a href="{{ route('order.index') }}" class="nav-link" aria-expanded="false">
+                                <i class="fa fa-cart-plus"></i>
+                                <span class="nav-text d-none d-md-inline-block">{{ __('admin.orders') }}</span>
+                                <span class="badge text-white bg-primary rounded-circle">{{ $orders_count }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Route::has('career.index'))
+                        <li class="nav-item"><a href="{{ route('career.index') }}" class="nav-link" aria-expanded="false">
+                                <i class="fa fa-id-badge"></i>
+                                <span class="nav-text d-none d-md-inline-block">{{ __('admin.careers') }}</span>
+                                <span class="badge text-white bg-primary rounded-circle">{{ $careers_count }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (Route::has('contact.index'))
+                        <li class="nav-item"><a href="{{ route('contact.index') }}" class="nav-link" aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="nav-text d-none d-md-inline-block">{{ __('admin.messages') }}</span>
+                                <span class="badge text-white bg-primary rounded-circle">{{ $msgs_count }}</span>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
                 <ul class="navbar-nav header-right main-notification">
                     <!-- Set Locales -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link p-3 rounded" href="#" role="button" data-toggle="dropdown">
-                            <i class="fa fa-language"></i> {{ Str::upper(app()->getLocale()) }}</a>
+                        <a class="nav-link p-1 p-sm-2 rounded fs-16" href="#" role="button" data-toggle="dropdown">
+                            <i class="fa fa-language d-none d-sm-inline-block mr-1"></i> {{ Str::upper(app()->getLocale()) }}</a>
                         @if ($locales->count() > 1)
                             <div class="dropdown-menu dropdown-menu-right">
                                 @foreach ($locales as $locale)
@@ -46,7 +73,7 @@
                         @endif
                     </li>
 
-                    <!-- Notification -->
+                    {{--<!-- Notification -->
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link  ai-icon" href="javascript:void(0)" role="button" data-toggle="dropdown">
                             <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +154,7 @@
                             </div>
                             <a class="all-notification" href="javascript:void(0)">See all notifications <i class="ti-arrow-right"></i></a>
                         </div>
-                    </li>
+                    </li>--}}
 
                     <!-- User Profile -->
                     <li class="nav-item dropdown header-profile">

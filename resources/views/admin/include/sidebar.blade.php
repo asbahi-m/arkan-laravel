@@ -126,7 +126,7 @@
                 </li>
             @endif
 
-            @if (Route::has('order.index'))
+            {{-- @if (Route::has('order.index'))
                 <li><a href="{{ route('order.index') }}" class="ai-icon d-flex" aria-expanded="false">
                         <i class="fa fa-cart-plus"></i>
                         <span class="nav-text mr-auto">{{ __('admin.orders') }}</span>
@@ -151,7 +151,7 @@
                         <span class="badge light badge-info">{{ $msgs_count }}</span>
                     </a>
                 </li>
-            @endif
+            @endif --}}
 
             <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="fa fa-users"></i>
