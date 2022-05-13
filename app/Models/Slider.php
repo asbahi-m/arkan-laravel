@@ -11,6 +11,10 @@ class Slider extends Model
     protected $guarded = [];
     protected $hidden = ['created_at', 'updated_at'];
 
+    public function t_sliders() {
+        return $this->hasMany(T_slider::class);
+    }
+
     ## Accessor
     protected function getIsPublishedAttribute($value) {
         return $value == 1 ? 'published' : 'unpublished';
