@@ -99,8 +99,8 @@ class ProductController extends Controller
                     T_product::create([
                         'locale_id' => $locale->id,
                         'product_id' => $product->id,
-                        'name' => $request['name'][$locale->short_sign],
-                        'description' => isset($request['description'][$locale->short_sign]) ? $request['description'][$locale->short_sign] : null,
+                        'name' => $validated['name'][$locale->short_sign],
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }
@@ -136,7 +136,7 @@ class ProductController extends Controller
         if ($locales->count()) {
             $val_product = $validated;
             $val_product['name'] = $validated['name'][DEFAULT_LOCALE];
-            $val_product['description'] = isset($validated['description'][DEFAULT_LOCALE]) ? $validated['description'][DEFAULT_LOCALE] : null;
+            $val_product['description'] = $validated['description'][DEFAULT_LOCALE];
 
             $product->update($val_product);
 
@@ -148,7 +148,7 @@ class ProductController extends Controller
                         'locale_id' => $locale->id,
                         'product_id' => $product->id,
                         'name' => $validated['name'][$locale->short_sign],
-                        'description' => isset($validated['description'][$locale->short_sign]) ? $validated['description'][$locale->short_sign] : null,
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }

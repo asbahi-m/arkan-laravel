@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
-use Rule;
-use Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use App\Traits\UploadFile;
 
 class SliderController extends Controller

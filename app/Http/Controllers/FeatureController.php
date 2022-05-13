@@ -81,8 +81,8 @@ class FeatureController extends Controller
                     T_feature::create([
                         'locale_id' => $locale->id,
                         'feature_id' => $feature->id,
-                        'name' => $request['name'][$locale->short_sign],
-                        'description' => isset($request['description'][$locale->short_sign]) ? $request['description'][$locale->short_sign] : null,
+                        'name' => $validated['name'][$locale->short_sign],
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }
@@ -115,7 +115,7 @@ class FeatureController extends Controller
         if ($locales->count()) {
             $val_feature = $validated;
             $val_feature['name'] = $validated['name'][DEFAULT_LOCALE];
-            $val_feature['description'] = isset($validated['description'][DEFAULT_LOCALE]) ? $validated['description'][DEFAULT_LOCALE] : null;
+            $val_feature['description'] = $validated['description'][DEFAULT_LOCALE];
 
             $feature->update($val_feature);
 
@@ -127,7 +127,7 @@ class FeatureController extends Controller
                         'locale_id' => $locale->id,
                         'feature_id' => $feature->id,
                         'name' => $validated['name'][$locale->short_sign],
-                        'description' => isset($validated['description'][$locale->short_sign]) ? $validated['description'][$locale->short_sign] : null,
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }

@@ -79,7 +79,7 @@ class ClientController extends Controller
                     T_client::create([
                         'locale_id' => $locale->id,
                         'client_id' => $client->id,
-                        'name' => $request['name'][$locale->short_sign],
+                        'name' => $validated['name'][$locale->short_sign],
                     ]);
                 }
             }

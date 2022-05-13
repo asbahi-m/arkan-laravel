@@ -127,8 +127,8 @@ class ServiceController extends Controller
                     T_service::create([
                         'locale_id' => $locale->id,
                         'service_id' => $service->id,
-                        'name' => $request['name'][$locale->short_sign],
-                        'description' => isset($request['description'][$locale->short_sign]) ? $request['description'][$locale->short_sign] : null,
+                        'name' => $validated['name'][$locale->short_sign],
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }
@@ -164,7 +164,7 @@ class ServiceController extends Controller
         if ($locales->count()) {
             $val_service = $validated;
             $val_service['name'] = $validated['name'][DEFAULT_LOCALE];
-            $val_service['description'] = isset($validated['description'][DEFAULT_LOCALE]) ? $validated['description'][DEFAULT_LOCALE] : null;
+            $val_service['description'] = $validated['description'][DEFAULT_LOCALE];
 
             $service->update($val_service);
 
@@ -176,7 +176,7 @@ class ServiceController extends Controller
                         'locale_id' => $locale->id,
                         'service_id' => $service->id,
                         'name' => $validated['name'][$locale->short_sign],
-                        'description' => isset($validated['description'][$locale->short_sign]) ? $validated['description'][$locale->short_sign] : null,
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }

@@ -99,8 +99,8 @@ class ProjectController extends Controller
                     T_project::create([
                         'locale_id' => $locale->id,
                         'project_id' => $project->id,
-                        'name' => $request['name'][$locale->short_sign],
-                        'description' => isset($request['description'][$locale->short_sign]) ? $request['description'][$locale->short_sign] : null,
+                        'name' => $validated['name'][$locale->short_sign],
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }
@@ -136,7 +136,7 @@ class ProjectController extends Controller
         if ($locales->count()) {
             $val_project = $validated;
             $val_project['name'] = $validated['name'][DEFAULT_LOCALE];
-            $val_project['description'] = isset($validated['description'][DEFAULT_LOCALE]) ? $validated['description'][DEFAULT_LOCALE] : null;
+            $val_project['description'] = $validated['description'][DEFAULT_LOCALE];
 
             $project->update($val_project);
 
@@ -148,7 +148,7 @@ class ProjectController extends Controller
                         'locale_id' => $locale->id,
                         'project_id' => $project->id,
                         'name' => $validated['name'][$locale->short_sign],
-                        'description' => isset($validated['description'][$locale->short_sign]) ? $validated['description'][$locale->short_sign] : null,
+                        'description' => $validated['description'][$locale->short_sign],
                     ]);
                 }
             }

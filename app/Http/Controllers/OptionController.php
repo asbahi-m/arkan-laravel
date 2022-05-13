@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\OptionRequest;
 use App\Models\Option;
-use Route;
+use Illuminate\Support\Facades\Route;
 
 class OptionController extends Controller
 {

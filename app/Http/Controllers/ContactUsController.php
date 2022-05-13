@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactUsRequest;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 use App\Mail\ContactUs as ContactMail;
 
@@ -42,12 +42,6 @@ class ContactUsController extends Controller
 
     public function store(ContactUsRequest $request) {
         $validated = $request->safe();
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'email' => ['required', 'email'],
-            'phone' => ['nullable', 'numeric', 'min:8'],
-            'message' => ['required', 'string', 'min:3', 'max:6000'],
-        ]);
 
         ContactUs::create($validated->merge(['status' => 'unread'])->all());
 
