@@ -19,30 +19,63 @@
                     <!-- Page Title -->
                     <div class="form-group">
                         <label class="text-label" for="page-title">{{ __('admin.page_title') }}:</label>
-                        <input type="text" id="page-title" class="form-control" name="title"
-                                value="{{ old('title') }}" required>
-                        @error('title')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            <div class="locale">
+                                <input type="text" id="page-title" class="form-control" name="title[{{ $locale->short_sign }}]"
+                                        lang="{{ $locale->short_sign }}" value="{{ old('title.' . $locale->short_sign) }}">
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('title.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <input type="text" id="page-title" class="form-control" name="title"
+                                    value="{{ old('title') }}" required>
+                            @error('title')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Page Subtitle -->
                     <div class="form-group">
                         <label class="text-label" for="page-subtitle">{{ __('admin.page_subtitle') }}:</label>
-                        <input type="text" id="page-subtitle" class="form-control" name="subtitle"
-                                value="{{ old('subtitle') }}">
-                        @error('subtitle')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            <div class="locale">
+                                <input type="text" id="page-subtitle" class="form-control" name="subtitle[{{ $locale->short_sign }}]"
+                                        lang="{{ $locale->short_sign }}" value="{{ old('subtitle.' . $locale->short_sign) }}">
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('subtitle.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <input type="text" id="page-subtitle" class="form-control" name="subtitle"
+                                    value="{{ old('subtitle') }}">
+                            @error('subtitle')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Page Description -->
                     <div class="form-group">
                         <label class="text-label" for="page-desc">{{ __('admin.page_desc') }}:</label>
-                        <textarea class="form-control summernote" name="description" rows="4">{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
-                        @enderror
+                        @forelse ($locales as $locale)
+                            <div class="locale">
+                                <textarea class="form-control summernote" name="description[{{ $locale->short_sign }}]" rows="4"
+                                        lang="{{ $locale->short_sign }}">{{ old('description.' . $locale->short_sign) }}</textarea>
+                                <small>{{ $locale->short_sign }}</small>
+                            </div>
+                            @error('description.' . $locale->short_sign)
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @empty
+                            <textarea class="form-control summernote" name="description" rows="4">{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        @endforelse
                     </div>
 
                     <!-- Page Publish -->

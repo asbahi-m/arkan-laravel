@@ -18,6 +18,10 @@ class Page extends Model
         return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));
     }
 
+    public function t_pages() {
+        return $this->hasMany(T_page::class);
+    }
+
     ## Accessor
     protected function getIsPublishedAttribute($value) {
         return $value == 1 ? 'published' : 'unpublished';
