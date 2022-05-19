@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Rules\Password;
 use Illuminate\Validation\Rule;
 use App\Models\User;
+use App\Traits\GetLocales;
 use App\Traits\UploadFile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class ProfileController extends Controller
 {
     use UploadFile;
+    use GetLocales;
 
     protected function passwordRules()
     {
@@ -22,7 +24,8 @@ class ProfileController extends Controller
     }
 
     public function profile() {
-        return view('admin.user.profile');
+        $locales = $this->locales();
+        return view('admin.user.profile', compact('locales'));
     }
 
     public function passwordChange() {
@@ -54,10 +57,12 @@ class ProfileController extends Controller
 
     public function profileUpdate(Request $request) {
         $user = User::find(auth()->user()->id);
+        $locales = $this->locales()->pluck('short_sign');
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:40', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'string', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
             'avatar' => ['nullable', 'mimes:png,jpg,jpeg', 'max:1024'],
+            'fav_locale' => ['nullable', Rule::in($locales)],
         ]);
 
         // Upload Profile Avatar
@@ -80,6 +85,7 @@ class ProfileController extends Controller
         $user->forceFill([
             'name' => $request['name'],
             'email' => $request['email'],
+            'fav_locale' => $request['fav_locale'],
         ])->save();
 
         return back()->with('success', __('admin.profile_update_succsess'));

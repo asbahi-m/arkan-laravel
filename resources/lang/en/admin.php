@@ -276,6 +276,7 @@ return [
     'arabic' => 'Arabic',
     'english' => 'English',
     'french' => 'French',
+    'fav_locale' => 'Favorite Locale',
     'views' => 'Views',
     'view' => 'View',
     'views_last_week' => 'Views Last Week',

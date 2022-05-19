@@ -36,6 +36,22 @@
                         @enderror
                     </div>
 
+                    @if ($locales->count())
+                        <!-- Favorite Locale -->
+                        <div class="form-group">
+                            <label class="text-label">{{ __('admin.fav_locale') }}:</label>
+                            <select class="form-control default-select" name="fav_locale">
+                                @foreach ($locales as $locale)
+                                    <option {{ old('fav_locale') == $locale->short_sign || $locale->short_sign == DEFAULT_LOCALE ? 'selected' : '' }}
+                                        value="{{ $locale->short_sign }}">{{ Str::ucfirst($locale->name) }}</option>
+                                @endforeach
+                            </select>
+                            @error('fav_locale')
+                                <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
+
                     <!-- User Password -->
                     <div class="form-group">
                         <label class="text-label" for="password">{{ __('admin.password') }}:</label>

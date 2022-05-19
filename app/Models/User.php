@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_super_admin',
+        'fav_locale',
     ];
 
     /**
@@ -59,4 +60,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function locale() {
+        return $this->belongsTo(Locale::class, 'fav_locale', 'short_sign');
+    }
 }

@@ -10,7 +10,7 @@ Trait GetLocales
         $locales = Locale::query()
             // ->where('short_sign', '!=', DEFAULT_LOCALE))
             ->whereNull('is_disabled')
-            ->select('id', 'short_sign')
+            ->select('id', 'short_sign', 'name')
             ->get();
         return $locales;
     }

@@ -38,6 +38,11 @@
                                     <i class="fa fa-sort{{ request('sortBy') == 'is_super_admin' ? '-asc' : (request('sortByDesc') == 'is_super_admin' ? '-desc' : '') }}"></i></a>
                                 <strong>{{ __('admin.role') }}</strong>
                             </th>
+                            <th>
+                                <a class="text-white" href="?sortBy{{ request('sortBy') == 'fav_locale' ? 'Desc' : '' }}=fav_locale">
+                                    <i class="fa fa-sort{{ request('sortBy') == 'fav_locale' ? '-asc' : (request('sortByDesc') == 'fav_locale' ? '-desc' : '') }}"></i></a>
+                            <strong>{{ __('admin.fav_locale') }}</strong>
+                            </th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>
                     </thead>
@@ -69,11 +74,12 @@
                                         @endif
                                     </small>
                                 </td>
+                                <td><small>{{ $user->locale ? __('admin.' . Str::lower($user->locale->name)) : '' }}</small></td>
                                 <td>
                                     <div class="d-flex">
                                         <a href="{{ route('user.edit', $user) }}" class="btn btn-info shadow btn-xs sharp mr-1">
                                             <i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick="confirmDelete({{ $user->id }})">
+                                        <button class="btn btn-danger shadow btn-xs sharp mr-1" onclick='confirmDelete("{{ $user->id }}")'>
                                             <i class="fa fa-trash"></i></button>
                                         <a href="#" target="_blank" class="btn btn-dark shadow btn-xs sharp">
                                             <i class="fa fa-eye"></i></a>

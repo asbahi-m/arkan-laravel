@@ -276,6 +276,7 @@ return [
     'arabic' => 'Arabe',
     'english' => 'Anglaise',
     'french' => 'Français',
+    'fav_locale' => 'régionaux favoris',
     'views' => 'Vues',
     'view' => 'Visualiser',
     'views_last_week' => 'Vues la semaine dernière',

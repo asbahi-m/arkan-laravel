@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Traits\GetLocales;
 use Laravel\Fortify\Rules\Password;
-use Arr;
-use Rule;
-use Hash;
-use Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class UserController extends Controller
 {
+    use GetLocales;
+
     public function __construct() {
         $this->middleware('super')->except('index');
     }
@@ -25,11 +27,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        // dd(request()->all());
         $users = User::query();
-        $users->when(in_array(request('sortBy'), ['name', 'email', 'email_verified_at', 'is_super_admin']), function ($q) {
+        $users->when(in_array(request('sortBy'), ['name', 'email', 'email_verified_at', 'is_super_admin', 'fav_locale']), function ($q) {
             $q->orderBy(request('sortBy'));
-        })->when(in_array(request('sortByDesc'), ['name', 'email', 'email_verified_at', 'is_super_admin']), function ($q) {
+        })->when(in_array(request('sortByDesc'), ['name', 'email', 'email_verified_at', 'is_super_admin', 'fav_locale']), function ($q) {
             $q->orderByDesc(request('sortByDesc'));
         });
 
@@ -44,7 +45,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $locales = $this->locales();
+        return view('admin.user.create', compact('locales'));
     }
 
     /**
@@ -55,11 +57,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $locales = $this->locales()->pluck('short_sign');
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:40', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', new Password, 'confirmed'],
             'is_super_admin' => ['nullable', 'boolean'],
+            'fav_locale' => ['nullable', Rule::in($locales)],
         ]);
 
         User::create([
@@ -67,6 +71,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'is_super_admin' => isset($request['is_super_admin']) ? true : false,
+            'fav_locale' => $request['fav_locale'],
         ]);
 
         $user = User::where('email', $request['email'])->first();
@@ -95,7 +100,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.user.edit', compact('user'));
+        $locales = $this->locales();
+        return view('admin.user.edit', compact('user', 'locales'));
     }
 
     /**
@@ -107,6 +113,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $locales = $this->locales()->pluck('short_sign');
         if ($user->id == 1 && auth()->user()->id != 1) {
             return redirect()->route('user.index')->with('warning', __('admin.user_cannot_update'));
         }
@@ -116,6 +123,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', new Password, 'confirmed'],
             'is_super_admin' => ['nullable', 'boolean'],
+            'fav_locale' => ['nullable', Rule::in($locales)],
         ]);
 
         if ($request['email'] !== $user->email && $user instanceof MustVerifyEmail) {
@@ -127,6 +135,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => $request['password'] ? Hash::make($request['password']) : $user->password,
             'is_super_admin' => isset($request['is_super_admin']) ? true : false,
+            'fav_locale' => $request['fav_locale'],
         ]);
 
         return redirect()->route('user.index')->with('success', __('admin.user_update_success'));
