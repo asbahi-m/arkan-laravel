@@ -33,7 +33,7 @@ if (!defined('PAGINATION_NUMBER')) define('PAGINATION_NUMBER', '20');
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.home');
 });
 
 Route::redirect('/cpanel', url('dashboard'));
