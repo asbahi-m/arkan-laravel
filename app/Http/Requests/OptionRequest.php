@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\GetLocales;
 use Illuminate\Foundation\Http\FormRequest;
-use Route;
+use Illuminate\Support\Facades\Route;
 
 class OptionRequest extends FormRequest
 {
+    use GetLocales;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,17 +27,33 @@ class OptionRequest extends FormRequest
     public function rules()
     {
         if (Route::is('option.general.update')) {
-            return [
-                'general_options.site_name' => ['required', 'string', 'min:3', 'max:100'],
-                'general_options.site_identity' => ['nullable', 'string', 'min:3', 'max:255'],
-                'general_options.site_description' => ['nullable', 'string', 'min:3', 'max:255'],
-                'general_options.keywords' => ['nullable', 'string', 'min:3', 'max:255'],
-                'general_options.copyrights' => ['nullable', 'string', 'min:3', 'max:255'],
+            $locales = $this->locales();
+            $rules = [
+                // 'general_options.site_name' => ['required', 'string', 'min:3', 'max:100'],
+                // 'general_options.site_identity' => ['nullable', 'string', 'min:3', 'max:255'],
+                // 'general_options.site_description' => ['nullable', 'string', 'min:3', 'max:255'],
+                // 'general_options.keywords' => ['nullable', 'string', 'min:3', 'max:255'],
+                // 'general_options.copyrights' => ['nullable', 'string', 'min:3', 'max:255'],
                 'general_options.site_email' => ['nullable', 'email'],
                 'general_options.support_email' => ['nullable', 'email'],
                 'general_options.live_chat_url' => ['nullable', 'url'],
                 'general_options.support_url' => ['nullable', 'url'],
+
             ];
+            if ($locales->count()) {
+                $rules['general_options.site_name.*'] = ['required', 'string', 'min:3', 'max:100'];
+                $rules['general_options.site_identity.*'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.site_description.*'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.keywords.*'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.copyrights.*'] = ['nullable', 'string', 'min:3', 'max:255'];
+            } else {
+                $rules['general_options.site_name'] = ['required', 'string', 'min:3', 'max:100'];
+                $rules['general_options.site_identity'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.site_description'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.keywords'] = ['nullable', 'string', 'min:3', 'max:255'];
+                $rules['general_options.copyrights'] = ['nullable', 'string', 'min:3', 'max:255'];
+            }
+            return $rules;
         }
 
         if (Route::is('option.social.update')) {
