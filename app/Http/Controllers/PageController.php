@@ -131,7 +131,7 @@ class PageController extends Controller
             $val_page = $validated;
             $val_page['title'] = $validated['title'][DEFAULT_LOCALE];
             $val_page['subtitle'] = $validated['subtitle'][DEFAULT_LOCALE];
-            $val_page['description'] = $validated['subtitle'][DEFAULT_LOCALE];
+            $val_page['description'] = $validated['description'][DEFAULT_LOCALE];
 
             $page->update($val_page);
 

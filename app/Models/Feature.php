@@ -9,6 +9,7 @@ class Feature extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function views() {
         return $this->hasMany(View::class, 'view_id')->where('view_model', class_basename($this));

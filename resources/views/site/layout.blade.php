@@ -5,18 +5,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARKAN Pro</title>
-    <meta name="description" content="Software Development - Enterprise Resource Planning - Design and Branding ..." />
+    <title>{{ __('site.site_name') }} | @yield('title')</title>
+    <meta name="description" content="{{ __('site.site_description') }}" />
     <meta name="thumbnail" content="{{ asset('images/logo.jpg') }}" />
 
     <!-- <meta name="twitter:card" content="summary_large_image" /> -->
     <meta name="twitter:card" content="summary" />
-    <meta property="og:url" content="{{ url('/') }}" />
-    <meta property="og:title" content="ARKAN Pro" />
-    <meta property="og:description" content="Software Development - Enterprise Resource Planning - Design and Branding ..." />
+    <meta property="og:url" content="{{ route('site.home') }}" />
+    <meta property="og:title" content="{{ __('site.site_name') }}" />
+    <meta property="og:description" content="{{ __('site.site_description') }}" />
     <meta property="og:image" content="{{ asset('images/logo.jpg') }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content="{{ app()->getLocale() }}" />
 
     <!-- Preload Files -->
     <link rel="preload" crossorigin as="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" />
@@ -47,10 +47,10 @@
                 <img src="" alt="" />
             </div>
             <div class="modal-search">
-                <div class="search uppercase">Search</div>
-                <form action="search.html" method="">
+                <div class="search uppercase">{{ __('site.Search') }}</div>
+                <form action="{{ route('site.search') }}">
                     <div class="field">
-                        <input type="search" name="search" placeholder="Keywords Search..." />
+                        <input type="search" name="search" placeholder="{{ __('site.Keywords Search') }}..." />
                         <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
                     </div>
                 </form>
@@ -61,7 +61,7 @@
     <div class="nav-top">
         <div class="container">
             <div class="social">
-                <strong>Join us</strong>
+                <strong>{{ __('site.Join us') }}</strong>
                 <a href="#" target="_blank" class="icon icon-primary"><i class="fab fa-instagram"></i></a>
                 <a href="#" target="_blank" class="icon icon-dark"><i class="fab fa-linkedin-in"></i></a>
                 <a href="#" target="_blank" class="icon icon-primary"><i class="fab fa-facebook-f"></i></a>
@@ -92,6 +92,7 @@
     <script src="{{ asset('js/fontawesome.js') }}"></script>
     <script src="{{ asset('js/multislider.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

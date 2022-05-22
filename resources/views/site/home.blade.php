@@ -1,235 +1,155 @@
 @extends('site.layout')
 
+@section('title', __('site.Home'))
+
 @section('content')
-    <section class="no-gutters main-slider">
-        <div class="carousel slide main">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="container">
-                        <div class="item-caption">
-                            <!-- <div class="sub-title uppercase">Arkan Pro</div>
-                            <h2 class="item-title uppercase">IT Services</h2>
-                            <p class="item-desc">
-                            Software Development - Enterprise Resource Planning - Design and Branding ...
-                            </p> -->
+    @if ($sliders->count())
+        <section class="no-gutters main-slider">
+            <div class="carousel slide main">
+                <div class="carousel-inner">
+                    @foreach ($sliders as $slider)
+                        <div class="carousel-item{{ $loop->index == 0 ? ' active' : '' }}" {{ $loop->index != 0 ? 'style=display:none' : '' }}>
+                            @if ($slider->title || $slider->primary_btn || $slider->secondary_btn)
+                            <div class="container">
+                                <div class="item-caption">
+                                    <div class="sub-title uppercase">{{ $slider->subtitle }}</div>
+                                    <h2 class="item-title uppercase">{{ $slider->title }}</h2>
+                                    <div class="item-desc">{!! Str::limit($slider->brief, 80) !!}</div>
+                                    <div class="buttons">
+                                        @isset($slider->primary_btn)
+                                            <a href="{{ $slider->primary_url }}" class="btn btn-secondary" type="button"
+                                                >{{ $slider->primary_btn }} <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        @endisset
+                                        @isset($slider->secondary_btn)
+                                            <a href="{{ $slider->secondary_url }}" class="btn btn-dark btn-outline" type="button"
+                                                >{{ $slider->secondary_btn }}</a>
+                                        @endisset
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="item-img overlay-img" style="background-image: url('{{ asset(Storage::url($slider->media)) }}')"></div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="carousel-control">
+                    <a type="button" class="prev" aria-controls="prev"></a>
+                    <a type="button" class="next" aria-controls="next"></a>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    @isset($about_us)
+        <section id="about-us" class="about-us">
+            <div class="container">
+                <div class="text-center">
+                    <h1 class="head-title"><a href="#">Arkan <span>Pro</span></a></h1>
+                    <div class="sub-title text-primary uppercase">Always close together</div>
+                    <p class="sub-text text-center">
+                        It is a long established fact that a reader will be distracted by
+                        the readable content of a page when looking at its layout. The point
+                        of using Lorem Ipsum is that it has a more-or-less normal
+                        distribution of letters ...
+                    </p>
+                </div>
+
+                <article class="card row">
+                    <div class="card-img">
+                        <div class="img">
+                            <img class="lazyload" data-src="{{ asset(Storage::url($about_us->image)) }}" alt="{{ $about_us->title }}" />
+                        </div>
+                        <div class="overlay-bg">
                             <div class="buttons">
-                                <a href="services.html" class="btn btn-secondary" type="button">
-                                    Our Services <i class="fas fa-chevron-right"></i>
-                                </a>
-                                <a href="about-us.html" class="btn btn-dark btn-outline" type="button">More About US</a>
+                                <a href="{{ route('site.page', $about_us->id) }}" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
+                                <button class="icon icon-primary modal-open" type="button" data-image="{{ asset(Storage::url($about_us->image)) }}">
+                                    <i class="fas fa-expand"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="item-img overlay-img" style="background-image: url(images/slider-1.jpg)"></div>
-                </div>
-                <div class="carousel-item" style="display: none">
-                    <div class="item-img overlay-img" style="background-image: url(images/slider-2.jpg)"></div>
-                </div>
-                <div class="carousel-item" style="display: none">
-                    <div class="item-img overlay-img" style="background-image: url(images/slider-3.jpg)"></div>
-                </div>
-            </div>
-            <div class="carousel-control">
-                <a href="#prev" class="prev" aria-controls="prev"></a>
-                <a href="#next" class="next" aria-controls="next"></a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about-us" class="about-us">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="head-title"><a href="#">Arkan <span>Pro</span></a></h1>
-                <div class="sub-title text-primary uppercase">Always close together</div>
-                <p class="sub-text text-center">
-                    It is a long established fact that a reader will be distracted by
-                    the readable content of a page when looking at its layout. The point
-                    of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters ...
-                </p>
-            </div>
-
-            <article class="card row">
-                <div class="card-img">
-                    <div class="img">
-                        <img class="lazyload" data-src="images/pic-about.jpg" alt="About Us" />
+                    <div class="card-body">
+                        <h2 class="card-title uppercase">
+                            {{ $about_us->subtitle }} <i class="fas fa-quote-right text-large text-primary"></i>
+                        </h2>
+                        <div class="card-desc">{!! Str::limit($about_us->description, STR_LIMIT) !!}</div>
+                        <a href="{{ route('site.page', $about_us->id) }}" class="btn btn-primary">Read More <i class="fas fa-chevron-right"></i></a>
+                        <span class="mark arrow">
+                            <img src="{{ asset('images/logo-white.png') }}" alt="{{ __('site.site_name') }}" />
+                            <span><strong>Arkan</strong>Pro</span>
+                        </span>
                     </div>
-                    <div class="overlay-bg">
-                        <div class="buttons">
-                            <a href="about-us.html" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                            <button class="icon icon-primary modal-open" type="button" data-image="images/pic-about.jpg">
-                                <i class="fas fa-expand"></i>
-                            </button>
+                </article>
+            </div>
+        </section>
+    @endisset
+
+    @if ($features->count())
+        <section id="unlimited-tech" class="unlimited-tech animate">
+            <div class="container">
+                <h1 class="underline"><a>{!! __('site.Unlimited_Technolgoy') !!}</a></h1>
+                <div class="items">
+                    @foreach ($features as $feature)
+                        <div class="item{{ $loop->index == 2 ? ' special' : '' }}">
+                            <span class="img-circle">
+                                <img class="lazyload" data-src="{{ asset(Storage::url($feature->image)) }}" alt="{{ $feature->name }}" />
+                            </span>
+                            <h2>{{ $feature->name }}</h2>
+                            <div>{!! $feature->description !!}</div>
+                            <a class="more" href="{{ route('site.feature', $feature->id) }}">
+                                <i class="fas fa-arrow-{{ $loop->index == 2 ? 'down' : 'right' }}"></i></a>
                         </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h2 class="card-title uppercase">
-                        United Vision <i class="fas fa-quote-right text-large text-primary"></i>
-                    </h2>
-                    <p class="card-desc">
-                        It is a long established fact that a reader will be distracted
-                        by the readable content of a page when looking at its layout.
-                        The point of using Lorem Ipsum is that it has a more-or-less
-                        normal distribution of letters ...
-                    </p>
-                    <a href="about-us.html" class="btn btn-primary">Read More <i class="fas fa-chevron-right"></i></a>
-                    <span class="mark arrow">
-                        <img src="images/logo-white.png" alt="Arkan Pro" />
-                        <span><strong>Arkan</strong>Pro</span>
-                    </span>
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <section id="unlimited-tech" class="unlimited-tech animate">
-        <div class="container">
-            <h1 class="underline"><a>Unlimited <span>Technolgoy</span></a></h1>
-            <div class="items">
-                <div class="item">
-                    <span class="img-circle">
-                        <img class="lazyload" data-src="images/icon-committed.png" alt="Committed to result" />
-                    </span>
-                    <h2>Committed to result</h2>
-                    <p>
-                        It is a long established fact that a reader will be distracted
-                        by the readable content of a page when looking at its layout.
-                    </p>
-                    <a class="more" href="#"><i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="item">
-                    <span class="img-circle">
-                        <img class="lazyload" data-src="images/icon-sale.png" alt="After-sales service" />
-                    </span>
-                    <h2>After-sales service</h2>
-                    <p>
-                        It is a long established fact that a reader will be distracted
-                        by the readable content of a page when looking at its layout.
-                    </p>
-                    <a class="more" href="#"><i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="item special">
-                    <span class="img-circle">
-                        <img class="lazyload" data-src="images/icon-guarantee.png" alt="Measure of success" />
-                    </span>
-                    <h2>Measure of success</h2>
-                    <p>
-                        It is a long established fact that a reader will be distracted
-                        by the readable content of a page when looking at its layout.
-                    </p>
-                    <a class="more" href="#"><i class="fas fa-arrow-down"></i></a>
-                </div>
-                <div class="item">
-                    <span class="img-circle">
-                        <img class="lazyload" data-src="images/icon-saudi.png" alt="Saudi identity" />
-                    </span>
-                    <h2>Saudi identity</h2>
-                    <p>
-                        It is a long established fact that a reader will be distracted
-                        by the readable content of a page when looking at its layout.
-                    </p>
-                    <a class="more" href="#"><i class="fas fa-arrow-right"></i></a>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
-    <section id="services" class="services animate">
-        <div class="container">
-            <div class="shuflle">
-                <h1 class="underline"><a>Services <span>web provide</span></a></h1>
-                <ul class="list">
-                    <li class="active" data-list="all">All</li>
-                    <li data-list="it">IT</li>
-                    <li data-list="security">Security</li>
-                    <li data-list="design">Design</li>
-                    <li data-list="hosting">Hosing</li>
-                </ul>
-                <div class="items card-grid">
-                    <div class="card" data-sort="it">
-                        <div class="card-img">
-                            <div class="img">
-                                <img class="lazyload" data-src="images/pic-serv-1.jpg" alt="Design and Branding" />
-                            </div>
-                            <div class="overlay-bg">
-                                <div class="buttons">
-                                    <a href="service-view.html" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                                    <button class="icon icon-primary modal-open" type="button" data-image="images/pic-serv-1.jpg">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
+    @if ($services->count())
+        <section id="services" class="services animate">
+            <div class="container">
+                <div class="shuflle">
+                    <h1 class="underline"><a>{!! __('site.Services_web_provide') !!}</a></h1>
+                    <ul class="list">
+                        <li class="active" data-list="all">{{ __('site.All') }}</li>
+                        @foreach ($types as $type)
+                            @if ($type->services->count())
+                                <li data-list="{{ $type->name }}">{{ Str::ucfirst($type->name) }}</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                    <div class="items card-grid">
+                        @foreach ($services as $service)
+                            <div class="card" data-sort="{{ $service->type->name }}">
+                                <div class="card-img">
+                                    <div class="img">
+                                        <img class="lazyload" data-src="{{ asset(Storage::url($service->image)) }}" alt="{{ $service->name }}" />
+                                    </div>
+                                    <div class="overlay-bg">
+                                        <div class="buttons">
+                                            <a href="{{ route('site.service', $service->id) }}" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
+                                            <button class="icon icon-primary modal-open" type="button" data-image="{{ asset(Storage::url($service->image)) }}">
+                                                <i class="fas fa-expand"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h2 class="card-title"><a href="{{ route('site.service', $service->id) }}">{{ $service->name }}</a></h2>
+                                    <div class="card-meta">{{ Str::ucFirst($service->type->name) }}</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="service-view.html">Design and Branding</a></h2>
-                            <div class="card-meta">IT Service</div>
-                        </div>
-                    </div>
-                    <div class="card" data-sort="security">
-                        <div class="card-img">
-                            <div class="img">
-                                <img class="lazyload" data-src="images/pic-serv-2.jpg" alt="Design and Branding" />
-                            </div>
-                            <div class="overlay-bg">
-                                <div class="buttons">
-                                    <a href="service-view.html" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                                    <button class="icon icon-primary modal-open" type="button" data-image="images/pic-serv-2.jpg">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="service-view.html">Design and Branding</a></h2>
-                            <div class="card-meta">Security Service</div>
-                        </div>
-                    </div>
-                    <div class="card" data-sort="design">
-                        <div class="card-img">
-                            <div class="img">
-                                <img class="lazyload" data-src="images/pic-serv-3.jpg" alt="Design and Branding" />
-                            </div>
-                            <div class="overlay-bg">
-                                <div class="buttons">
-                                    <a href="service-view.html" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                                    <button class="icon icon-primary modal-open" type="button" data-image="images/pic-serv-3.jpg">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="service-view.html">Design and Branding</a></h2>
-                            <div class="card-meta">Design Service</div>
-                        </div>
-                    </div>
-                    <div class="card" data-sort="hosting">
-                        <div class="card-img">
-                            <div class="img">
-                                <img class="lazyload" data-src="images/pic-serv-4.jpg" alt="Design and Branding" />
-                            </div>
-                            <div class="overlay-bg">
-                                <div class="buttons">
-                                    <a href="service-view.html" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                                    <button class="icon icon-primary modal-open" type="button" data-image="images/pic-serv-4.jpg">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h2 class="card-title"><a href="service-view.html">Design and Branding</a></h2>
-                            <div class="card-meta">Hosting Service</div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
+
+                <div class="benner">
+                    <a href="#"><img class="lazyload" data-src="{{ asset('images/benner.jpg') }}" alt="Benner" /></a>
+                </div>
             </div>
-            <div class="benner">
-                <a href="#"><img class="lazyload" data-src="images/benner.jpg" alt="Benner" /></a>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section class="boxlight animate">
         <div class="img">
@@ -251,45 +171,29 @@
         </div>
     </section>
 
-    <section id="clients" class="clients animate">
-        <div class="container">
-            <h1 class="underline uppercase"><a href="clients.html">Our <span>Clients</span></a></h1>
-            <a href="clients.html" class="btn btn-primary more">More</a>
-            <div class="slider">
-                <div class="MS-content items">
-                    <div class="item">
-                        <a class="img" href="#">
-                            <img class="lazyload" data-src="images/pic-client1.png" alt="Abu Ayyan" />
-                        </a>
+    @if ($clients->count())
+        <section id="clients" class="clients animate">
+            <div class="container">
+                <h1 class="underline uppercase"><a href="{{ route('site.clients') }}">{!! __('site.Our_Clients') !!}</a></h1>
+                <a href="{{ route('site.clients') }}" class="btn btn-primary more">{{ __('site.More') }}</a>
+                <div class="slider">
+                    <div class="MS-content items">
+                        @foreach ($clients as $client)
+                            <div class="item">
+                                <a class="img" href="{{ $client->url_address }}" target="_blank">
+                                    <img class="lazyload" data-src="{{ asset(Storage::url($client->image)) }}" alt="$client->name" />
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="item">
-                        <a class="img" href="#">
-                            <img class="lazyload" data-src="images/pic-client2.png" alt="Abu Ayyan" />
-                        </a>
+                    <div class="MS-controls">
+                        <button class="MS-left prev" type="button"></button>
+                        <button class="MS-right next" type="button"></button>
                     </div>
-                    <div class="item">
-                        <a class="img" href="#">
-                            <img class="lazyload" data-src="images/pic-client3.png" alt="Abu Ayyan" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="img" href="#">
-                            <img class="lazyload" data-src="images/pic-client4.png" alt="Abu Ayyan" />
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="img" href="#">
-                            <img class="lazyload" data-src="images/pic-client1.png" alt="Abu Ayyan" />
-                        </a>
-                    </div>
-                </div>
-                <div class="MS-controls">
-                    <button class="MS-left prev" type="button"></button>
-                    <button class="MS-right next" type="button"></button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
     <section id="subscribe" class="subscribe boxlight bg-secondary animate">
         <div class="container">
@@ -304,33 +208,7 @@
                         requiests wherever he is.
                     </p>
                 </div>
-                <form action="" method="">
-                    <div class="field">
-                        <label for="input-name">Your Name</label>
-                        <input type="text" name="name" id="input-name" required>
-                    </div>
-                    <div class="form-group">
-                        <div class="field">
-                            <label for="input-email">Email</label>
-                            <input type="email" name="email" id="input-email" required>
-                        </div>
-                        <div class="field">
-                            <label for="input-phone">Phone</label>
-                            <input type="tel" name="phone" id="input-phone">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label for="input-service">Service</label>
-                        <select name="service" id="input-service" required>
-                            <option value="" disabled selected>Please Select Service</option>
-                            <option value="it">IT Service</option>
-                            <option value="security">Security Service</option>
-                            <option value="design">Design Service</option>
-                            <option value="hosting">Hosting Service</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary center" type="submit">Subscribe</button>
-                </form>
+                @include('site.templates.service_order', $services)
             </div>
         </div>
     </section>

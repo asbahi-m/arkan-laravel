@@ -16,10 +16,12 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SiteController;
 use App\Models\Locale;
 
 if (!defined('DEFAULT_LOCALE')) define('DEFAULT_LOCALE', config('app.locale'));
 if (!defined('PAGINATION_NUMBER')) define('PAGINATION_NUMBER', '20');
+if (!defined('STR_LIMIT')) define('STR_LIMIT', '210');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,19 @@ if (!defined('PAGINATION_NUMBER')) define('PAGINATION_NUMBER', '20');
 |
 */
 
-Route::get('/', function () {
-    return view('site.home');
+Route::controller(SiteController::class)->name('site.')->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/page/{id}', 'page')->name('page');
+    Route::get('/feature/{id}', 'feature')->name('feature');
+    Route::get('/services', 'services')->name('services');
+    Route::get('/service/{id}', 'service')->name('service');
+    Route::post('service/order', 'serviceOrder')->name('order');
+    Route::get('/products', 'products')->name('products');
+    Route::get('/product/{id}', 'product')->name('product');
+    Route::get('/projects', 'projects')->name('projects');
+    Route::get('/project/{id}', 'project')->name('project');
+    Route::get('/clients', 'clients')->name('clients');
+    Route::get('/search', 'search')->name('search');
 });
 
 Route::redirect('/cpanel', url('dashboard'));
@@ -137,7 +150,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::controller(OrderController::class)->prefix('order')->name('order.')->group(function () {
             Route::get('/', 'index')->name('index');
             // Route::get('/create', 'create')->name('create');
-            Route::post('/store', 'store')->name('store');
+            // Route::post('/store', 'store')->name('store');
             Route::get('/{order}', 'show')->name('show');
             Route::delete('/delete', 'destroy')->name('delete');
             Route::put('/accept', 'accept')->name('accept');
@@ -148,7 +161,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::controller(CareerController::class)->prefix('career')->name('career.')->group(function () {
             Route::get('/', 'index')->name('index');
             // Route::get('/create', 'create')->name('create');
-            Route::post('/store', 'store')->name('store');
+            // Route::post('/store', 'store')->name('store');
             Route::get('/{career}', 'show')->name('show');
             Route::delete('/delete', 'destroy')->name('delete');
             Route::put('/accept', 'accept')->name('accept');
@@ -159,7 +172,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::controller(ContactUsController::class)->prefix('contact')->name('contact.')->group(function () {
             Route::get('/', 'index')->name('index');
             // Route::get('/create', 'create')->name('create');
-            Route::post('/store', 'store')->name('store');
+            // Route::post('/store', 'store')->name('store');
             Route::get('/{contact}', 'show')->name('show');
             Route::delete('/delete', 'destroy')->name('delete');
             Route::put('/reply', 'reply')->name('reply');
