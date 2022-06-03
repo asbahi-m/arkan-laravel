@@ -44,16 +44,7 @@
     @isset($about_us)
         <section id="about-us" class="about-us">
             <div class="container">
-                <div class="text-center">
-                    <h1 class="head-title"><a href="#">Arkan <span>Pro</span></a></h1>
-                    <div class="sub-title text-primary uppercase">Always close together</div>
-                    <p class="sub-text text-center">
-                        It is a long established fact that a reader will be distracted by
-                        the readable content of a page when looking at its layout. The point
-                        of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters ...
-                    </p>
-                </div>
+                @include('site.include.headTitle')
 
                 <article class="card row">
                     <div class="card-img">
@@ -74,7 +65,7 @@
                             {{ $about_us->subtitle }} <i class="fas fa-quote-right text-large text-primary"></i>
                         </h2>
                         <div class="card-desc">{!! Str::limit($about_us->description, STR_LIMIT) !!}</div>
-                        <a href="{{ route('site.page', $about_us->id) }}" class="btn btn-primary">Read More <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ route('site.page', $about_us->id) }}" class="btn btn-primary">{{ __('site.Read More') }} <i class="fas fa-chevron-right"></i></a>
                         <span class="mark arrow">
                             <img src="{{ asset('images/logo-white.png') }}" alt="{{ __('site.site_name') }}" />
                             <span><strong>Arkan</strong>Pro</span>
@@ -85,71 +76,9 @@
         </section>
     @endisset
 
-    @if ($features->count())
-        <section id="unlimited-tech" class="unlimited-tech animate">
-            <div class="container">
-                <h1 class="underline"><a>{!! __('site.Unlimited_Technolgoy') !!}</a></h1>
-                <div class="items">
-                    @foreach ($features as $feature)
-                        <div class="item{{ $loop->index == 2 ? ' special' : '' }}">
-                            <span class="img-circle">
-                                <img class="lazyload" data-src="{{ asset(Storage::url($feature->image)) }}" alt="{{ $feature->name }}" />
-                            </span>
-                            <h2>{{ $feature->name }}</h2>
-                            <div>{!! $feature->description !!}</div>
-                            <a class="more" href="{{ route('site.feature', $feature->id) }}">
-                                <i class="fas fa-arrow-{{ $loop->index == 2 ? 'down' : 'right' }}"></i></a>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
+    @include('site.templates.features', $features)
 
-    @if ($services->count())
-        <section id="services" class="services animate">
-            <div class="container">
-                <div class="shuflle">
-                    <h1 class="underline"><a>{!! __('site.Services_web_provide') !!}</a></h1>
-                    <ul class="list">
-                        <li class="active" data-list="all">{{ __('site.All') }}</li>
-                        @foreach ($types as $type)
-                            @if ($type->services->count())
-                                <li data-list="{{ $type->name }}">{{ Str::ucfirst($type->name) }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                    <div class="items card-grid">
-                        @foreach ($services as $service)
-                            <div class="card" data-sort="{{ $service->type->name }}">
-                                <div class="card-img">
-                                    <div class="img">
-                                        <img class="lazyload" data-src="{{ asset(Storage::url($service->image)) }}" alt="{{ $service->name }}" />
-                                    </div>
-                                    <div class="overlay-bg">
-                                        <div class="buttons">
-                                            <a href="{{ route('site.service', $service->id) }}" class="icon icon-primary" type="button"><i class="fas fa-link"></i></a>
-                                            <button class="icon icon-primary modal-open" type="button" data-image="{{ asset(Storage::url($service->image)) }}">
-                                                <i class="fas fa-expand"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h2 class="card-title"><a href="{{ route('site.service', $service->id) }}">{{ $service->name }}</a></h2>
-                                    <div class="card-meta">{{ Str::ucFirst($service->type->name) }}</div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="benner">
-                    <a href="#"><img class="lazyload" data-src="{{ asset('images/benner.jpg') }}" alt="Benner" /></a>
-                </div>
-            </div>
-        </section>
-    @endif
+    @include('site.templates.services', $services)
 
     <section class="boxlight animate">
         <div class="img">
@@ -171,29 +100,7 @@
         </div>
     </section>
 
-    @if ($clients->count())
-        <section id="clients" class="clients animate">
-            <div class="container">
-                <h1 class="underline uppercase"><a href="{{ route('site.clients') }}">{!! __('site.Our_Clients') !!}</a></h1>
-                <a href="{{ route('site.clients') }}" class="btn btn-primary more">{{ __('site.More') }}</a>
-                <div class="slider">
-                    <div class="MS-content items">
-                        @foreach ($clients as $client)
-                            <div class="item">
-                                <a class="img" href="{{ $client->url_address }}" target="_blank">
-                                    <img class="lazyload" data-src="{{ asset(Storage::url($client->image)) }}" alt="$client->name" />
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="MS-controls">
-                        <button class="MS-left prev" type="button"></button>
-                        <button class="MS-right next" type="button"></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    @endif
+    @include('site.templates.clients', $clients)
 
     <section id="subscribe" class="subscribe boxlight bg-secondary animate">
         <div class="container">

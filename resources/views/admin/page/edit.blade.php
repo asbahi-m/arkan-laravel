@@ -113,11 +113,12 @@
                     <!-- Page Marker -->
                     <div class="form-group">
                         <div class="custom-control custom-checkbox mb-3">
+                            <input type="hidden" name="is_marker" value="0">
                             <input type="checkbox" class="custom-control-input" id="marker" name="is_marker"
                                     value="1" {{ $page->is_marker == 1 ? 'checked' : '' }}>
                             <label class="custom-control-label" for="marker">{{ __('admin.marker') }}</label>
                         </div>
-                        @error('')
+                        @error('is_marker')
                             <div class="invalid-feedback animated fadeInUp" style="display: block;">{{ $message }}</div>
                         @enderror
                     </div>

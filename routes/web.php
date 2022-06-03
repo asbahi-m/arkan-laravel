@@ -40,13 +40,15 @@ Route::controller(SiteController::class)->name('site.')->group(function () {
     Route::get('/feature/{id}', 'feature')->name('feature');
     Route::get('/services', 'services')->name('services');
     Route::get('/service/{id}', 'service')->name('service');
-    Route::post('service/order', 'serviceOrder')->name('order');
     Route::get('/products', 'products')->name('products');
     Route::get('/product/{id}', 'product')->name('product');
     Route::get('/projects', 'projects')->name('projects');
     Route::get('/project/{id}', 'project')->name('project');
     Route::get('/clients', 'clients')->name('clients');
     Route::get('/search', 'search')->name('search');
+    Route::post('/order', 'serviceOrder')->name('order');
+    Route::post('/job-application', 'jobApplication')->name('career');
+    Route::post('/contact-us', 'contactUs')->name('contact');
 });
 
 Route::redirect('/cpanel', url('dashboard'));

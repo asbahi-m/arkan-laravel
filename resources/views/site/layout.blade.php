@@ -80,7 +80,7 @@
 
     @include('site.include.header')
 
-    <main>
+    <main class="{{ !request()->routeIs('site.home') ? 'page' : '' }}">
         @yield('content')
     </main>
 

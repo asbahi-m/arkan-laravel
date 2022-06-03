@@ -25,18 +25,7 @@
             <div class="item">
                 <h2 class="underline">{{ __('site.Info Contact') }}</h2>
                 <div class="contact-info">
-                    <div>
-                        <span><i class="fas fa-map-marker-alt"></i></span>
-                        <a>Saudi Arabia - Khobar</a>
-                    </div>
-                    <div>
-                        <span><i class="far fa-envelope"></i></span>
-                        <a href="mailto:info@arkanpro.com">info@arkanpro.com</a>
-                    </div>
-                    <div>
-                        <span><i class="fas fa-phone-volume"></i></span>
-                        <a>+966 555 123456</a>
-                    </div>
+                    @include('site.include.contact_info')
                 </div>
             </div>
         </div>

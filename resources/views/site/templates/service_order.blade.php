@@ -1,7 +1,7 @@
 <form action="{{ route('site.order') }}" method="POST" id="order">
     @csrf
     <div class="field">
-        <label for="input-name">{{ __('site.More') }}</label>
+        <label for="input-name">{{ __('site.Your Name') }}</label>
         <input type="text" name="name" id="input-name" value="{{ old('name') }}" required>
         @error('name')
             <small style="color: red; display: block;">{{ $message }}</small>
