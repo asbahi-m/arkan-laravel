@@ -1,13 +1,15 @@
 @extends('site.layout')
 
-@section('title', __('site.' . $page->title))
+@section('title', $page->title)
 
 @section('content')
 
 @include('site.include.heading', [
 'title' => $page->title,
-'id' => $page->id,
-//'image' => $page->image
+'image' => null,
+'route' => route('site.page', $page->id),
+'parent_title' => null,
+'parent_route' => null,
 ])
 
 @if ($page->slug != 'contact-us')
@@ -43,9 +45,9 @@
 
 @includeWhen($page->slug == 'about-us', 'site.templates.features', $features)
 
-@includeWhen($page->slug == 'about-us', 'site.templates.projects', $projects)
+@includeWhen($page->slug == 'about-us', 'site.templates.projects', [$projects, 'latest' => true])
 
-@includeWhen($page->slug == 'about-us', 'site.templates.clients', $clients)
+@includeWhen($page->slug == 'about-us', 'site.templates.clients', [$clients, 'latest' => true])
 
 @if ($page->slug == 'why-us')
 <section class="our-client-list">

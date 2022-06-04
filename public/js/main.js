@@ -196,7 +196,7 @@ $(function () {
       if ($(item).hasClass("active")) currentIndex = index;
       else $(item).hide();
     })
-    
+
     let intervalEl;
     function fadeInItem() {
       if (!intervalEl && itemsLen > 1) {
@@ -257,7 +257,7 @@ $(function () {
   function fadeSection(item) {
     let scrTop = $(window).scrollTop();
     let winHei = $(window).height();
-    if ((scrTop + winHei) > ($(item).offset().top + (winHei / 2)) && scrTop < ($(item).offset().top + $(item).height() - (winHei / 2))) {
+    if ((scrTop + winHei) > ($(item).offset().top + (winHei / 3)) && scrTop < ($(item).offset().top + $(item).height() - (winHei / 3))) {
       $(item).animate({
         "opacity": 1,
       }, 700).removeClass("animate");

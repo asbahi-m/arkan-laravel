@@ -1,7 +1,11 @@
 @if ($projects->count())
-    <section class="latest animate">
+    <section class="projects animate">
         <div class="container">
+            @if (isset($latest) && $latest)
             <h1 class="underline"><a>{!! __('site.Latest_Projects') !!}</a></h1>
+            @else
+            <h1 class="underline"><a>{!! __('site.Our_Projects') !!}</a></h1>
+            @endif
             <div class="card-grid">
                 @foreach ($projects as $project)
                     <div class="card">
@@ -25,10 +29,14 @@
                     </div>
                 @endforeach
             </div>
+
+            @if (isset($latest) && $latest)
             <div class="text-center more">
                 <a class="btn btn-primary" href="#">{{ __('site.View More') }} <i class="fas fa-chevron-right"></i></a>
             </div>
-        </div>
+            @else
+            {{ $projects->links() }}
+            @endif
         </div>
     </section>
 @endif

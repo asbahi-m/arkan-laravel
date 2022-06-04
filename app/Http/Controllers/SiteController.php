@@ -20,28 +20,52 @@ use App\Models\Service;
 use App\Models\Slider;
 use App\Models\Type;
 use App\Traits\UploadFile;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
 {
     use UploadFile;
 
+    public function get_latest_features() {
+        $features = Feature::where('is_published', true)->limit(4)->get();
+        return $features;
+    }
+
+    public function get_types() {
+        $types = Type::all();
+        return $types;
+    }
+
+    public function get_services() {
+        $services = Service::where('is_published', true)->get();
+        return $services;
+    }
+
+    public function get_latest_clients() {
+        $clients = Client::where('is_published', true)->limit(6)->latest()->get();
+        return $clients;
+    }
+
+    public function get_latest_projects() {
+        $projects = Project::where('is_published', true)->limit(6)->latest()->get();
+        return $projects;
+    }
+
     public function home() {
         $sliders = Slider::where('is_published', true)->where('place', 'home')->orderBy('order')->get();
         $about_us = Page::where('is_published', true)->find(1);
-        $features = Feature::where('is_published', true)->limit(4)->get();
-        $types = Type::all();
-        $services = Service::where('is_published', true)->get();
-        $clients = Client::where('is_published', true)->get();
+        $features = $this->get_latest_features();
+        $types = $this->get_types();
+        $services = $this->get_services();
+        $clients = $this->get_latest_clients();
         return view('site.home', compact('sliders', 'about_us', 'features', 'types', 'services', 'clients'));
     }
 
     public function page($id) {
         $page = Page::where('is_published', true)->findOrFail($id);
-        $features = Feature::where('is_published', true)->limit(4)->get();
-        $projects = Project::where('is_published', true)->limit(6)->latest()->get();
-        $clients = Client::where('is_published', true)->get();
+        $features = $this->get_latest_features();
+        $projects = $this->get_latest_projects();
+        $clients = $this->get_latest_clients();
         return view('site.page', compact('page', 'features', 'projects', 'clients'));
     }
 
@@ -51,43 +75,45 @@ class SiteController extends Controller
     }
 
     public function services() {
-        $services = Service::where('is_published', true)->get();
-        return view('site.services');
+        $types = $this->get_types();
+        $services = $this->get_services();
+        return view('site.services', compact('types', 'services'));
     }
 
     public function service($id) {
         $service = Service::where('is_published', true)->findOrFail($id);
-        return view('site.service', compact('service'));
+        $services = $this->get_services();
+        $projects = $this->get_latest_projects();
+        return view('site.service', compact('service', 'services', 'projects'));
     }
 
     public function products() {
-        $products = Product::where('is_published', true)->get();
-        return view('site.products');
+        $types = $this->get_types();
+        $products = Product::where('is_published', true)->paginate(8);
+        return view('site.products', compact('types', 'products'));
     }
 
     public function product($id) {
         $product = Product::where('is_published', true)->findOrFail($id);
-        return view('site.product', compact('product'));
+        $services = $this->get_services();
+        return view('site.product', compact('product', 'services'));
     }
 
     public function projects() {
-        $projects = Project::where('is_published', true)->get();
-        return view('site.projects');
+        $types = $this->get_types();
+        $projects = Project::where('is_published', true)->paginate(8);
+        return view('site.projects', compact('types', 'projects'));
     }
 
     public function project($id) {
         $project = Project::where('is_published', true)->findOrFail($id);
-        return view('site.project', compact('project'));
+        $services = $this->get_services();
+        return view('site.project', compact('project', 'services'));
     }
 
     public function clients() {
-        $clients = Client::where('is_published', true)->get();
-        return view('site.clients');
-    }
-
-    public function client($id) {
-        $client = Client::where('is_published', true)->findOrFail($id);
-        return view('site.client', compact('client'));
+        $clients = Client::where('is_published', true)->paginate(8);
+        return view('site.clients', compact('clients'));
     }
 
     public function serviceOrder(OrderRequest $request) {

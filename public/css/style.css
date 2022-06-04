@@ -1089,29 +1089,29 @@ main:not(.page) .services .container .benner img {
   }
 }
 
-.latest .card-img {
+.projects .card-img {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 @media (min-width: 1200px) {
-  .latest .card-img {
+  .projects .card-img {
     height: 240px;
   }
 }
-.latest .card-body {
+.projects .card-body {
   position: relative;
 }
-.latest .card-body:hover {
+.projects .card-body:hover {
   background-color: #89cb07;
   color: #fff;
 }
-.latest .card-body:hover .card-title:hover a {
+.projects .card-body:hover .card-title:hover a {
   color: #f7f7f7;
 }
-.latest .card-body:hover .card-meta {
+.projects .card-body:hover .card-meta {
   color: #fff;
 }
-.latest .more {
+.projects .more {
   margin-top: 30px;
 }
 

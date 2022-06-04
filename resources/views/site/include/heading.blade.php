@@ -6,7 +6,10 @@
         <h1>{{ $title }}</h1>
         <ul class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('site.home') }}">{{ __('site.Home') }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('site.page', $id) }}">{{ $title }}</a></li>
+            @isset($parent_route)
+            <li class="breadcrumb-item"><a href="{{ $parent_route }}">{{ $parent_title }}</a></li>
+            @endisset
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ $route }}">{{ $title }}</a></li>
         </ul>
         <div class="carousel">
             <div class="carousel-inner">

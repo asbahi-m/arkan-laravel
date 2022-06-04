@@ -68,8 +68,8 @@
                 <a href="#" target="_blank" class="icon icon-dark"><i class="fab fa-whatsapp"></i></a>
             </div>
             <div class="email">
-                <a class="nav-link" href="mailto:info@arkanpro.com">
-                    <i class="far fa-envelope text-primary"></i><span>info@arkanpro.com</span>
+                <a class="nav-link" href="mailto:info@developer-web.net">
+                    <i class="far fa-envelope text-primary"></i><span>info@developer-web.net</span>
                 </a>
             </div>
             <div class="locale">
