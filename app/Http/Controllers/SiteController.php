@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Viewer;
 use App\Http\Requests\CareerRequest;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Requests\OrderRequest;
@@ -66,11 +67,13 @@ class SiteController extends Controller
         $features = $this->get_latest_features();
         $projects = $this->get_latest_projects();
         $clients = $this->get_latest_clients();
+        event(new Viewer($page));
         return view('site.page', compact('page', 'features', 'projects', 'clients'));
     }
 
     public function feature($id) {
         $feature = Feature::where('is_published', true)->findOrFail($id);
+        event(new Viewer($feature));
         return view('site.feature', compact('feature'));
     }
 
@@ -84,6 +87,7 @@ class SiteController extends Controller
         $service = Service::where('is_published', true)->findOrFail($id);
         $services = $this->get_services();
         $projects = $this->get_latest_projects();
+        event(new Viewer($service));
         return view('site.service', compact('service', 'services', 'projects'));
     }
 
@@ -96,6 +100,7 @@ class SiteController extends Controller
     public function product($id) {
         $product = Product::where('is_published', true)->findOrFail($id);
         $services = $this->get_services();
+        event(new Viewer($product));
         return view('site.product', compact('product', 'services'));
     }
 
@@ -108,6 +113,7 @@ class SiteController extends Controller
     public function project($id) {
         $project = Project::where('is_published', true)->findOrFail($id);
         $services = $this->get_services();
+        event(new Viewer($project));
         return view('site.project', compact('project', 'services'));
     }
 

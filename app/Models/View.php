@@ -9,7 +9,7 @@ class View extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    // public $timestamps = false;
+    public $timestamps = false;
     const CREATED_AT = 'viewed_at';
     protected $dateFormat = 'U';
 
