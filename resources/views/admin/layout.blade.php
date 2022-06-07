@@ -15,6 +15,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('admin/vendor/animate/animate.min.css') }}">
+
     <!-- Styles -->
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
     {{--<link href="{{ asset('admin/vendor/chartist/css/chartist.min.css') }}" rel="stylesheet">--}}
@@ -188,6 +190,48 @@
                 showImg.style.display = "block";
             }
         }
+    </script>
+
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    <script src="{{ asset('admin/js/pusher.min.js') }}"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        // Pusher.logToConsole = true;
+
+        var pusher = new Pusher('138a028039d2f9d0d19b', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe('channel-notice');
+        channel.bind('new-notice', function(data) {
+            // increment count messages, careers and orders
+            let element = $(`[data-model=${data.data.model}]`);
+            $count = parseInt(element.text());
+            element.text($count + 1);
+            // console.log(data);
+
+            // Show notification
+            Swal.fire({
+                toast: true,
+                title: data.data.title,
+                text: data.data.text,
+                showConfirmButton: false,
+                showCloseButton: true,
+                iconHtml: '<i class="fa fa-bell"></i>',
+                iconColor: '#eb8153',
+                position: 'bottom-{{ app()->isLocale("ar") ? "left" : "right" }}',
+                color: '#eb8153',
+                background: '#3b3363',
+                // timer: 5000,
+                // timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInUp'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut'
+                }
+            })
+        });
     </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewNotification;
 use App\Events\Viewer;
 use App\Http\Requests\CareerRequest;
 use App\Http\Requests\ContactUsRequest;
@@ -22,6 +23,7 @@ use App\Models\Slider;
 use App\Models\Type;
 use App\Traits\UploadFile;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
@@ -135,10 +137,19 @@ class SiteController extends Controller
                 'name' => $validated['name'],
                 'service' => $service->name,
             ],
-            'subject' => __('site.service_order') . ' | ' . $service->name . ' | ' . $validated['name'],
+            'subject' => __('admin.service_order') . ' | ' . $service->name . ' | ' . $validated['name'],
         ]));
 
-        return back()->with('success', __('site.order_service_success'));
+        // Show notification in realtime via pusher
+        $data = [
+            'title' => 'New Order: <div class="mt-2">'. Str::limit($service->name, 40) .'</div>',
+            'text' => 'By ' . $validated['name'],
+            'datetime' => now()->format('Y-m-d h:i'),
+            'model' => 'service_order',
+        ];
+        event(new NewNotification($data));
+
+        return back()->with('success', __('admin.order_service_success'));
     }
 
     public function jobApplication(CareerRequest $request) {
@@ -161,6 +172,15 @@ class SiteController extends Controller
             'subject' => __('admin.job_application') . ' | ' . $validated['name'],
         ]));
 
+        // Show notification in realtime via pusher
+        $data = [
+            'title' => 'New Job Application: <div class="mt-2">'. Str::limit($validated['message'], 40) .'</div>',
+            'text' => 'By ' . $validated['name'],
+            'datetime' => now()->format('Y-m-d h:i'),
+            'model' => 'job_application',
+        ];
+        event(new NewNotification($data));
+
         return back()->with('success', __('admin.job_apply_success'));
     }
 
@@ -176,6 +196,15 @@ class SiteController extends Controller
             ],
             'subject' => __('admin.contact_us') . ' | ' . $validated['name'],
         ]));
+
+        // Show notification in realtime via pusher
+        $data = [
+            'title' => 'New message: <div class="mt-2">'. Str::limit($validated['message'], 40) .'</div>',
+            'text' => 'By ' . $validated['name'],
+            'datetime' => now()->format('Y-m-d h:i'),
+            'model' => 'contact_us',
+        ];
+        event(new NewNotification($data));
 
         return back()->with('success', __('admin.message_delete_success'));
     }

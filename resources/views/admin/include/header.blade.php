@@ -36,7 +36,7 @@
                         <li class="nav-item"><a href="{{ route('order.index') }}" class="nav-link" aria-expanded="false">
                                 <i class="fa fa-cart-plus"></i>
                                 <span class="nav-text d-none d-md-inline-block">{{ __('admin.orders') }}</span>
-                                <span class="badge text-white bg-primary rounded-circle">{{ $orders_count }}</span>
+                                <span data-model="service_order" class="badge text-white bg-primary rounded-circle">{{ $orders_count }}</span>
                             </a>
                         </li>
                     @endif
@@ -44,7 +44,7 @@
                         <li class="nav-item"><a href="{{ route('career.index') }}" class="nav-link" aria-expanded="false">
                                 <i class="fa fa-id-badge"></i>
                                 <span class="nav-text d-none d-md-inline-block">{{ __('admin.careers') }}</span>
-                                <span class="badge text-white bg-primary rounded-circle">{{ $careers_count }}</span>
+                                <span data-model="job_application" class="badge text-white bg-primary rounded-circle">{{ $careers_count }}</span>
                             </a>
                         </li>
                     @endif
@@ -52,7 +52,7 @@
                         <li class="nav-item"><a href="{{ route('contact.index') }}" class="nav-link" aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="nav-text d-none d-md-inline-block">{{ __('admin.messages') }}</span>
-                                <span class="badge text-white bg-primary rounded-circle">{{ $msgs_count }}</span>
+                                <span data-model="contact_us" class="badge text-white bg-primary rounded-circle">{{ $msgs_count }}</span>
                             </a>
                         </li>
                     @endif
